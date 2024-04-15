@@ -21,6 +21,7 @@ export default function RootLayout({
         <Script
           id="Absence-banner"
           async
+          strategy="beforeInteractive"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4568231404553117"
           crossOrigin="anonymous"
         />

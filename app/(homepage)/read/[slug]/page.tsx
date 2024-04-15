@@ -1,7 +1,7 @@
 import { getDataSheet } from "@/lib/gSheet";
 import Link from "next/link";
 import Image from "next/image";
-import GAds from "@/components/google-ads";
+import AdSense from "@/components/google-ads/AdSense";
 
 const getImages = async (albumHash: string) => {
   const res = await fetch(`https://api.imgur.com/3/album/${albumHash}/images`, {
@@ -46,8 +46,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
             {filmIndex.title} - Chapter {film.chap}
           </h3>
         </div>
-        <GAds />
-    
+        <AdSense />
+
         <div className="flex justify-center">
           <div>
             {images.map((image: any) => (

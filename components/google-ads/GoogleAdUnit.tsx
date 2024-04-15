@@ -1,6 +1,6 @@
 "use client";
 
-export default function Ads() {
+export default function GoogleAdUnit() {
   return (
     <>
       <ins
