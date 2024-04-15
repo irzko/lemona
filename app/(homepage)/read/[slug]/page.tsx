@@ -1,6 +1,7 @@
 import { getDataSheet } from "@/lib/gSheet";
 import Link from "next/link";
 import Image from "next/image";
+import GAds from "@/components/google-ads";
 
 const getImages = async (albumHash: string) => {
   const res = await fetch(`https://api.imgur.com/3/album/${albumHash}/images`, {
@@ -39,7 +40,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div className="flex justify-center">
-      <div className="max-w-screen-lg space-y-2 w-full">
+      <div className="max-w-screen-md space-y-2 w-full">
+        <div>
+          <h3 className="font-semibold text-3xl p-2">
+            {filmIndex.title} - Chapter {film.chap}
+          </h3>
+        </div>
+        <GAds />
         <div className="flex justify-center">
           <div>
             {images.map((image: any) => (
@@ -54,11 +61,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             ))}
           </div>
         </div>
-        <div>
-          <h2 className="font-semibold p-2">
-            {filmIndex.title} - Tập {film.eps}
-          </h2>
-        </div>
+
         <div>
           <ul className="flex gap-2 flex-wrap">
             {eps.map((f) => (
@@ -66,8 +69,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 <Link
                   className={`flex p-2 h-10 w-10 justify-center items-center text-sm font-medium focus:outline-none rounded-lg focus:z-10 focus:ring-4 ${
                     f.id === params.slug
-                      ? "bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
-                      : "border bg-white text-gray-400 border-gray-600 hover:hover:bg-white"
+                      ? "bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 text-white"
+                      : "border bg-white text-gray-900 border-gray-600 hover:bg-white"
                   }`}
                   href={`/read/${f.id}`}
                 >
