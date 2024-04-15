@@ -11,7 +11,7 @@ export default function HomeLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <nav className="bg-white border-b sticky top-0 z-50 border-gray-200">
+      <nav className="bg-white/70 backdrop-blur-lg backdrop-saturate-150 border-b sticky top-0 z-50 border-gray-200">
         <div className="max-w-screen-lg flex flex-wrap items-center justify-between mx-auto h-16 px-2">
           <Link
             href="/"
