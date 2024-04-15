@@ -47,6 +47,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </h3>
         </div>
         <GAds />
+    
         <div className="flex justify-center">
           <div>
             {images.map((image: any) => (

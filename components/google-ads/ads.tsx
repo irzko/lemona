@@ -3,11 +3,6 @@
 export default function Ads() {
   return (
     <>
-      <script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4568231404553117"
-        crossOrigin="anonymous"
-      ></script>
       <ins
         className="adsbygoogle block"
         data-ad-client="ca-pub-4568231404553117"
