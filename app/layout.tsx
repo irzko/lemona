@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -17,8 +18,9 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <head>
-        <script
+        <Script
           id="Absence-banner"
+          strategy="lazyOnload"
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4568231404553117"
           crossOrigin="anonymous"
