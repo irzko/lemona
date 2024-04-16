@@ -24,6 +24,10 @@ export default function RootLayout({
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4568231404553117"
           crossOrigin="anonymous"
         />
+        <meta
+          name="google-adsense-account"
+          content="ca-pub-4568231404553117"
+        ></meta>
       </head>
       <body className={`${inter.className} text-gray-900`}>{children}</body>
     </html>
