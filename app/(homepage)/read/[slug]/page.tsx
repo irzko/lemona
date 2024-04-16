@@ -42,9 +42,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
     <div className="flex justify-center">
       <div className="max-w-screen-md space-y-2 w-full">
         <div>
-          <h3 className="font-semibold text-3xl p-2">
+          <h5 className="font-semibold text-xl p-2">
             {filmIndex.title} - Chapter {film.chap}
-          </h3>
+          </h5>
         </div>
         <AdSense />
 

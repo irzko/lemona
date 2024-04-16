@@ -41,7 +41,7 @@ export default async function Home() {
             </Link>
           </div>
         </div> */}
-        <h4 className="text-2xl mb-2 font-bold">Phim mới cập nhật</h4>
+        <h4 className="text-xl mb-2 font-semibold">Truyện mới cập nhật</h4>
         <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-2">
           {newFilms.map((item) => (
             <li

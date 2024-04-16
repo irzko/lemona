@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -29,7 +28,7 @@ export default function RootLayout({
           content="ca-pub-4568231404553117"
         ></meta>
       </head>
-      <body className={`${inter.className} text-gray-900`}>{children}</body>
+      <body className={`${inter.className}`}>{children}</body>
     </html>
   );
 }

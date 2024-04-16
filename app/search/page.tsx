@@ -4,13 +4,14 @@ import Link from "next/link";
 import { useState } from "react";
 import useSWR, { Fetcher } from "swr";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const filmFetcher: Fetcher<Film[], string> = async (key) => {
   return fetch(key).then((res) => res.json());
 };
 
 export default function SearchPage() {
-  // const [keyword, setKeyword] = useState("");
+  const router = useRouter();
   const [films, setFilms] = useState<Film[]>([]);
   const { data } = useSWR("/api/mangas", filmFetcher);
 
@@ -29,7 +30,7 @@ export default function SearchPage() {
     <main className="flex flex-col items-center">
       <div className="border-b h-16 flex justify-center items-center border-gray-200 w-full">
         <div className="flex justify-center items-center max-w-sm w-full p-2">
-          <Link className="mr-2" href="/">
+          <button className="mr-2" onClick={() => router.back()}>
             <svg
               className="w-6 h-6"
               aria-hidden="true"
@@ -47,7 +48,7 @@ export default function SearchPage() {
                 d="M5 12h14M5 12l4-4m-4 4 4 4"
               />
             </svg>
-          </Link>
+          </button>
           <div className="relative w-full">
             <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
               <svg
