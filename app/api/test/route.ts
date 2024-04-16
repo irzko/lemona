@@ -11,15 +11,15 @@ export const GET = async (req: Request) => {
     "1397060211"
   );
 
-  await prisma.chapter.createMany({
-    data: tmp.map((item) => {
-      return {
-        orderNumber: parseInt(item.chap),
-        mangaId: 3,
-        chapterHash: item.src,
-      };
-    }),
-  });
+  // await prisma.chapter.createMany({
+  //   data: tmp.map((item) => {
+  //     return {
+  //       orderNumber: parseInt(item.chap),
+  //       mangaId: 3,
+  //       chapterHash: item.src,
+  //     };
+  //   }),
+  // });
 
   // const g = tmp.map((item) => {
   //   return {

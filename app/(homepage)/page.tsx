@@ -4,7 +4,9 @@ import slugify from "slugify";
 import { Manga } from "@prisma/client";
 
 const getData = async (): Promise<Manga[]> => {
-  const res = await fetch(`${process.env.API_URL}/api/manga`);
+  const res = await fetch(`${process.env.API_URL}/api/manga`, {
+    cache: "no-store",
+  });
   const data = await res.json();
   return data;
 };
