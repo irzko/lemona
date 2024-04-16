@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="vi">
       <head>
-        <Script
+        <script
           id="Absence-banner"
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4568231404553117"

@@ -53,7 +53,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
             {images.map((image: any) => (
               <Image
                 width={image.width}
-                height={image.width}
+                height={image.height}
                 src={image.link}
                 key={image.id}
                 quality={100}
