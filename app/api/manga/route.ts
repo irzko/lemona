@@ -1,10 +1,19 @@
-import { getDataSheet } from "@/lib/gSheet";
+import prisma from "@/lib/prisma";
 
-export async function GET() {
-  const data = await getDataSheet(
-    "14AVcFaqm_2DgvbCVwZShOC5wHL6Ye2FORMt97KNZN2Y",
-    "0"
-  );
+export async function GET(req: Request) {
+  const data = await prisma.manga.findMany({
+    include: {
+      genres: {
+        select: {
+          genre: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  });
 
   return Response.json(data);
 }

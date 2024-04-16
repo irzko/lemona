@@ -13,37 +13,28 @@ const getImages = async (albumHash: string) => {
   return data.data;
 };
 
+const getData = async (id: string) => {
+  const res = await fetch(`${process.env.API_URL}/api/chapters/${id}`, {
+    cache: "no-store",
+  });
+  const data = await res.json();
+  return data;
+};
+
 export default async function Page({ params }: { params: { slug: string } }) {
-  const films = await getDataSheet(
-    "14AVcFaqm_2DgvbCVwZShOC5wHL6Ye2FORMt97KNZN2Y",
-    "1397060211"
-  );
-
-  const film = films.find((film) => film.id === params.slug);
-  if (!film) {
+  const slugId = params.slug.split(".")[0].split("-").pop();
+  if (!slugId) {
     return <div>Not found</div>;
   }
-  const images = await getImages(film.src);
-
-  const eps = films.filter((f) => f.manga_id === film.manga_id);
-
-  const info = await getDataSheet(
-    "14AVcFaqm_2DgvbCVwZShOC5wHL6Ye2FORMt97KNZN2Y",
-    "0"
-  );
-
-  const filmIndex = info.find((f) => f.id === film.manga_id);
-
-  if (!filmIndex) {
-    return <div>Not found</div>;
-  }
+  const data = await getData(slugId);
+  const images = await getImages(data.chapterHash);
 
   return (
     <div className="flex justify-center">
       <div className="max-w-screen-md space-y-2 w-full">
         <div>
           <h5 className="font-semibold text-xl p-2">
-            {filmIndex.title} - Chapter {film.chap}
+            {data.manga.title} - Chapter {data.orderNumber}
           </h5>
         </div>
         <AdSense />
@@ -63,13 +54,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
 
-        <div>
+        {/* <div>
           <ul className="flex gap-2 flex-wrap">
             {eps.map((f) => (
               <li key={f.id}>
                 <Link
                   className={`flex p-2 h-10 w-10 justify-center items-center text-sm font-medium focus:outline-none rounded-lg focus:z-10 focus:ring-4 ${
-                    f.id === params.slug
+                    f.id === slugId
                       ? "bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 text-white"
                       : "border bg-white text-gray-900 border-gray-600 hover:bg-white"
                   }`}
@@ -80,7 +71,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );
