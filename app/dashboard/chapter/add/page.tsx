@@ -6,9 +6,7 @@ import { Fetcher } from "swr";
 import useSWRImmutable from "swr/immutable";
 
 const mangaFetcher: Fetcher<any, string> = async (url) => {
-  const res = await fetch(url);
-  const data = await res.json();
-  return data;
+  return fetch(url).then((res) => res.json());
 };
 
 export default function Page() {

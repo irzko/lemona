@@ -1,3 +1,4 @@
+import GenreMenu from "@/components/GenreMenu";
 import { Navbar, NavbarContent, NavbarItem } from "@/components/ui/navbar";
 import { Bangers } from "next/font/google";
 import Link from "next/link";
@@ -8,18 +9,21 @@ const bangers = Bangers({
   subsets: ["latin"],
 });
 
-export default function HomeLayout({
+const getGenres = async () => {
+  return fetch(`${process.env.API_URL}/api/genres`).then((res) => res.json());
+};
+
+export default async function HomeLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const genres = await getGenres();
   return (
     <>
       <Navbar>
-        <button
-          data-collapse-toggle="navbar-multi-level"
+        <Link
+          href={"/menu"}
           type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-          aria-controls="navbar-multi-level"
-          aria-expanded="false"
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
         >
           <span className="sr-only">Open main menu</span>
           <svg
@@ -37,23 +41,26 @@ export default function HomeLayout({
               d="M1 1h15M1 7h15M1 13h15"
             />
           </svg>
-        </button>
-        <NavbarItem>
-          <Link
-            href="/"
-            className="flex items-center space-x-3 rtl:space-x-reverse"
+        </Link>
+        <Link
+          href="/"
+          className="flex items-center space-x-3 rtl:space-x-reverse"
+        >
+          <span
+            className={`self-center text-2xl font-semibold whitespace-nowrap ${bangers.className}`}
           >
-            <span
-              className={`self-center text-2xl font-semibold whitespace-nowrap ${bangers.className}`}
-            >
-              Lẩu Truyện
-            </span>
-          </Link>
-        </NavbarItem>
+            Lẩu Truyện
+          </span>
+        </Link>
+        <NavbarContent>
+          <NavbarItem>
+            <GenreMenu genres={genres.data} />
+          </NavbarItem>
+        </NavbarContent>
         <Link
           href="/search"
           type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-zinc-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-zinc-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
         >
           <svg
             className="w-5 h-5"
@@ -71,7 +78,7 @@ export default function HomeLayout({
             />
           </svg>
         </Link>
-        <div className="relative hidden md:block">
+        <div className="relative hidden sm:block">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg
               className="w-4 h-4 text-zinc-500"

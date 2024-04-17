@@ -14,9 +14,6 @@ const getData = async (): Promise<Manga[]> => {
 export default async function Home() {
   const manga = await getData();
 
-  // const newFilms = data.reverse();
-  // const newFilms = data.reverse().slice(0, 12);
-
   return (
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-2">

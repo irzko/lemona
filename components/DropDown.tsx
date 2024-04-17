@@ -59,6 +59,8 @@ export function DropDownItem({
   );
 }
 
+
+
 function DropDownItems({
   children,
   dropDownRef,
@@ -130,7 +132,7 @@ function DropDownItems({
   return (
     <DropDownContext.Provider value={contextValue}>
       <div
-        className="z-[100] block fixed shadow-[0_12px_28px_0_rgba(0,0,0,0.2),0_2px_4px_0_rgba(0,0,0,0.1),inset_0_0_0_1px_rgba(255,255,255,0.5)] min-h-[40px] bg-white rounded-lg"
+        className="z-[100] grid grid-cols-4 gap-2 p-2 fixed shadow-sm min-h-[40px] bg-white rounded-lg"
         ref={dropDownRef}
         onKeyDown={handleKeyDown}
       >
@@ -244,7 +246,23 @@ export default function DropDown({
         {buttonLabel && (
           <span className="text dropdown-button-text">{buttonLabel}</span>
         )}
-        <i className="chevron-down" />
+        <svg
+          className="w-5 h-5 text-gray-800 dark:text-white"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="m19 9-7 7-7-7"
+          />
+        </svg>
       </button>
 
       {showDropDown &&
