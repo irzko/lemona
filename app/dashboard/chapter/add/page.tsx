@@ -11,16 +11,28 @@ const mangaFetcher: Fetcher<any, string> = async (url) => {
 
 export default function Page() {
   const { data: manga } = useSWRImmutable("/api/manga", mangaFetcher);
+  const [data, setData] = React.useState<{
+    mangaId?: number;
+    orderNumber?: number;
+    title: string;
+    chapterHash: string;
+  }>({
+    title: "",
+    chapterHash: "",
+  });
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetch("/api/chapters", {
       method: "POST",
-      body: JSON.stringify({
-        mangaId: parseInt(e.currentTarget.mangaId.value),
-        orderNumber: parseInt(e.currentTarget.orderNumber.value),
-        title: e.currentTarget.chapterName.value,
-        chapterHash: e.currentTarget.chapterHash.value,
-      }),
+      body: JSON.stringify(data),
+    }).then(() => {
+      alert("Thêm tập thành công");
+      setData({
+        mangaId: undefined,
+        orderNumber: undefined,
+        title: "",
+        chapterHash: "",
+      });
     });
   };
 
@@ -29,22 +41,58 @@ export default function Page() {
       <div className="max-w-screen-sm w-full">
         <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
           <div className="flex gap-2">
-            <Select name="mangaId">
+            <Select
+              name="mangaId"
+              value={data.mangaId}
+              onChange={(e) => {
+                setData((prev) => ({
+                  ...prev,
+                  mangaId: parseInt(e.target.value),
+                }));
+              }}
+            >
+              <option>Chọn truyện</option>
               {manga?.map((mg: any) => (
                 <option key={mg.id} value={mg.id}>
                   {mg.title}
                 </option>
               ))}
             </Select>
-            <Input type="number" name="orderNumber" placeholder="Tập" />
+            <Input
+              onChange={(e) => {
+                setData((prev) => ({
+                  ...prev,
+                  orderNumber: parseInt(e.target.value),
+                }));
+              }}
+              value={data.orderNumber}
+              type="number"
+              name="orderNumber"
+              placeholder="Tập"
+              required
+            />
           </div>
           <Input
+            onChange={(e) => {
+              setData((prev) => ({
+                ...prev,
+                title: e.target.value,
+              }));
+            }}
+            value={data.title}
             type="text"
             name="chapterName"
             placeholder="Tên tập (Tùy chọn)"
           />
-          <Input type="text" name="chapterHash" placeholder="Nguồn truyện" />
-          <button>Thêm tập</button>
+          <Input
+            type="text"
+            name="chapterHash"
+            placeholder="Nguồn truyện"
+            required
+          />
+          <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
+            Thêm tập
+          </button>
         </form>
       </div>
     </div>
