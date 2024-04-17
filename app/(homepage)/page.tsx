@@ -5,7 +5,7 @@ import { Manga } from "@prisma/client";
 
 const getData = async (): Promise<Manga[]> => {
   const res = await fetch(`${process.env.API_URL}/api/manga`, {
-    cache: "no-store",
+    // cache: "no-store",
   });
   const data = await res.json();
   return data;

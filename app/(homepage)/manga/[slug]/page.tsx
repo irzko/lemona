@@ -1,4 +1,3 @@
-import { getDataSheet } from "@/lib/gSheet";
 import Link from "next/link";
 import Image from "next/image";
 import slugify from "slugify";
@@ -18,6 +17,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
     return <div>Not found</div>;
   }
   const data = await getData(slugId);
+  console.log(data.genres);
+
+  const genres: string[] = data.genres.map(
+    (g: { genre: { name: string } }) => g.genre.name
+  );
 
   return (
     <div className="flex justify-center">
@@ -35,14 +39,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <h2 className="font-semibold text-2xl">{data.title}</h2>
             <hr className="border-gray-200 w-full" />
             <div className="text-sm">
-              Thể loại:
-              <ul className="space-x-2 flex">
-                {data.genres.map(
-                  (g: { genre: { id: number; name: string } }) => {
-                    return <li key={g.genre.id}>{g.genre.name}</li>;
-                  }
-                )}
-              </ul>
+              <h6 className="font-semibold">Thể loại:</h6>
+              <p>{genres.join(" ⋅ ")}</p>
             </div>
             <hr className="border-gray-200" />
             <p className="text-sm">Năm: {data.publicationYear || "Chưa rõ"}</p>
@@ -66,7 +64,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                       strict: false,
                       locale: "vi",
                       trim: true,
-                    })}-chapter-${chapter.orderNumber}-${data.id}.html`}
+                    })}-chapter-${chapter.orderNumber}-${chapter.id}.html`}
                   >
                     <p>{chapter.orderNumber}</p>
                   </Link>

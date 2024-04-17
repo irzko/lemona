@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getDataSheet } from "@/lib/gSheet";
 import { Manga } from "@prisma/client";
-import { connect } from "http2";
 
 export const GET = async (req: Request) => {
   // await prisma.genre.deleteMany();

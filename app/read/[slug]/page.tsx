@@ -1,5 +1,3 @@
-import { getDataSheet } from "@/lib/gSheet";
-import Link from "next/link";
 import Image from "next/image";
 import AdSense from "@/components/google-ads/AdSense";
 
@@ -27,6 +25,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     return <div>Not found</div>;
   }
   const data = await getData(slugId);
+
   const images = await getImages(data.chapterHash);
 
   return (
@@ -41,9 +40,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
         <div className="flex justify-center">
           <div>
-            {images.map((image: any) => (
+            {images.map((image: any, index: number) => (
               <Image
                 width={image.width}
+                priority={index < 1}
                 height={image.height}
                 src={image.link}
                 key={image.id}
