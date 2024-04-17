@@ -119,6 +119,18 @@ export default function Page() {
                 <Link href={`/dashboard/chapter/edit/${item.id}`}>
                   <span className="text-blue-700">Sửa</span>
                 </Link>
+                <button
+                  onClick={() => {
+                    fetch(`/api/chapters/${item.id}`, {
+                      method: "DELETE",
+                    }).then(() => {
+                      alert("Xóa thành công");
+                    });
+                  }}
+                  className="text-red-700"
+                >
+                  Xóa
+                </button>
               </li>
             ))}
           </ul>

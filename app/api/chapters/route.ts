@@ -25,20 +25,3 @@ export const POST = async (req: Request) => {
   return Response.json({ message: "Chapter created" }, { status: 201 });
 };
 
-export const PUT = async (req: Request) => {
-  const data = await req.json();
-  await prisma.chapter.create({
-    data: data,
-  });
-  return Response.json({ message: "Chapter updated" }, { status: 201 });
-};
-
-export const DELETE = async (req: Request) => {
-  const data = await req.json();
-  await prisma.chapter.delete({
-    where: {
-      id: data.id,
-    },
-  });
-  return Response.json({ message: "Chapter deleted" }, { status: 200 });
-};

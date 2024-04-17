@@ -30,9 +30,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   });
 
   useEffect(() => {
-    fetch(`/api/chapters/${params.slug}`, {
-      method: "PUT",
-    })
+    fetch(`/api/chapters/${params.slug}`)
       .then((res) => res.json())
       .then((chapter) => {
         setData((prev) => ({
@@ -47,7 +45,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetch("/api/chapters", {
+    fetch(`/api/chapters/${params.slug}`, {
       method: "PUT",
       body: JSON.stringify(data),
     }).then(() => {

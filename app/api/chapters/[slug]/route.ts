@@ -47,3 +47,32 @@ export async function GET(
 
   return Response.json({ ...data, previousChapter, nextChapter });
 }
+
+export const PUT = async (
+  req: Request,
+  { params }: { params: { slug: string } }
+) => {
+  const slug = params.slug;
+  const data = await req.json();
+  await prisma.chapter.update({
+    where: {
+      id: parseInt(slug),
+    },
+    data: data,
+  });
+  return Response.json({ message: "Chapter updated" }, { status: 201 });
+};
+
+export const DELETE = async (
+  req: Request,
+  { params }: { params: { slug: string } }
+) => {
+  const slug = params.slug;
+  const data = await req.json();
+  await prisma.chapter.delete({
+    where: {
+      id: parseInt(slug),
+    },
+  });
+  return Response.json({ message: "Chapter deleted" }, { status: 200 });
+};
