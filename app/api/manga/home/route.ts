@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 export async function GET(req: Request) {
   const recentlyUpdated = await prisma.manga.findMany({
     orderBy: {
-      updatedAt: "desc",
+      updatedAt: "asc",
     },
     take: 12,
   });
