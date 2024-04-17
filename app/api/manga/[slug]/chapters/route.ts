@@ -20,6 +20,15 @@ export async function GET(
           },
         },
       },
+      chapters: {
+        select: {
+          id: true,
+          orderNumber: true,
+        },
+        orderBy: {
+          orderNumber: "asc",
+        },
+      },
     },
   });
 

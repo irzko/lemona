@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 export default function VideoWithBlob({ src }: { src: string }) {
   const [videoUrl, setVideoUrl] = useState("");
-  console.log(src);
 
   useEffect(() => {
     const fetchBlob = async () => {

@@ -1,9 +1,30 @@
 import Link from "next/link";
 import Image from "next/image";
 import slugify from "slugify";
+import { Metadata, ResolvingMetadata } from "next";
+
+type Props = {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const slugId = params.slug.split(".")[0].split("-").pop();
+
+  const manga = await fetch(`${process.env.API_URL}/api/manga/${slugId}`, {
+    cache: "no-store",
+  }).then((res) => res.json());
+
+  return {
+    title: manga.title,
+  };
+}
 
 const getData = async (id: string) => {
-  const res = await fetch(`${process.env.API_URL}/api/manga/${id}`, {
+  const res = await fetch(`${process.env.API_URL}/api/manga/${id}/chapters`, {
     cache: "no-store",
   });
   const data = await res.json();
@@ -17,7 +38,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
     return <div>Not found</div>;
   }
   const data = await getData(slugId);
-  console.log(data.genres);
 
   const genres: string[] = data.genres.map(
     (g: { genre: { name: string } }) => g.genre.name
@@ -57,7 +77,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                 <li key={chapter.id}>
                   <Link
                     className="flex p-2 h-10 w-10 justify-center text-gray-900 items-center text-sm font-medium focus:outline-none rounded-lg border focus:z-10 focus:ring-4 bg-white border-gray-300"
-                    href={`/read/${slugify(data.title, {
+                    href={`/doc-truyen/${slugify(data.title, {
                       replacement: "-",
                       remove: undefined,
                       lower: true,
