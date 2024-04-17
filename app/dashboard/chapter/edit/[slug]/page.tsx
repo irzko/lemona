@@ -30,7 +30,9 @@ export default function Page({ params }: { params: { slug: string } }) {
   });
 
   useEffect(() => {
-    fetch(`/api/chapters/${params.slug}`)
+    fetch(`/api/chapters/${params.slug}`, {
+      method: "PUT",
+    })
       .then((res) => res.json())
       .then((chapter) => {
         setData((prev) => ({
