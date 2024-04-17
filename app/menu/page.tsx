@@ -2,7 +2,7 @@ export default function Menu() {
   return (
     <main className="flex flex-col items-center">
       <div className="border-b h-16 flex justify-center items-center border-gray-200 w-full">
-        <div className="flex items-center max-w-sm w-full p-2">
+        <div className="flex items-center max-w-screen-lg w-full p-2">
           <button className="mr-2">
             <svg
               className="w-6 h-6"

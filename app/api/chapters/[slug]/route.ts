@@ -68,7 +68,6 @@ export const DELETE = async (
   { params }: { params: { slug: string } }
 ) => {
   const slug = params.slug;
-  const data = await req.json();
   await prisma.chapter.delete({
     where: {
       id: parseInt(slug),
