@@ -19,9 +19,16 @@ export const GET = async (req: Request) => {
 
 export const POST = async (req: Request) => {
   const data = await req.json();
-  await prisma.chapter.create({
+  const chapter = await prisma.chapter.create({
     data: data,
+  });
+  await prisma.manga.update({
+    where: {
+      id: chapter.mangaId,
+    },
+    data: {
+      updatedAt: new Date(),
+    },
   });
   return Response.json({ message: "Chapter created" }, { status: 201 });
 };
-

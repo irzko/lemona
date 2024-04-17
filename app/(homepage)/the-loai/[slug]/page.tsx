@@ -15,7 +15,7 @@ export async function generateMetadata(
   const slugId = params.slug.split(".")[0].split("-").pop();
 
   const genre = await fetch(`${process.env.API_URL}/api/genres/${slugId}`, {
-    cache: "no-store",
+    next: { revalidate: 3600 }
   }).then((res) => res.json());
 
   return {
@@ -25,7 +25,7 @@ export async function generateMetadata(
 
 const getData = async (id: string) => {
   const res = await fetch(`${process.env.API_URL}/api/genres/${id}`, {
-    cache: "no-store",
+    next: { revalidate: 3600 }
   });
   const data = await res.json();
   return data;

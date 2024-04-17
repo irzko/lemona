@@ -10,7 +10,9 @@ const bangers = Bangers({
 });
 
 const getGenres = async () => {
-  return fetch(`${process.env.API_URL}/api/genres`).then((res) => res.json());
+  return fetch(`${process.env.API_URL}/api/genres`, {
+    next: { revalidate: 3600 }
+  }).then((res) => res.json());
 };
 
 export default async function HomeLayout({

@@ -17,7 +17,7 @@ export async function generateMetadata(
   const slugId = params.slug.split(".")[0].split("-").pop();
 
   const chapter = await fetch(`${process.env.API_URL}/api/chapters/${slugId}`, {
-    cache: "no-store",
+    next: { revalidate: 3600 },
   }).then((res) => res.json());
 
   return {
@@ -37,7 +37,7 @@ const getImages = async (albumHash: string) => {
 
 const getData = async (id: string) => {
   const res = await fetch(`${process.env.API_URL}/api/chapters/${id}`, {
-    cache: "no-store",
+    next: { revalidate: 3600 },
   });
   const data = await res.json();
   return data;
@@ -45,7 +45,7 @@ const getData = async (id: string) => {
 
 const getManga = async (id: string) => {
   const res = await fetch(`${process.env.API_URL}/api/manga/${id}`, {
-    cache: "no-store",
+    next: { revalidate: 3600 },
   });
   const data = await res.json();
   return data;
