@@ -1,23 +1,24 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import Select from "@/components/ui/select";
-import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { Fetcher } from "swr";
 import useSWRImmutable from "swr/immutable";
-
-const mangaFetcher: Fetcher<any, string> = async (url) => {
-  return fetch(url).then((res) => res.json());
-};
 
 const chapterFetcher: Fetcher<any, string> = async (url) => {
   return fetch(url).then((res) => res.json());
 };
+const mangaFetcher: Fetcher<any, string> = async (url) => {
+  return fetch(url).then((res) => res.json());
+};
 
-export default function Page() {
+export default function Page({ params }: { params: { slug: string } }) {
+  // const { data: chapter } = useSWRImmutable(
+  //   `/api/chapters/${params.slug}`,
+  //   chapterFetcher
+  // );
+
   const { data: manga } = useSWRImmutable("/api/manga", mangaFetcher);
-  const { data: chapter } = useSWRImmutable("/api/chapters", mangaFetcher);
-
   const [data, setData] = React.useState<{
     mangaId?: number;
     orderNumber?: number;
@@ -27,10 +28,25 @@ export default function Page() {
     title: "",
     chapterHash: "",
   });
+
+  useEffect(() => {
+    fetch(`/api/chapters/${params.slug}`)
+      .then((res) => res.json())
+      .then((chapter) => {
+        setData((prev) => ({
+          ...prev,
+          mangaId: chapter.mangaId,
+          orderNumber: chapter.orderNumber,
+          title: chapter.title,
+          chapterHash: chapter.chapterHash,
+        }));
+      });
+  }, [params.slug]);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetch("/api/chapters", {
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify(data),
     }).then(() => {
       setData({
@@ -108,21 +124,6 @@ export default function Page() {
             Thêm tập
           </button>
         </form>
-        <div className="mt-4">
-          <h2 className="text-lg font-medium">Danh sách tập mới nhất</h2>
-          <ul>
-            {chapter?.map((item: any) => (
-              <li className="flex gap-2" key={item.id}>
-                <span>{item.manga.title}</span>
-                <span>-</span>
-                <span>Chapter {item.orderNumber}</span>
-                <Link href={`/dashboard/chapter/edit/${item.id}`}>
-                  <span className="text-blue-700">Sửa</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
     </div>
   );
