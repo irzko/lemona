@@ -26,7 +26,7 @@ export async function GET(
           orderNumber: true,
         },
         orderBy: {
-          orderNumber: "asc",
+          orderNumber: "desc",
         },
       },
     },

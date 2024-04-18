@@ -4,8 +4,8 @@ import slugify from "slugify";
 
 const getData = async () => {
   const res = await fetch(`${process.env.API_URL}/api/manga/home`, {
-    // next: { revalidate: 3600 },
-    cache: "no-store",
+    next: { revalidate: 3600 },
+    // cache: "no-store",
   });
   const data = await res.json();
   return data;

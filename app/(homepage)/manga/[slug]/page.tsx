@@ -39,14 +39,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
   const data = await getData(slugId);
 
-  const genres: string[] = data.genres.map(
-    (g: { genre: { name: string } }) => g.genre.name
-  );
-
   return (
     <div className="flex justify-center">
-      <div className="p-2 max-w-screen-md w-full">
-        <div className="flex mb-2 border border-gray-200 overflow-hidden bg-white rounded-lg">
+      <div className="p-2 max-w-screen-md space-y-2 w-full">
+        <div className="flex border border-gray-200 overflow-hidden bg-white rounded-lg">
           <div className="relative w-64 aspect-[3/4]">
             <Image
               src={data.imageCover || "/no-image.jpg"}
@@ -55,19 +51,45 @@ export default async function Page({ params }: { params: { slug: string } }) {
               className="object-cover rounded-lg"
             />
           </div>
-          <div className="p-2 space-y-2 w-full">
-            <h2 className="font-semibold text-2xl">{data.title}</h2>
-            <hr className="border-gray-200 w-full" />
+          <div className="p-2 space-y-4 w-full">
+            <h3 className="font-bold text-3xl">{data.title}</h3>
+            {/* <hr className="border-gray-200 w-full" /> */}
+            <div className="text-sm">
+              <p className="font-semibold">Tác giả:</p>
+              <p>{data.author || "Chưa rõ"}</p>
+            </div>
             <div className="text-sm">
               <h6 className="font-semibold">Thể loại:</h6>
-              <p>{genres.join(" ⋅ ")}</p>
+              <div className="flex gap-2">
+                {data.genres.map(
+                  (g: { genre: { id: string; name: string } }) => (
+                    <Link
+                      href={`/the-loai/${g.genre.id}`}
+                      key={g.genre.id}
+                      className="relative max-w-fit min-w-min inline-flex items-center justify-between box-border whitespace-nowrap px-1 h-7 text-small rounded-full bg-zinc-300"
+                    >
+                      <span className="flex-1 text-inherit font-normal px-2">
+                        {g.genre.name}
+                      </span>
+                    </Link>
+                  )
+                )}
+              </div>
+              {/* <p>{genres.join(" ⋅ ")}</p> */}
             </div>
-            <hr className="border-gray-200" />
-            <p className="text-sm">Năm: {data.publicationYear || "Chưa rõ"}</p>
+            {/* <hr className="border-gray-200" /> */}
+            <div className="text-sm space-x-2">
+              <span className="font-semibold">Năm:</span>
+              <span>{data.publicationYear || "Chưa rõ"}</span>
+            </div>
           </div>
         </div>
-        <div>
-          <ul className="flex gap-2 flex-wrap">
+        <div className="text-sm flex mb-2 border border-gray-200 overflow-hidden bg-white rounded-lg flex-col p-2">
+          <h5 className="text-xl font-bold">Giới thiệu:</h5>
+          <p>{data.description || "Không có"}</p>
+        </div>
+        <div className="flex justify-center w-full">
+          <ul className="grid grid-cols-10 gap-2 max-w-screen-sm">
             {data.chapters.map(
               (chapter: {
                 id: number;
@@ -76,7 +98,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               }) => (
                 <li key={chapter.id}>
                   <Link
-                    className="flex p-2 h-10 w-10 justify-center text-gray-900 items-center text-sm font-medium focus:outline-none rounded-lg border focus:z-10 focus:ring-4 bg-white border-gray-300"
+                    className="flex p-2 w-full aspect-square justify-center text-gray-900 items-center text-sm font-medium focus:outline-none rounded-lg border focus:z-10 focus:ring-4 bg-white border-gray-300"
                     href={`/doc-truyen/${slugify(data.title, {
                       replacement: "-",
                       remove: undefined,
