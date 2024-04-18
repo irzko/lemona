@@ -1,16 +1,12 @@
 "use client";
 import { Input } from "@/components/ui/input";
-import Select from "@/components/ui/select";
 import Link from "next/link";
 import React from "react";
 import { Fetcher } from "swr";
 import useSWRImmutable from "swr/immutable";
+import Select from "react-select";
 
 const mangaFetcher: Fetcher<any, string> = async (url) => {
-  return fetch(url).then((res) => res.json());
-};
-
-const chapterFetcher: Fetcher<any, string> = async (url) => {
   return fetch(url).then((res) => res.json());
 };
 
@@ -19,11 +15,16 @@ export default function Page() {
   const { data: chapter } = useSWRImmutable("/api/chapters", mangaFetcher);
 
   const [data, setData] = React.useState<{
-    mangaId?: number;
+    mangaId: {
+      value: number;
+      label: string;
+    } | null;
     orderNumber?: number;
     title: string;
     chapterHash: string;
   }>({
+    mangaId: null,
+    orderNumber: undefined,
     title: "",
     chapterHash: "",
   });
@@ -31,10 +32,15 @@ export default function Page() {
     e.preventDefault();
     fetch("/api/chapters", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        mangaId: data.mangaId?.value,
+        orderNumber: data.orderNumber,
+        title: data.title,
+        chapterHash: data.chapterHash,
+      }),
     }).then(() => {
       setData({
-        mangaId: undefined,
+        mangaId: null,
         orderNumber: undefined,
         title: "",
         chapterHash: "",
@@ -50,21 +56,29 @@ export default function Page() {
           <div className="flex gap-2">
             <Select
               name="mangaId"
+              className="w-full"
+              classNames={{
+                control: () => "border border-gray-300 !rounded-lg",
+              }}
               value={data.mangaId}
-              onChange={(e) => {
+              onChange={(newValue) =>
                 setData((prev) => ({
                   ...prev,
-                  mangaId: parseInt(e.target.value),
-                }));
-              }}
-            >
-              <option>Chọn truyện</option>
+                  mangaId: newValue,
+                }))
+              }
+              options={manga?.map((mg: any) => ({
+                value: mg.id,
+                label: mg.title,
+              }))}
+            />
+            {/* <option>Chọn truyện</option>
               {manga?.map((mg: any) => (
                 <option key={mg.id} value={mg.id}>
                   {mg.title}
                 </option>
               ))}
-            </Select>
+            </Select> */}
             <Input
               onChange={(e) => {
                 setData((prev) => ({

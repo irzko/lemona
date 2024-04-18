@@ -89,7 +89,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <p>{data.description || "Không có"}</p>
         </div>
         <div className="flex justify-center w-full">
-          <ul className="grid grid-cols-10 gap-2 max-w-screen-sm">
+          <ul className="grid grid-cols-10 sm:grid-cols-12 gap-2">
             {data.chapters.map(
               (chapter: {
                 id: number;
@@ -98,7 +98,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               }) => (
                 <li key={chapter.id}>
                   <Link
-                    className="flex p-2 w-full aspect-square justify-center text-gray-900 items-center text-sm font-medium focus:outline-none rounded-lg border focus:z-10 focus:ring-4 bg-white border-gray-300"
+                    className="flex p-2 w-full aspect-square justify-center text-gray-900 items-center text-xs font-medium focus:outline-none rounded-lg border focus:z-10 focus:ring-4 bg-white border-gray-300"
                     href={`/doc-truyen/${slugify(data.title, {
                       replacement: "-",
                       remove: undefined,
