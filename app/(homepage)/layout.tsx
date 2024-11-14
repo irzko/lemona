@@ -44,7 +44,7 @@ export default async function HomeLayout({
           <span
             className={`self-center text-2xl font-semibold whitespace-nowrap ${bangers.className}`}
           >
-            Lẩu Truyện
+            Kuzt
           </span>
         </Link>
         <NavbarContent>

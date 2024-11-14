@@ -8,7 +8,7 @@ export default async function Home() {
   return (
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-2">
-        <h4 className="text-xl mb-2 font-semibold">Truyện mới cập nhật</h4>
+        <h4 className="text-xl mb-2 font-semibold">Sản phẩm mới cập nhật</h4>
         <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-2">
           {products.map((product) => (
             <li
