@@ -30,7 +30,7 @@ export default async function Home() {
                     src={product.image || "/no-image.jpg"}
                     alt={product.name}
                     fill
-                    className="object-cover rounded-b-lg"
+                    className="object-contain rounded-b-lg"
                   />
                 </div>
 
