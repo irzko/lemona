@@ -12,30 +12,30 @@ export default async function Home() {
         <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-2">
           {products.map((product: any) => (
             <li
-              key={product[0]}
+              key={product.id}
               className="border border-gray-200 overflow-hidden bg-white rounded-lg"
             >
               <Link
-                href={`/product/${slugify(product[2], {
+                href={`/product/${slugify(product.name, {
                   replacement: "-",
                   remove: undefined,
                   lower: true,
                   strict: false,
                   locale: "vi",
                   trim: true,
-                })}-${product[0]}.html`}
+                })}-${product.id}.html`}
               >
                 <div className="relative w-full aspect-[3/4]">
                   <Image
-                    src={product[1] || "/no-image.jpg"}
-                    alt={product[2]}
+                    src={product.image || "/no-image.jpg"}
+                    alt={product.name}
                     fill
                     className="object-cover rounded-b-lg"
                   />
                 </div>
 
                 <h2 className="font-semibold p-2 flex justify-center text-center items-center min-h-16">
-                  {product[2]}
+                  {product.name}
                 </h2>
               </Link>
             </li>

@@ -6,9 +6,8 @@ const getGSheet = async (spreadsheetId: string, sheetId: string) => {
   const data = await response.text();
 
   const rows = data.split("\n").map((row) => row.split(","));
-  const [header, ...rowsWithoutHeader] = rows;
 
-  return rowsWithoutHeader;
+  return rows.slice(1);
 };
 
 export { getGSheet };
