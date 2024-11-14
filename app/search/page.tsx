@@ -2,30 +2,21 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import useSWR, { Fetcher } from "swr";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const filmFetcher: Fetcher<Film[], string> = async (key) => {
-  return fetch(key).then((res) => res.json());
-};
 
 export default function SearchPage() {
   const router = useRouter();
-  const [films, setFilms] = useState<Film[]>([]);
-  const { data } = useSWR("/api/mangas", filmFetcher);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const keyword = event.target.value;
     if (keyword === "") {
-      setFilms([]);
+      
       return;
     }
-    const filteredFilms = data?.filter((film) =>
-      film.title.toLowerCase().includes(keyword.toLowerCase())
-    );
-    setFilms(filteredFilms || []);
-  };
+  }
+    
   return (
     <main className="flex flex-col items-center">
       <div className="border-b h-16 flex justify-center items-center border-gray-200 w-full">
@@ -80,26 +71,8 @@ export default function SearchPage() {
       </div>
       <div className="max-w-sm w-full p-2">
         {/* <h2 className="font-semibold">Kết quả tìm kiếm</h2> */}
-        <ul>
-          {films.map((film) => (
-            <li
-              key={film.id}
-              className="border mb-2 border-gray-200 overflow-hidden bg-white rounded-lg"
-            >
-              <Link className="flex items-center" href={`watch/${film.id}`}>
-                <div className="relative w-16 aspect-[3/4]">
-                  <Image
-                    src={film.thumbnail}
-                    alt={film.title}
-                    fill
-                    className="object-cover rounded-b-lg"
-                  />
-                </div>
-                <h2 className="font-semibold p-2">{film.title}</h2>
-              </Link>
-            </li>
-          ))}
-        </ul>
+
+      
       </div>
     </main>
   );
