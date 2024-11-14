@@ -1,4 +1,3 @@
-import GenreMenu from "@/components/GenreMenu";
 import { Navbar, NavbarContent, NavbarItem } from "@/components/ui/navbar";
 import { Bangers } from "next/font/google";
 import Link from "next/link";
