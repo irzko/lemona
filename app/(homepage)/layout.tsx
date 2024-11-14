@@ -9,16 +9,10 @@ const bangers = Bangers({
   subsets: ["latin"],
 });
 
-const getGenres = async () => {
-  return fetch(`${process.env.API_URL}/api/genres`, {
-    next: { revalidate: 3600 }
-  }).then((res) => res.json());
-};
 
 export default async function HomeLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const genres = await getGenres();
   return (
     <>
       <Navbar>
@@ -56,7 +50,7 @@ export default async function HomeLayout({
         </Link>
         <NavbarContent>
           <NavbarItem>
-            <GenreMenu genres={genres.data} />
+            {/*<GenreMenu genres={genres.data} />*/}
           </NavbarItem>
         </NavbarContent>
         <Link
