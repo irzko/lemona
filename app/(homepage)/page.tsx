@@ -9,13 +9,14 @@ export default async function Home() {
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-2">
         <h4 className="text-xl mb-2 font-semibold">Sản phẩm mới cập nhật</h4>
-        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-2">
+        <ul className="grid grid-cols-2 list-none sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-2">
           {products.findMany().map((product) => (
             <li
               key={product.id}
               className="border border-gray-200 overflow-hidden bg-white rounded-lg"
             >
               <Link
+                className="text-gray-800 dark:text-gray-100"
                 href={`/product/${slugify(product.name, {
                   replacement: "-",
                   remove: undefined,
