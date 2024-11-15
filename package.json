@@ -12,8 +12,12 @@
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "rehype-parse": "^9.0.1",
+    "rehype-react": "^8.0.0",
+    "remark-gfm": "^4.0.0",
     "slugify": "^1.6.6",
-    "tailwind-variants": "^0.2.1"
+    "tailwind-variants": "^0.2.1",
+    "unified": "^11.0.5"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -5,15 +5,41 @@ const data = await getGSheet(
   "0"
 )
 
+interface BaseModel {
+  id: number;
+}
 
-const products = data.map(item => {
+class NogleDB<T extends BaseModel> {
+  private data: T[];
+
+  constructor(data: T[]) {
+    this.data = data;
+  }
+
+  findById(id: number) {
+    return this.data.find((item) => item.id === id);
+  }
+
+  findMany() {
+    return this.data;
+  }
+  
+}
+
+interface IProduct {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+}
+const products = new NogleDB<IProduct>(data.map(item => {
   return {
-    id: item[0],
+    id: Number(item[0]),
     name: item[1],
-    price: parseInt(item[2]),
+    price: Number(item[2]),
     image: item[3],
   }
-})
+}))
 
 
 

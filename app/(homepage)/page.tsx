@@ -10,7 +10,7 @@ export default async function Home() {
       <div className="max-w-screen-lg w-full p-2">
         <h4 className="text-xl mb-2 font-semibold">Sản phẩm mới cập nhật</h4>
         <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-2">
-          {products.map((product) => (
+          {products.findMany().map((product) => (
             <li
               key={product.id}
               className="border border-gray-200 overflow-hidden bg-white rounded-lg"

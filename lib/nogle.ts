@@ -5,10 +5,10 @@ const getGSheet = async (spreadsheetId: string, sheetId: string) => {
   );
 
   const data = await response.text();
+  
 
-  const rows = data.split("\n").map((row) => row.split(","));
-
-  return rows.slice(1);
+  const rows = data.split("\n").splice(1).map((row) => row.split(","));
+  return rows;
 };
 
 export { getGSheet };
