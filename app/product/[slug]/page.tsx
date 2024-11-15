@@ -1,33 +1,5 @@
-"use client"
 import {products} from "@/lib/db"
-import {unified} from 'unified'
-import {Fragment,createElement, useEffect, useState} from 'react'
-import rehypeReact from 'rehype-react'
-import rehypeParse from 'rehype-parse'
-
-
-const production = { Fragment};
-
-function useProcessor(text : string) {
-  const [Content, setContent] = useState(createElement(Fragment))
-
-  useEffect(
-    function () {
-      ;(async function () {
-        const file = await unified()
-          .use(rehypeParse, {fragment: true})
-          .use(rehypeReact, )
-          .process(text)
-
-        setContent(file.result)
-      })()
-    },
-    [text]
-  )
-
-  return Content
-}
-
+import MdxRenderer from "@/components/mdx-renderer"
 export default async function Page({
   params,
 }: {
@@ -40,7 +12,6 @@ export default async function Page({
 and the smallest planet in the Solar System.
 `
   
-  
   const productId = (await params).slug.split(".")[0].split("-").pop();
 
   const product = products.findById(Number(productId));
@@ -51,7 +22,7 @@ and the smallest planet in the Solar System.
   return (
     <main>
       <h2>{product.name}</h2>
-      <p>{useProcessor(doc)}</p>
+      <MdxRenderer mdx={doc}/>
     </main>
   );
 }
