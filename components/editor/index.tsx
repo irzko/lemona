@@ -11,4 +11,4 @@ const Editor = forwardRef<MDXEditorMethods, MDXEditorProps>((props, ref) => (
   <MDXEditor {...props} editorRef={ref} />
 ));
 
-export default Editor;
+Editor.displayName = "Editor";
