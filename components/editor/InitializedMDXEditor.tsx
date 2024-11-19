@@ -2,6 +2,7 @@
 import type { ForwardedRef } from "react";
 import {
   headingsPlugin,
+  imagePlugin,
   listsPlugin,
   quotePlugin,
   thematicBreakPlugin,
@@ -9,6 +10,7 @@ import {
   BlockTypeSelect,
   UndoRedo,
   BoldItalicUnderlineToggles,
+  InsertImage,
   toolbarPlugin,
   MDXEditor,
   type MDXEditorMethods,
@@ -26,6 +28,7 @@ export default function InitializedMDXEditor({
       plugins={[
         // Example Plugin Usage
         headingsPlugin(),
+        imagePlugin(),
         listsPlugin(),
         quotePlugin(),
         thematicBreakPlugin(),
@@ -38,6 +41,7 @@ export default function InitializedMDXEditor({
               <UndoRedo />
               <BoldItalicUnderlineToggles />
               <BlockTypeSelect />
+              <InsertImage />
             </>
           ),
         }),

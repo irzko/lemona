@@ -8,7 +8,6 @@ const bangers = Bangers({
   subsets: ["latin"],
 });
 
-
 export default async function HomeLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -48,9 +47,7 @@ export default async function HomeLayout({
           </span>
         </Link>
         <NavbarContent>
-          <NavbarItem>
-            {/*<GenreMenu genres={genres.data} />*/}
-          </NavbarItem>
+          <NavbarItem>{/*<GenreMenu genres={genres.data} />*/}</NavbarItem>
         </NavbarContent>
         <Link
           href="/search"

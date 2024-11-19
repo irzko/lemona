@@ -4,25 +4,25 @@
 
 @layer base {
   h1 {
-    @apply text-5xl font-extrabold dark:text-white;
+    @apply text-5xl font-extrabold;
   }
   h2 {
-    @apply text-4xl font-bold dark:text-white;
+    @apply text-4xl font-bold;
   }
   h3 {
-    @apply text-3xl font-bold dark:text-white;
+    @apply text-3xl font-bold;
   }
   h4 {
-    @apply text-2xl font-bold dark:text-white;
+    @apply text-2xl font-bold;
   }
   h5 {
-    @apply text-xl font-bold dark:text-white;
+    @apply text-xl font-bold;
   }
   h6 {
-    @apply text-lg font-bold dark:text-white;
+    @apply text-lg font-bold;
   }
   strong {
-    @apply font-semibold dark:text-white;
+    @apply font-semibold;
   }
   u {
     @apply underline;
@@ -31,18 +31,18 @@
     @apply italic;
   }
   p {
-    @apply text-gray-500 dark:text-gray-400;
+    @apply text-gray-500;
   }
   blockquote {
-    @apply p-4 my-4 border-s-4 border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800;
+    @apply p-4 my-4 border-s-4 border-gray-300 bg-gray-50;
   }
   ul {
-    @apply space-y-1 text-gray-500 list-disc list-inside dark:text-gray-400;
+    @apply space-y-1 text-gray-500 list-disc list-inside;
   }
   ol {
-    @apply space-y-1 text-gray-500 list-decimal list-inside dark:text-gray-400;
+    @apply space-y-1 text-gray-500 list-decimal list-inside;
   }
   a {
-    @apply font-medium text-blue-600 dark:text-blue-500 hover:underline;
+    @apply font-medium text-blue-600 hover:underline;
   }
 }

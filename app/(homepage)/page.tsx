@@ -16,7 +16,7 @@ export default async function Home() {
               className="border border-gray-200 overflow-hidden bg-white rounded-lg"
             >
               <Link
-                className="text-gray-800 dark:text-gray-100"
+                className="text-gray-800 hover:no-underline"
                 href={`/product/${slugify(product.name, {
                   replacement: "-",
                   remove: undefined,
@@ -35,9 +35,9 @@ export default async function Home() {
                   />
                 </div>
 
-                <h2 className="font-semibold p-2 flex justify-center text-center items-center min-h-16">
+                <h6 className="font-semibold p-2 flex justify-center text-center items-center min-h-16">
                   {product.name}
-                </h2>
+                </h6>
               </Link>
             </li>
           ))}
