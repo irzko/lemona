@@ -32,7 +32,7 @@ export default async function Page() {
                   trim: true,
                 })}-${post.id.toString()}.html`}
               >
-                <div className="relative w-full aspect-[3/4]">
+                <div className="relative w-full aspect-[4/3]">
                   <Image
                     src={"/no-image.jpg"}
                     alt={post.title}
