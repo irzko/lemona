@@ -17,7 +17,7 @@ export default async function Page() {
   return (
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-4">
-        <h2>Bài viết mới</h2>
+        <h2 className="mb-4">Bài viết mới</h2>
         <ul className="grid grid-cols-2 space-y-0 list-none sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {allPosts.map((post) => (
             <li
@@ -44,7 +44,7 @@ export default async function Page() {
                   />
                 </div>
 
-                <h6 className="py-2 font-semibold text-sm flex justify-center items-center min-h-16">
+                <h6 className="py-2 font-semibold text-md min-h-16">
                   {post.title || "(No title)"}
                 </h6>
               </Link>
