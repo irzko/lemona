@@ -20,7 +20,12 @@ export default async function Page() {
         <h2>Bài viết mới</h2>
         <ul className="grid grid-cols-1 list-none sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-2">
           {allPosts.map((post) => (
-            <li className="border border-gray-200 overflow-hidden bg-white rounded-lg" key={post.id.toString()}>
+            <li
+              className="border border-gray-200 overflow-hidden bg-white rounded-lg"
+              key={JSON.stringify(post.id, (_, value) =>
+                typeof value === "bigint" ? value.toString() : value,
+              )}
+            >
               <Link
                 className="text-gray-800 hover:no-underline"
                 href={`/post/${slugify(post.title, {
@@ -30,7 +35,9 @@ export default async function Page() {
                   strict: false,
                   locale: "vi",
                   trim: true,
-                })}-${post.id.toString()}.html`}
+                })}-${JSON.stringify(post.id, (_, value) =>
+                  typeof value === "bigint" ? value.toString() : value,
+                )}.html`}
               >
                 <div className="relative w-full aspect-[4/3]">
                   <Image
