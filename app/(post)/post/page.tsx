@@ -47,7 +47,7 @@ export default async function Page() {
                   />
                 </div>
 
-                <h6 className="py-2 font-semibold text-base">
+                <h6 className="py-2 font-semibold text-base line-clamp-3">
                   {post.title || "(No title)"}
                 </h6>
               </Link>
@@ -79,7 +79,7 @@ export default async function Page() {
                   </div>
                 </div>
 
-                <h6 className="font-semibold w-3/5 text-base">
+                <h6 className="font-semibold w-3/5 text-base line-clamp-3">
                   {post.title || "(No title)"}
                 </h6>
               </Link>
