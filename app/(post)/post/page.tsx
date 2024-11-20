@@ -22,9 +22,7 @@ export default async function Page() {
           {allPosts.map((post) => (
             <li
               className="border border-gray-200 overflow-hidden bg-white rounded-lg"
-              key={JSON.stringify(post.id, (_, value) =>
-                typeof value === "bigint" ? value.toString() : value,
-              )}
+              key={post.id}
             >
               <Link
                 className="text-gray-800 hover:no-underline"
@@ -35,9 +33,7 @@ export default async function Page() {
                   strict: false,
                   locale: "vi",
                   trim: true,
-                })}-${JSON.stringify(post.id, (_, value) =>
-                  typeof value === "bigint" ? value.toString() : value,
-                )}.html`}
+                })}-${post.id}.html`}
               >
                 <div className="relative w-full aspect-[4/3]">
                   <Image

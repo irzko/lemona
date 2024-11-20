@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import remarkGfm from "remark-gfm";
 
 const getPost = unstable_cache(
-  async (id: bigint) => {
+  async (id: string) => {
     return await prisma.post.findUnique({
       where: {
         id,
@@ -24,7 +24,7 @@ export default async function Page({
   if (!postId) {
     return null;
   }
-  const post = await getPost(BigInt(postId));
+  const post = await getPost(postId);
 
   if (!post) {
     return (
