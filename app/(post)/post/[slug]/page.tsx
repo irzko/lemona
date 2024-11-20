@@ -34,12 +34,14 @@ export default async function Page({
     );
   }
   return (
-    <main>
-      <h2>{post.title}</h2>
-      <i>{post.createdAt.toLocaleString()}</i>
-      <Markdown remarkPlugins={[[remarkGfm, { singleTilde: false }]]}>
-        {post.content}
-      </Markdown>
+    <main className="flex justify-center">
+      <div className="max-w-screen-lg w-full p-2">
+        <h2>{post.title}</h2>
+        <i>{new Date(post.createdAt).toLocaleString()}</i>
+        <Markdown remarkPlugins={[[remarkGfm, { singleTilde: false }]]}>
+          {post.content}
+        </Markdown>
+      </div>
     </main>
   );
 }
