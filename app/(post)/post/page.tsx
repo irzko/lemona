@@ -16,12 +16,12 @@ export default async function Page() {
   const allPosts = await getPosts();
   return (
     <main className="flex justify-center">
-      <div className="max-w-screen-lg w-full p-2">
+      <div className="max-w-screen-lg w-full p-4">
         <h2>Bài viết mới</h2>
-        <ul className="grid grid-cols-2 list-none sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
+        <ul className="grid grid-cols-2 space-y-0 list-none sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {allPosts.map((post) => (
             <li
-              className="border border-gray-200 overflow-hidden bg-white rounded-lg"
+              className="overflow-hidden bg-white"
               key={post.id}
             >
               <Link
@@ -40,11 +40,11 @@ export default async function Page() {
                     src={"/no-image.jpg"}
                     alt={post.title}
                     fill
-                    className="object-cover rounded-b-lg"
+                    className="object-cover rounded-lg"
                   />
                 </div>
 
-                <h6 className="p-2 flex justify-center items-center min-h-16">
+                <h6 className="py-2 font-semibold text-sm flex justify-center items-center min-h-16">
                   {post.title || "(No title)"}
                 </h6>
               </Link>
