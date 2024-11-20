@@ -3,5 +3,9 @@ import { NextResponse } from "next/server";
 
 export const GET = async () => {
   const posts = await prisma.post.findMany();
-  return NextResponse.json(posts);
-}
+  const postsData = posts.map((post) => ({
+    ...post,
+    id: post.id.toString(),
+  }));
+  return NextResponse.json(postsData);
+};
