@@ -47,7 +47,7 @@ export default async function Page() {
                   />
                 </div>
 
-                <h6 className="py-2 font-semibold text-base line-clamp-3">
+                <h6 className="pt-2 font-semibold text-base line-clamp-3">
                   {post.title || "(No title)"}
                 </h6>
               </Link>
