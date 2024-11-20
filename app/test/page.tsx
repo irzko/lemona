@@ -16,8 +16,8 @@ const allPosts = await getPosts()
       <h1>Posts</h1>
       <ul>
         {allPosts.map((post) => (
-          <li key={post.id}>
-            <a href={`/posts/${post.id}`}>{post.title}</a>
+          <li key={post.id.toString()}>
+            <a href={`/posts/${post.id.toString()}`}>{post.title}</a>
           </li>
         ))}
       </ul>
