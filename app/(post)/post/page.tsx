@@ -17,13 +17,10 @@ export default async function Page() {
   return (
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-4">
-        <h2 className="mb-4">Bài viết mới</h2>
+        <h3 className="mb-4">Bài viết mới</h3>
         <ul className="grid grid-cols-2 space-y-0 list-none sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
-          {allPosts.map((post) => (
-            <li
-              className="overflow-hidden bg-white"
-              key={post.id}
-            >
+          {allPosts.slice(0, 4).map((post) => (
+            <li className="overflow-hidden bg-white" key={post.id}>
               <Link
                 className="text-gray-800 hover:no-underline"
                 href={`/post/${slugify(post.title, {
@@ -44,7 +41,37 @@ export default async function Page() {
                   />
                 </div>
 
-                <h6 className="py-2 font-semibold text-md min-h-16">
+                <h6 className="py-2 font-semibold text-base">
+                  {post.title || "(No title)"}
+                </h6>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <ul className="grid grid-cols-1 mt-4 space-y-0 list-none sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+          {allPosts.slice(5).map((post) => (
+            <li className="overflow-hidden bg-white" key={post.id}>
+              <Link
+                className="text-gray-800 hover:no-underline flex gap-4"
+                href={`/post/${slugify(post.title, {
+                  replacement: "-",
+                  remove: undefined,
+                  lower: true,
+                  strict: false,
+                  locale: "vi",
+                  trim: true,
+                })}-${post.id}.html`}
+              >
+                <div className="relative w-1/3 aspect-[16/9]">
+                  <Image
+                    src={"/no-image.jpg"}
+                    alt={post.title}
+                    fill
+                    className="object-cover rounded-lg"
+                  />
+                </div>
+
+                <h6 className="py-2 font-semibold text-base">
                   {post.title || "(No title)"}
                 </h6>
               </Link>
