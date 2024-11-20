@@ -45,7 +45,7 @@ export default async function Page() {
                 </div>
 
                 <h6 className="p-2 flex justify-center items-center min-h-16">
-                  {post.title}
+                  {post.title || "(No title)"}
                 </h6>
               </Link>
             </li>
