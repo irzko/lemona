@@ -49,7 +49,7 @@ export default async function Page() {
           ))}
         </ul>
         <ul className="grid grid-cols-1 mt-4 space-y-0 list-none sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-          {allPosts.slice(5).map((post) => (
+          {allPosts.slice(4).map((post) => (
             <li className="overflow-hidden bg-white" key={post.id}>
               <Link
                 className="text-gray-800 hover:no-underline flex gap-4"
@@ -62,7 +62,7 @@ export default async function Page() {
                   trim: true,
                 })}-${post.id}.html`}
               >
-                <div className="relative w-1/3 aspect-[16/9]">
+                <div className="relative w-2/5 aspect-[16/9]">
                   <Image
                     src={"/no-image.jpg"}
                     alt={post.title}
@@ -71,7 +71,7 @@ export default async function Page() {
                   />
                 </div>
 
-                <h6 className="py-2 font-semibold text-base">
+                <h6 className="font-semibold text-base">
                   {post.title || "(No title)"}
                 </h6>
               </Link>
