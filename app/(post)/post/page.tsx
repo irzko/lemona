@@ -18,7 +18,7 @@ export default async function Page() {
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-2">
         <h2>Bài viết mới</h2>
-        <ul className="grid grid-cols-2 list-none sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-2">
+        <ul className="grid grid-cols-2 list-none sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {allPosts.map((post) => (
             <li
               className="border border-gray-200 overflow-hidden bg-white rounded-lg"
@@ -40,7 +40,7 @@ export default async function Page() {
                     src={"/no-image.jpg"}
                     alt={post.title}
                     fill
-                    className="object-contain rounded-lg"
+                    className="object-cover rounded-b-lg"
                   />
                 </div>
 
