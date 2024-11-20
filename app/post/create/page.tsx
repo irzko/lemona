@@ -17,13 +17,14 @@ export default function Page() {
   
   return (
     <form className="space-y-4 p-2" action={(formData) => {
-      formData.append("title", title);
+      formData.append("content", ref.current!.getMarkdown());
       createPost(formData)
     }}>
       <div>
         <Input
           value={title}
           id="title"
+          name= "title"
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Tiêu đề"
         />
