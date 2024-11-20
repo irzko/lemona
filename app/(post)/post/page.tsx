@@ -6,7 +6,13 @@ import Image from "next/image";
 
 const getPosts = unstable_cache(
   async () => {
-    return await prisma.post.findMany();
+    return await prisma.post.findMany({
+      orderBy: [
+        {
+          createdAt: "desc",
+        },
+      ],
+})
   },
   ["posts"],
   { tags: ["posts"] },
@@ -32,7 +38,7 @@ export default async function Page() {
                   trim: true,
                 })}-${post.id}.html`}
               >
-                <div className="relative w-full aspect-[16/9]">
+                <div className="relative w-full aspect-video">
                   <Image
                     src={"/no-image.jpg"}
                     alt={post.title}
@@ -62,13 +68,15 @@ export default async function Page() {
                   trim: true,
                 })}-${post.id}.html`}
               >
-                <div className="relative w-2/5 aspect-[16/9]">
-                  <Image
-                    src={"/no-image.jpg"}
-                    alt={post.title}
-                    fill
-                    className="object-cover rounded-lg"
-                  />
+                <div className="w-2/5">
+                  <div className="relative w-full aspect-video">
+                    <Image
+                      src={"/no-image.jpg"}
+                      alt={post.title}
+                      fill
+                      className="object-cover rounded-lg"
+                    />
+                  </div>
                 </div>
 
                 <h6 className="font-semibold w-3/5 text-base">
