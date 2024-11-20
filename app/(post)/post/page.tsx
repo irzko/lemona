@@ -71,7 +71,7 @@ export default async function Page() {
                   />
                 </div>
 
-                <h6 className="font-semibold text-base">
+                <h6 className="font-semibold w-3/5 text-base">
                   {post.title || "(No title)"}
                 </h6>
               </Link>
