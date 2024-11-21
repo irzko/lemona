@@ -5,12 +5,15 @@ import { type MDXEditorMethods } from "@mdxeditor/editor";
 import { useRef, useState } from "react";
 import Input from "@/components/ui/Input";
 import { createPost } from "@/app/actions";
+import { useSession } from "next-auth/react"
 
 const markdown = `
 Hello **world**!
 `;
 export default function Page() {
   const [title, setTitle] = useState("");
+  const { data: session } = useSession()
+  if (!session?.user) return null
 
   const ref = useRef<MDXEditorMethods>(null);
 
@@ -18,6 +21,7 @@ export default function Page() {
   return (
     <form className="space-y-4 p-2" action={(formData) => {
       formData.append("content", ref.current!.getMarkdown());
+      formData.append("authorId", session.user!.id!);
       createPost(formData)
     }}>
       <div>

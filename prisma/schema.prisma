@@ -8,9 +8,36 @@ datasource db {
 }
 
 model Post {
+  id         String     @id
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  title      String
+  content    String?
+  authorId   String
+  published  Boolean    @default(false)
+  categories Category[]
+  author     User       @relation(fields: [authorId], references: [id])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
   id        String   @id
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String
-  content   String?
+  username  String   @unique
+  password  String
+  name      String?
+  role      Role     @default(USER)
+  posts     Post[]
+}
+
+
+model Category {
+  id    String @id
+  name  String
+  posts Post[]
 }
