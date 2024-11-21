@@ -35,10 +35,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  basePath: "/auth",
   pages: {
     signIn: "/login",
   },
-
-  experimental: { enableWebAuthn: true },
 });
 

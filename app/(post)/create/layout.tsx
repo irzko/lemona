@@ -1,4 +1,3 @@
-"use client"
 import { auth } from "@/auth"
 import { SessionProvider } from "next-auth/react"
 
@@ -16,7 +15,7 @@ export default async function Layout({
   }
 
   return (
-    <SessionProvider session={session}>
+    <SessionProvider basePath="/auth" session={session}>
       {children}
     </SessionProvider>
   )
