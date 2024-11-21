@@ -43,16 +43,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   session: { strategy: "jwt" },
   callbacks: {
-  async session({ session, token }) {
+  async session({ session, user }) {
     
-    session.user.id = token.id as string
+    session.user.id = user.id as string
     
     return session
   }}
 });
-
-declare module "next-auth" {
-  interface Session {
-    accessToken?: string
-  }
-}
