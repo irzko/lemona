@@ -44,18 +44,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
 
     jwt: async ({ token, user }) => {
-      // First time JWT callback is run, user object is available
       if (user && user.id && user.role) {
         token.id = user.id;
         token.role = user.role;
+        token.username = user.username;
       }
       return token;
     },
     session: async ({ session, token }) => {
-      if (token && token.id && token.role) {
+      
         session.user.id = token.id;
         session.user.role = token.role;
-      }
+        session.user.username = token.username;
+      
       return session;
     },
   },
@@ -65,10 +66,12 @@ declare module "next-auth" {
   interface Session {
     id: string;
     role: string;
+    username: string;
   }
   interface User {
     id?: string;
     role: string;
+    username: string;
     name?: string | null;
   }
 }
@@ -77,5 +80,6 @@ declare module "next-auth/jwt" {
   interface JWT {
     id: string;
     role: string;
+    username: string;
   }
 }
