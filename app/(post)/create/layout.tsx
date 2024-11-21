@@ -8,6 +8,7 @@ export default async function Layout({
   if (session?.user) {
     // TODO: Look into https://react.dev/reference/react/experimental_taintObjectReference
     // filter out sensitive data before passing to client.
+    console.log(session.user)
     session.user = {
       id: session.user.id,
       name: session.user.name,
