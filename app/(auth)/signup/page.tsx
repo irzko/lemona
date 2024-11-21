@@ -1,6 +1,6 @@
 import { createUser } from "@/app/actions";
 
-export function SignUp() {
+export default function SignUp() {
   return (
     <form action={createUser}>
       <label>
