@@ -12,10 +12,10 @@ Hello **world**!
 `;
 export default function Page() {
   const [title, setTitle] = useState("");
+  const ref = useRef<MDXEditorMethods>(null);
   const { data: session } = useSession()
   if (!session?.user) return null
 
-  const ref = useRef<MDXEditorMethods>(null);
 
   
   return (
