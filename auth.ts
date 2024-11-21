@@ -11,7 +11,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     CredentialsProvider({
       credentials: {
-        email: {},
+        username: {},
         password: {},
       },
       async authorize(credentials): Promise<any> {
@@ -20,7 +20,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           password: string;
         };
         if (!username || !password) {
-          throw new Error("Missing username or password");
+          throw new Error("Pls provide username and password");
         }
         const user = await prisma.user.findUnique({
           where: {
@@ -29,7 +29,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         });
         
         if (!user || !(await verify(password, user.password))) {
-          throw new Error("Email hoặc mật khẩu không đúng");
+          throw new Error("Invaid credentials.");
         }
         return user;
       },
