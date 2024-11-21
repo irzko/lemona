@@ -27,6 +27,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             username,
           },
         });
+
+        console.log(user);
         
         if (!user || !(await verify(user.password, password))) {
           throw new Error("Invaid credentials.");
@@ -39,5 +41,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
     signIn: "/login",
   },
+  session: { strategy: "jwt" },
 });
 
