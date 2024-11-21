@@ -9,11 +9,11 @@ export default function SignIn() {
       }}
     >
       <label>
-        Email
-        <input name="email" type="email" />
+        Tên tài khoản
+        <input name="username" type="text" />
       </label>
       <label>
-        Password
+        Mật khẩu
         <input name="password" type="password" />
       </label>
       <button>Sign In</button>
