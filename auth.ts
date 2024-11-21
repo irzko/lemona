@@ -1,14 +1,13 @@
-import NextAuth from "next-auth"
-import { PrismaAdapter } from "@auth/prisma-adapter"
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/lib/prisma";
 import { verify } from "argon2";
-import "next-auth/jwt"
+import "next-auth/jwt";
+import { User as IUser } from "@prisma/client";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   debug: !!process.env.AUTH_DEBUG,
   theme: { logo: "https://authjs.dev/img/logo-sm.png" },
-  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       credentials: {
@@ -29,8 +28,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           },
         });
 
-        console.log(user);
-        
+
         if (!user || !(await verify(user.password, password))) {
           throw new Error("Invaid credentials.");
         }
@@ -43,8 +41,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/login",
   },
   session: { strategy: "jwt" },
+
   callbacks: {
-  // callbackk session return user id
+
     jwt: async ({ token, user }) => {
       // First time JWT callback is run, user object is available
       if (user && user.id && user.role) {
@@ -60,24 +59,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       return session;
     },
-  }
+  },
 });
 
 declare module "next-auth" {
   interface Session {
     id: string;
-    role: number;
+    role: string;
   }
-
-  interface User {
-    id?: string;
-    role: number;
-  }
+  interface User extends IUser {}
 }
 
 declare module "next-auth/jwt" {
   interface JWT {
     id: string;
-    role: number;
+    role: string;
   }
 }
