@@ -27,7 +27,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           },
         });
 
-
         if (!user || !(await verify(user.password, password))) {
           throw new Error("Invaid credentials.");
         }
@@ -42,7 +41,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
 
   callbacks: {
-
     jwt: async ({ token, user }) => {
       if (user && user.id && user.role) {
         token.id = user.id;
@@ -52,11 +50,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return token;
     },
     session: async ({ session, token }) => {
-      
-        session.user.id = token.id;
-        session.user.role = token.role;
-        session.user.username = token.username;
-      
+      session.user.id = token.id;
+      session.user.role = token.role;
+      session.user.username = token.username;
+
       return session;
     },
   },

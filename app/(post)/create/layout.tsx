@@ -12,6 +12,8 @@ export default async function Layout({
       id: session.user.id,
       role: session.user.role,
       name: session.user.name,
+      username: session.user.username,
+      image: session.user.image,
     }
   }
 
