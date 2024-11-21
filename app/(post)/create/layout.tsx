@@ -15,7 +15,7 @@ export default async function Layout({
   }
 
   return (
-    <SessionProvider basePath={"/auth"} session={session}>
+    <SessionProvider session={session}>
       {children}
     </SessionProvider>
   )
