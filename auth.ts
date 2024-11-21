@@ -42,5 +42,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/login",
   },
   session: { strategy: "jwt" },
+  callbacks: {
+  async session({ session, token }) {
+    
+    session.user.id = token.id as string
+    
+    return session
+  }}
 });
 
+declare module "next-auth" {
+  interface Session {
+    accessToken?: string
+  }
+}
