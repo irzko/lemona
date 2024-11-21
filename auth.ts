@@ -67,7 +67,11 @@ declare module "next-auth" {
     id: string;
     role: string;
   }
-  interface User extends IUser {}
+  interface User {
+    id?: string;
+    role: string;
+    name?: string | null;
+  }
 }
 
 declare module "next-auth/jwt" {
