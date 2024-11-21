@@ -3,7 +3,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/lib/prisma";
 import { verify } from "argon2";
 import "next-auth/jwt";
-import { User as IUser } from "@prisma/client";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   debug: !!process.env.AUTH_DEBUG,
