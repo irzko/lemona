@@ -3,6 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/lib/prisma";
 import { verify } from "argon2";
+import "next-auth/jwt"
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   debug: !!process.env.AUTH_DEBUG,
@@ -43,10 +44,40 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   session: { strategy: "jwt" },
   callbacks: {
-  async session({ session, user }) {
-    
-    session.user.id = user.id as string
-    
-    return session
-  }}
+  // callbackk session return user id
+    jwt: async ({ token, user }) => {
+      // First time JWT callback is run, user object is available
+      if (user && user.id && user.role) {
+        token.id = user.id;
+        token.role = user.role;
+      }
+      return token;
+    },
+    session: async ({ session, token }) => {
+      if (token && token.id && token.role) {
+        session.id = token.id;
+        session.role = token.role;
+      }
+      return session;
+    },
+  }
 });
+
+declare module "next-auth" {
+  interface Session {
+    id: string;
+    role: number;
+  }
+
+  interface User {
+    id?: string;
+    role: number;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    id: string;
+    role: number;
+  }
+}

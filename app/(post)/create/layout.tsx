@@ -10,6 +10,7 @@ export default async function Layout({
     // filter out sensitive data before passing to client.
     session.user = {
       id: session.user.id,
+      role: session.user.role,
       name: session.user.name,
     }
   }
