@@ -1,8 +1,8 @@
-import { auth } from "@/auth"
+import { auth } from "@/auth";
 import Link from "next/link";
 
 export default async function Menu() {
-  const session = await auth()
+  const session = await auth();
   return (
     <main className="flex flex-col items-center">
       <div className="border-b h-16 flex justify-center items-center border-gray-200 w-full">
@@ -30,7 +30,11 @@ export default async function Menu() {
         </div>
       </div>
       <div className="max-w-sm w-full p-2">
-        {session?.user ? <div>{session.user.username}</div> : <Link href="/login">Login</Link>}
+        {session?.user ? (
+          <div>{session.user.username}</div>
+        ) : (
+          <Link href="/login">Login</Link>
+        )}
       </div>
     </main>
   );
