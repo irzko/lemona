@@ -136,7 +136,7 @@ export default function ToolbarPlugin() {
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
         }}
-        // className={"toolbar-item spaced " + (isBold ? "active" : "")}
+        className={(isBold ? "active" : "")}
         aria-label="Format Bold"
       >
         <i className="format bold" />
