@@ -1,10 +1,10 @@
 "use client"
-import Editor from "@/components/lexical/editor"
+import Lexical from "@/components/lexical"
 
 export default function Page() {
   return (
     <div className="p-4">
-      <Editor />
+      <Lexical />
     </div>
     
   )

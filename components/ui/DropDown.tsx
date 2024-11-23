@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
+import Button from "@/components/ui/button";
 
 type DropDownContextType = {
   registerItem: (ref: React.RefObject<HTMLButtonElement>) => void;
@@ -26,7 +27,7 @@ export function DropDownItem({
   title,
 }: {
   children: React.ReactNode;
-  className: string;
+  className?: string;
   onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   title?: string;
 }) {
@@ -47,19 +48,17 @@ export function DropDownItem({
   }, [ref, registerItem]);
 
   return (
-    <button
-      className={className}
+    <Button
+      className={`w-full justify-start ${className}`}
       onClick={onClick}
       ref={ref}
       title={title}
       type="button"
     >
       {children}
-    </button>
+    </Button>
   );
 }
-
-
 
 function DropDownItems({
   children,
@@ -78,7 +77,7 @@ function DropDownItems({
     (itemRef: React.RefObject<HTMLButtonElement>) => {
       setItems((prev) => (prev ? [...prev, itemRef] : [itemRef]));
     },
-    [setItems]
+    [setItems],
   );
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -116,7 +115,7 @@ function DropDownItems({
     () => ({
       registerItem,
     }),
-    [registerItem]
+    [registerItem],
   );
 
   useEffect(() => {
@@ -132,7 +131,7 @@ function DropDownItems({
   return (
     <DropDownContext.Provider value={contextValue}>
       <div
-        className="z-[100] grid grid-cols-4 gap-2 p-2 fixed shadow-sm min-h-[40px] bg-white rounded-lg"
+        className="z-10 p-2 absolute bg-white rounded-lg shadow"
         ref={dropDownRef}
         onKeyDown={handleKeyDown}
       >
@@ -147,14 +146,14 @@ export default function DropDown({
   buttonLabel,
   buttonAriaLabel,
   buttonClassName,
-  buttonIconClassName,
+  buttonIcon,
   children,
   stopCloseOnClickSelf,
 }: {
   disabled?: boolean;
   buttonAriaLabel?: string;
-  buttonClassName: string;
-  buttonIconClassName?: string;
+  buttonClassName?: string;
+  buttonIcon?: JSX.Element;
   buttonLabel?: string;
   children: ReactNode;
   stopCloseOnClickSelf?: boolean;
@@ -179,7 +178,7 @@ export default function DropDown({
       dropDown.style.top = `${top + button.offsetHeight + dropDownPadding}px`;
       dropDown.style.left = `${Math.min(
         left,
-        window.innerWidth - dropDown.offsetWidth - 20
+        window.innerWidth - dropDown.offsetWidth - 20,
       )}px`;
     }
   }, [dropDownRef, buttonRef, showDropDown]);
@@ -234,43 +233,42 @@ export default function DropDown({
 
   return (
     <>
-      <button
-        type="button"
+      <Button
+        size="sm"
         disabled={disabled}
         aria-label={buttonAriaLabel || buttonLabel}
         className={buttonClassName}
         onClick={() => setShowDropDown(!showDropDown)}
         ref={buttonRef}
       >
-        {buttonIconClassName && <span className={buttonIconClassName} />}
+        {buttonIcon}
         {buttonLabel && (
           <span className="text dropdown-button-text">{buttonLabel}</span>
         )}
         <svg
-          className="w-5 h-5 text-gray-800 dark:text-white"
-          aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="none"
+          width="20"
+          height="20"
           viewBox="0 0 24 24"
+          fill="none"
         >
           <path
+            d="M5.99977 9.00005L11.9998 15L17.9998 9"
             stroke="currentColor"
+            strokeWidth="2"
+            strokeMiterlimit="16"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth="2"
-            d="m19 9-7 7-7-7"
-          />
+          ></path>
         </svg>
-      </button>
+      </Button>
 
       {showDropDown &&
         createPortal(
           <DropDownItems dropDownRef={dropDownRef} onClose={handleClose}>
             {children}
           </DropDownItems>,
-          document.body
+          document.body,
         )}
     </>
   );

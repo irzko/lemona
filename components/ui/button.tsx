@@ -2,11 +2,11 @@ import { ReactNode } from "react";
 import { tv } from "tailwind-variants";
 
 const buttonStyles = tv({
-  base: "flex justify-center items-center font-medium tap-highlight-transparent",
+  base: "flex justify-center items-center gap-2 font-medium tap-highlight-transparent",
   variants: {
     color: {
       default:
-        "text-gray-500 rounded hover:text-gray-900 hover:bg-gray-100",
+        "text-gray-500 rounded",
       light:
         "text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100",
       danger:
