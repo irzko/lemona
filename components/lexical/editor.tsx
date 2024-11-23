@@ -6,13 +6,19 @@
  *
  */
 
-import "./styles.css"
-import {AutoFocusPlugin} from '@lexical/react/LexicalAutoFocusPlugin';
-import {LexicalComposer} from '@lexical/react/LexicalComposer';
-import {ContentEditable} from '@lexical/react/LexicalContentEditable';
-import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
-import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
-import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
+import "./styles.css";
+import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
+import { LexicalComposer } from "@lexical/react/LexicalComposer";
+import { ContentEditable } from "@lexical/react/LexicalContentEditable";
+import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
+import {
+  // $convertFromMarkdownString,
+  // $convertToMarkdownString,
+  TRANSFORMERS,
+} from "@lexical/markdown";
+import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import {
   $isTextNode,
   DOMConversionMap,
@@ -23,13 +29,13 @@ import {
   LexicalNode,
   ParagraphNode,
   TextNode,
-} from 'lexical';
+} from "lexical";
 
-import ExampleTheme from './ExampleTheme';
-import ToolbarPlugin from './plugins/ToolbarPlugin';
-import {parseAllowedColor, parseAllowedFontSize} from './styleConfig';
+import ExampleTheme from "./ExampleTheme";
+import ToolbarPlugin from "./plugins/ToolbarPlugin";
+import { parseAllowedColor, parseAllowedFontSize } from "./styleConfig";
 
-const placeholder = 'Enter some rich text...';
+const placeholder = "Enter some rich text...";
 
 const removeStylesExportDOM = (
   editor: LexicalEditor,
@@ -44,10 +50,10 @@ const removeStylesExportDOM = (
       output.element,
       ...output.element.querySelectorAll('[style],[class],[dir="ltr"]'),
     ]) {
-      el.removeAttribute('class');
-      el.removeAttribute('style');
-      if (el.getAttribute('dir') === 'ltr') {
-        el.removeAttribute('dir');
+      el.removeAttribute("class");
+      el.removeAttribute("style");
+      if (el.getAttribute("dir") === "ltr") {
+        el.removeAttribute("dir");
       }
     }
   }
@@ -65,17 +71,17 @@ const exportMap: DOMExportOutputMap = new Map<
 const getExtraStyles = (element: HTMLElement): string => {
   // Parse styles from pasted input, but only if they match exactly the
   // sort of styles that would be produced by exportDOM
-  let extraStyles = '';
+  let extraStyles = "";
   const fontSize = parseAllowedFontSize(element.style.fontSize);
   const backgroundColor = parseAllowedColor(element.style.backgroundColor);
   const color = parseAllowedColor(element.style.color);
-  if (fontSize !== '' && fontSize !== '15px') {
+  if (fontSize !== "" && fontSize !== "15px") {
     extraStyles += `font-size: ${fontSize};`;
   }
-  if (backgroundColor !== '' && backgroundColor !== 'rgb(255, 255, 255)') {
+  if (backgroundColor !== "" && backgroundColor !== "rgb(255, 255, 255)") {
     extraStyles += `background-color: ${backgroundColor};`;
   }
-  if (color !== '' && color !== 'rgb(0, 0, 0)') {
+  if (color !== "" && color !== "rgb(0, 0, 0)") {
     extraStyles += `color: ${color};`;
   }
   return extraStyles;
@@ -106,7 +112,7 @@ const constructImportMap = (): DOMConversionMap => {
           }
           const extraStyles = getExtraStyles(element);
           if (extraStyles) {
-            const {forChild} = output;
+            const { forChild } = output;
             return {
               ...output,
               forChild: (child, parent) => {
@@ -132,7 +138,7 @@ const editorConfig = {
     export: exportMap,
     import: constructImportMap(),
   },
-  namespace: 'React.js Demo',
+  namespace: "React.js Demo",
   nodes: [ParagraphNode, TextNode],
   onError(error: Error) {
     throw error;
@@ -145,6 +151,7 @@ export default function Editor() {
     <LexicalComposer initialConfig={editorConfig}>
       <div className="w-full border border-gray-200 rounded-lg bg-gray-50">
         <ToolbarPlugin />
+        <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
         <div className="relative">
           <RichTextPlugin
             contentEditable={
@@ -152,7 +159,9 @@ export default function Editor() {
                 className="block w-full relative min-h-40 outline-none px-4 py-2 bg-white rounded-b-lg text-sm text-gray-800 border-0 focus:ring-0"
                 aria-placeholder={placeholder}
                 placeholder={
-                  <div className="absolute text-sm top-2 left-4 text-gray-400">{placeholder}</div>
+                  <div className="absolute text-sm top-2 left-4 text-gray-400 text-ellipsis user-select-none pointer-events-none inline">
+                    {placeholder}
+                  </div>
                 }
               />
             }
