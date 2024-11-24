@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import {
   ReactNode,
@@ -235,6 +233,7 @@ export default function DropDown({
     <>
       <Button
         size="sm"
+        type="button"
         disabled={disabled}
         aria-label={buttonAriaLabel || buttonLabel}
         className={buttonClassName}
