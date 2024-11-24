@@ -7,7 +7,7 @@ export default async function Menu() {
     <main className="flex flex-col items-center">
       <div className="border-b h-16 flex justify-center items-center border-gray-200 w-full">
         <div className="flex items-center max-w-screen-lg w-full p-2">
-          <button className="mr-2">
+          <Link href="/" className="mr-2" replace>
             <svg
               className="w-6 h-6"
               aria-hidden="true"
@@ -25,7 +25,7 @@ export default async function Menu() {
                 d="M5 12h14M5 12l4-4m-4 4 4 4"
               />
             </svg>
-          </button>
+          </Link>
           <h6 className="font-semibold">Menu</h6>
         </div>
       </div>
@@ -36,6 +36,7 @@ export default async function Menu() {
           <Link href="/login">Login</Link>
         )}
       </div>
+      <Link href="/create">Viết bài</Link>
     </main>
   );
 }

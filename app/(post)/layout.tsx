@@ -52,11 +52,11 @@ export default async function HomeLayout({
           <NavbarItem>{/*<GenreMenu genres={genres.data} />*/}</NavbarItem>
         </NavbarContent>
         <Link
-          href="/search"
+          href="/profile"
           type="button"
           className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-zinc-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
         >
-          {session.user.username || session.user.username}
+          {session?.user?.name || session?.user?.username}
         </Link>
         <div className="relative hidden sm:block">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
