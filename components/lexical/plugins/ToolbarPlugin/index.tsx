@@ -102,6 +102,11 @@ function dropDownActiveClass(active: boolean) {
   }
 }
 
+const rootTypeToRootName = {
+  root: 'Root',
+  table: 'Table',
+};
+
 const iconBlockFormat: {
   [key in keyof typeof blockTypeToBlockName]: {
     icon: JSX.Element;
