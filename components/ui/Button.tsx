@@ -6,7 +6,7 @@ const buttonStyles = tv({
   variants: {
     color: {
       default:
-        "text-gray-500 rounded",
+        "text-gray-500",
       light:
         "text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100",
       danger:
@@ -78,6 +78,7 @@ export default function Button({
         size,
         isIconOnly,
       })}
+      type={props.type || "button" }
     >
       {children}
     </button>

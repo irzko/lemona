@@ -68,7 +68,7 @@ import {
 // import { sanitizeUrl } from "@/components/lexical/utils/url";
 import { Dispatch, useCallback, useEffect, useState } from "react";
 import { getSelectedNode } from "@/components/lexical/utils/getSelectedNode";
-import Button from "@/components/ui/button";
+import Button from "@/components/ui/Button";
 import DropDown, { DropDownItem } from "@/components/ui/DropDown";
 
 function Divider() {

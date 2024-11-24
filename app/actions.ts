@@ -18,7 +18,7 @@ export async function createPost(formData: FormData) {
     },
   });
   revalidateTag("posts");
-  redirect("/");
+  redirect("/post");
 }
 
 export async function createUser(formData: FormData) {

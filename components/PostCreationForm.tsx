@@ -5,7 +5,7 @@ import { createPost } from "@/app/actions";
 import LexicalEditor from "@/components/lexical";
 import { $convertToMarkdownString, TRANSFORMERS } from "@lexical/markdown";
 import { EditorState } from "lexical";
-import Button from "@/components/ui/button";
+import Button from "@/components/ui/Button";
 import { useCallback } from "react";
 
 export default function PostCreationForm({ authorId }: { authorId: string }) {
@@ -19,7 +19,7 @@ export default function PostCreationForm({ authorId }: { authorId: string }) {
 
   return (
     <form
-      className="space-y-4 p-2"
+      className="space-y-4 p-4 flex flex-col"
       action={(formData) => {
         formData.append("content", content);
         formData.append("authorId", authorId);
@@ -30,7 +30,7 @@ export default function PostCreationForm({ authorId }: { authorId: string }) {
         <Input id="title" name="title" placeholder="Tiêu đề" required />
       </div>
       <LexicalEditor onChange={handleChange} />
-      <Button type="submit">Đăng</Button>
+      <Button className="w-full" color="light" type="submit">Đăng</Button>
     </form>
   );
 }
