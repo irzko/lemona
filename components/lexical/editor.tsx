@@ -11,6 +11,8 @@ import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
+import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
+import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import {
   // $convertFromMarkdownString,
   // $convertToMarkdownString,
@@ -52,6 +54,9 @@ export default function Editor() {
           }
           ErrorBoundary={LexicalErrorBoundary}
         />
+
+        <ListPlugin />
+        <CheckListPlugin />
         <TablePlugin
           hasCellMerge={true}
           hasCellBackgroundColor={true}

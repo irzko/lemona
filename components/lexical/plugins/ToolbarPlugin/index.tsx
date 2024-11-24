@@ -79,7 +79,6 @@ function Divider() {
   );
 }
 
-
 function getCodeLanguageOptions(): [string, string][] {
   const options: [string, string][] = [];
 
@@ -103,8 +102,8 @@ function dropDownActiveClass(active: boolean) {
 }
 
 type rootTypeToRootName = {
-  root: 'Root',
-  table: 'Table',
+  root: "Root";
+  table: "Table";
 };
 
 const iconBlockFormat: {
@@ -651,7 +650,7 @@ export default function ToolbarPlugin({
           }
         }
       }
-/*
+      /*
       let matchingParent;
       
       if ($isLinkNode(parent)) {
@@ -673,7 +672,7 @@ export default function ToolbarPlugin({
             : parent?.getFormatType() || "left",
       );*/
     }
-    
+
     if ($isRangeSelection(selection) || $isTableSelection(selection)) {
       // Update text format
       updateToolbarState("isBold", selection.hasFormat("bold"));
@@ -767,7 +766,7 @@ export default function ToolbarPlugin({
     [applyStyleText],
   );
   */
-/*
+  /*
   const insertLink = useCallback(() => {
     if (!toolbarState.isLink) {
       setIsLinkEditMode(true);
@@ -1004,10 +1003,33 @@ export default function ToolbarPlugin({
           <Divider />
           <DropDown
             disabled={!isEditable}
-            buttonClassName="toolbar-item spaced"
+            buttonClassName="bg-gray-100"
             buttonLabel=""
             buttonAriaLabel="Formatting options for additional text styles"
-            buttonIcon={<></>}
+            buttonIcon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width={20}
+                height={20}
+                fill={"none"}
+              >
+                <path
+                  d="M14 19L11.1069 10.7479C9.76348 6.91597 9.09177 5 8 5C6.90823 5 6.23652 6.91597 4.89309 10.7479L2 19M4.5 12H11.5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M21.9692 13.9392V18.4392M21.9692 13.9392C22.0164 13.1161 22.0182 12.4891 21.9194 11.9773C21.6864 10.7709 20.4258 10.0439 19.206 9.89599C18.0385 9.75447 17.1015 10.055 16.1535 11.4363M21.9692 13.9392L19.1256 13.9392C18.6887 13.9392 18.2481 13.9603 17.8272 14.0773C15.2545 14.7925 15.4431 18.4003 18.0233 18.845C18.3099 18.8944 18.6025 18.9156 18.8927 18.9026C19.5703 18.8724 20.1955 18.545 20.7321 18.1301C21.3605 17.644 21.9692 16.9655 21.9692 15.9392V13.9392Z"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            }
           >
             <DropDownItem
               onClick={() => {
@@ -1048,15 +1070,47 @@ export default function ToolbarPlugin({
                 activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript");
               }}
               className={
-                "item wide " + dropDownActiveClass(toolbarState.isSubscript)
+                dropDownActiveClass(toolbarState.isSubscript)
               }
               title="Subscript"
               aria-label="Format text with a subscript"
             >
-              <div className="icon-text-container">
-                <i className="icon subscript" />
-                <span className="text">Subscript</span>
-              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width={20}
+                height={20}
+                fill={"none"}
+              >
+                <path
+                  d="M12.5 21H6.5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M16.5 6C16.5 5.37191 16.5 5.05787 16.4194 4.78267C16.2518 4.21026 15.8066 3.71716 15.2541 3.49226C14.9886 3.38413 14.6885 3.35347 14.0884 3.29216C12.6695 3.14718 10.8874 3 9.5 3C8.11262 3 6.33047 3.14718 4.91161 3.29216C4.3115 3.35347 4.01144 3.38413 3.74586 3.49226C3.19344 3.71716 2.74816 4.21026 2.58057 4.78267C2.5 5.05787 2.5 5.37191 2.5 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M9.5 3.34863L9.5 20.8486"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M21.5 21H19.5C19.0286 21 18.7929 21 18.6464 20.8566C18.5 20.7133 18.5 20.4825 18.5 20.021V19.0766C18.5 18.2812 18.676 18.1253 19.5004 18.1094C20.2769 18.0944 20.7401 18.0388 21.0607 17.8333C21.5 17.5516 21.5 17.0983 21.5 16.1916C21.5 14.4594 18.5 15.1262 18.5 15.1262"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+
+              <span className="text">Subscript</span>
             </DropDownItem>
             <DropDownItem
               onClick={() => {
@@ -1065,16 +1119,45 @@ export default function ToolbarPlugin({
                   "superscript",
                 );
               }}
-              className={
-                dropDownActiveClass(toolbarState.isSuperscript)
-              }
-              title="Superscript"
+              className={dropDownActiveClass(toolbarState.isSuperscript)}
+              title="Superscript,"
               aria-label="Format text with a superscript"
             >
-              <div className="icon-text-container">
-                <i className="icon superscript" />
-                <span className="text">Superscript</span>
-              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width={20}
+                height={20}
+                fill={"none"}
+              >
+                <path
+                  d="M12.5 21H6.5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M16.5 6C16.5 5.37191 16.5 5.05787 16.4194 4.78267C16.2518 4.21026 15.8066 3.71716 15.2541 3.49226C14.9886 3.38413 14.6885 3.35347 14.0884 3.29216C12.6695 3.14718 10.8874 3 9.5 3C8.11262 3 6.33047 3.14718 4.91161 3.29216C4.3115 3.35347 4.01144 3.38413 3.74586 3.49226C3.19344 3.71716 2.74816 4.21026 2.58057 4.78267C2.5 5.05787 2.5 5.37191 2.5 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M9.5 3.34863L9.5 20.8486"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M22 12H20C19.5286 12 19.2929 12 19.1464 11.8566C19 11.7133 19 11.4825 19 11.021V10.0766C19 9.28117 19.176 9.12533 20.0004 9.10939C20.7769 9.09438 21.2401 9.03883 21.5607 8.83328C22 8.55161 22 8.09827 22 7.19159C22 5.45943 19 6.12617 19 6.12617"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <span className="text">Superscript</span>
             </DropDownItem>
             <DropDownItem
               onClick={() => clearFormatting(activeEditor)}
@@ -1082,10 +1165,35 @@ export default function ToolbarPlugin({
               title="Clear text formatting"
               aria-label="Clear all text formatting"
             >
-              <div className="icon-text-container">
-                <i className="icon clear" />
-                <span className="text">Clear Formatting</span>
-              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width={20}
+                height={20}
+                fill={"none"}
+              >
+                <path
+                  d="M11 20.001H5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M12 4L8 20.0008M12 4C13.3874 4 15.1695 4.03054 16.5884 4.17648C17.1885 4.23819 17.4886 4.26905 17.7541 4.37789C18.3066 4.60428 18.7518 5.10062 18.9194 5.6768C19 5.95381 19 6.26991 19 6.90214M12 4C10.6126 4 8.83047 4.03054 7.41161 4.17648C6.8115 4.23819 6.51144 4.26905 6.24586 4.37789C5.69344 4.60428 5.24816 5.10062 5.08057 5.6768C5 5.95381 5 6.26991 5 6.90214"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M14 15L19 20M14 20L19 15"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <span>Clear Formatting</span>
             </DropDownItem>
           </DropDown>
         </>
