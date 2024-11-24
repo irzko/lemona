@@ -45,4 +45,15 @@
   a {
     @apply font-medium text-blue-600 hover:underline;
   }
+  code {
+    @apply px-1 text-sm font-normal font-mono text-[#1c63f2];
+  }
+
+  pre {
+    @apply border text-sm rounded-lg p-2.5 bg-gray-50 border-gray-200 text-[#1c63f2];
+  }
+
+  pre>code {
+    @apply bg-inherit text-inherit border-none rounded-none;
+  }
 }

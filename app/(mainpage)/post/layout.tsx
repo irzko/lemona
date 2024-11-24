@@ -2,7 +2,6 @@ import { Navbar, NavbarContent, NavbarItem } from "@/components/ui/navbar";
 import { Bangers } from "next/font/google";
 import Link from "next/link";
 import React from "react";
-import { auth } from "@/auth";
 
 const bangers = Bangers({
   weight: ["400"],
@@ -12,7 +11,6 @@ const bangers = Bangers({
 export default async function HomeLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const session = await auth();
   return (
     <>
       <Navbar>
@@ -56,7 +54,21 @@ export default async function HomeLayout({
           type="button"
           className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-zinc-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
         >
-          {session.user.username || session.user.username}
+          <svg
+            className="w-5 h-5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+            />
+          </svg>
         </Link>
         <div className="relative hidden sm:block">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
