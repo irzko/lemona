@@ -14,14 +14,11 @@ import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import {
-  // $convertFromMarkdownString,
-  // $convertToMarkdownString,
   TRANSFORMERS,
 } from "@lexical/markdown";
 import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import { useState } from "react";
 const placeholder = "Hãy bắt đầu viết...";
@@ -29,7 +26,8 @@ const placeholder = "Hãy bắt đầu viết...";
 export default function Editor() {
   const [editor] = useLexicalComposerContext();
   const [activeEditor, setActiveEditor] = useState(editor);
-  // const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
+
+
   return (
     <div className="w-full border border-gray-200 rounded-lg bg-gray-50">
       <ToolbarPlugin

@@ -1069,9 +1069,7 @@ export default function ToolbarPlugin({
               onClick={() => {
                 activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript");
               }}
-              className={
-                dropDownActiveClass(toolbarState.isSubscript)
-              }
+              className={dropDownActiveClass(toolbarState.isSubscript)}
               title="Subscript"
               aria-label="Format text with a subscript"
             >

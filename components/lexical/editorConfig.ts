@@ -1,15 +1,3 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-
-import { ToolbarContext } from "@/components/lexical/context/ToolbarContext";
-import { LexicalComposer } from "@lexical/react/LexicalComposer";
-import Editor from "./editor";
 import {
   $isTextNode,
   DOMConversionMap,
@@ -121,7 +109,7 @@ const constructImportMap = (): DOMConversionMap => {
   return importMap;
 };
 
-const editorConfig = {
+export const editorConfig = {
   html: {
     export: exportMap,
     import: constructImportMap(),
@@ -135,13 +123,3 @@ const editorConfig = {
   },
   theme: LexicalTheme,
 };
-
-export default function Lexical() {
-  return (
-    <LexicalComposer initialConfig={editorConfig}>
-      <ToolbarContext>
-        <Editor />
-      </ToolbarContext>
-    </LexicalComposer>
-  );
-}

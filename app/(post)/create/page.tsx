@@ -1,43 +1,47 @@
 "use client";
-import { Suspense } from "react";
-import Editor from "@/components/editor";
-import { type MDXEditorMethods } from "@mdxeditor/editor";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Input from "@/components/ui/Input";
 import { createPost } from "@/app/actions";
-import { useSession } from "next-auth/react"
+import { useSession } from "next-auth/react";
+import { ToolbarContext } from "@/components/lexical/context/ToolbarContext";
+import { LexicalComposer } from "@lexical/react/LexicalComposer";
+import Editor from "@/components/lexical/editor";
+import { editorConfig } from "@/components/lexical/editorConfig";
 
-const markdown = `
-Hello **world**!
-`;
+import { $convertToMarkdownString, TRANSFORMERS } from "@lexical/markdown";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import { EditorState } from "lexical";
+
 export default function Page() {
-  const [title, setTitle] = useState("");
-  const ref = useRef<MDXEditorMethods>(null);
-  const { data: session } = useSession()
-  if (!session?.user) return null
+  const { data: session } = useSession();
+  const [content, setContent] = useState("");
 
+  const onChange = (editorState: EditorState) => {
+    editorState.read(() => {
+      const markdownText = $convertToMarkdownString(TRANSFORMERS);
+      setContent(markdownText);
+    });
+  };
+  if (!session?.user) return null;
 
-  
   return (
-    <form className="space-y-4 p-2" action={(formData) => {
-      formData.append("content", ref.current!.getMarkdown());
-      formData.append("authorId", session.user!.id!);
-      createPost(formData)
-    }}>
+    <form
+      className="space-y-4 p-2"
+      action={(formData) => {
+        formData.append("content", content);
+        formData.append("authorId", session.user!.id!);
+        createPost(formData);
+      }}
+    >
       <div>
-        <Input
-          value={title}
-          id="title"
-          name= "title"
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Tiêu đề"
-        />
+        <Input id="title" name="title" placeholder="Tiêu đề" />
       </div>
-      <Suspense fallback={<div>Đang tải editor...</div>}>
-        <div className="border border-gray-300 rounded-lg">
-          <Editor ref={ref} markdown={markdown} />
-        </div>
-      </Suspense>
+      <LexicalComposer initialConfig={editorConfig}>
+        <ToolbarContext>
+          <Editor />
+        </ToolbarContext>
+        <OnChangePlugin onChange={onChange} />
+      </LexicalComposer>
       <button type="submit">Submit</button>
     </form>
   );

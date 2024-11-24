@@ -15,31 +15,31 @@ const LexicalTheme = {
     h4: 'editor-heading-h4',
     h5: 'editor-heading-h5',
   }, */
-  image: 'editor-image',
-  link: 'editor-link',
-  
+  image: "editor-image",
+  link: "editor-link",
+
   list: {
-    listitem: 'editor-listitem',
+    listitem: "editor-listitem",
     nested: {
-      listitem: 'editor-nested-listitem',
+      listitem: "editor-nested-listitem",
     },
-    ol: 'space-y-1 text-gray-500 list-decimal list-inside',
-    ul: 'space-y-1 text-gray-500 list-disc list-inside',
+    ol: "space-y-1 text-gray-500 list-decimal list-inside",
+    ul: "space-y-1 text-gray-500 list-disc list-inside",
   },
-  
-  ltr: 'ltr',
+
+  ltr: "ltr",
   // paragraph: 'editor-paragraph',
   // placeholder: 'editor-placeholder',
-  rtl: 'rtl',
+  rtl: "rtl",
   text: {
-    bold: 'font-semibold',
-    code: 'editor-text-code',
-    hashtag: 'editor-text-hashtag',
-    italic: 'italic',
-    overflowed: 'editor-text-overflowed',
-    strikethrough: 'line-through',
-    underline: 'underline',
-    underlineStrikethrough: 'editor-text-underlineStrikethrough',
+    bold: "font-semibold",
+    code: "editor-text-code",
+    hashtag: "editor-text-hashtag",
+    italic: "italic",
+    overflowed: "editor-text-overflowed",
+    strikethrough: "line-through",
+    underline: "underline",
+    underlineStrikethrough: "underline line-through",
   },
 };
 
