@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import Input from "@/components/ui/Input";
 import { createPost } from "@/app/actions";
@@ -7,7 +8,7 @@ import { EditorState } from "lexical";
 import Button from "@/components/ui/button";
 import { useCallback } from "react";
 
-export default function PostCreationForm() {
+export default function PostCreationForm({ authorId }: { authorId: string }) {
   const [content, setContent] = useState("");
   const handleChange = useCallback((editorState: EditorState) => {
     editorState.read(() => {
@@ -21,7 +22,7 @@ export default function PostCreationForm() {
       className="space-y-4 p-2"
       action={(formData) => {
         formData.append("content", content);
-        formData.append("authorId", session.user!.id!);
+        formData.append("authorId", authorId);
         createPost(formData);
       }}
     >
@@ -29,7 +30,7 @@ export default function PostCreationForm() {
         <Input id="title" name="title" placeholder="Tiêu đề" required />
       </div>
       <LexicalEditor onChange={handleChange} />
-      <Button type="submit">Submit</Button>
+      <Button type="submit">Đăng</Button>
     </form>
   );
 }
