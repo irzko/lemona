@@ -102,7 +102,7 @@ function dropDownActiveClass(active: boolean) {
   }
 }
 
-const rootTypeToRootName = {
+type rootTypeToRootName = {
   root: 'Root',
   table: 'Table',
 };
@@ -475,7 +475,7 @@ function BlockFormatDropDown({
   disabled = false,
 }: {
   blockType: keyof typeof blockTypeToBlockName;
-  rootType: keyof typeof rootTypeToRootName;
+  rootType: keyof rootTypeToRootName;
   editor: LexicalEditor;
   disabled?: boolean;
 }): JSX.Element {
