@@ -50,7 +50,7 @@
   }
 
   pre {
-    @apply border text-sm rounded-lg p-2.5 bg-gray-50 border-gray-200 text-[#1c63f2];
+    @apply border text-sm rounded-lg p-2.5 bg-gray-50 border-gray-200 overflow-x-auto text-[#1c63f2];
   }
 
   pre>code {

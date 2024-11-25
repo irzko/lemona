@@ -45,7 +45,7 @@ export default async function Page() {
               >
                 <div className="relative w-full aspect-video">
                   <Image
-                    src={"/no-image.jpg"}
+                    src={post.featuredImageURL || "/no-image.jpg"}
                     alt={post.title}
                     fill
                     className="object-cover rounded-lg"
