@@ -84,7 +84,7 @@ export async function createCategory(
 
   if (category) {
     return {
-      errors: { name: "Category already exists" },
+      errors: { name: ["Category already exists" ]},
     };
   }
   const parentCategoryId = formData.get("parentCategoryId") as string;
