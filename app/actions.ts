@@ -9,12 +9,14 @@ export async function createPost(formData: FormData) {
   const title = formData.get("title") as string;
   const content = formData.get("content") as string;
   const authorId = formData.get("authorId") as string;
+  const featuredImageURL = formData.get("featuredImageURL") as string;
   await prisma.post.create({
     data: {
       id: createId(),
       title,
       content,
       authorId,
+      featuredImageURL,
     },
   });
   revalidateTag("posts");
@@ -29,7 +31,7 @@ export async function createUser(formData: FormData) {
     data: {
       id: createId(),
       username: username,
-      password: hashedPassword,
+      hashedPassword: hashedPassword,
     },
   });
   revalidateTag("users");

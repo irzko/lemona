@@ -7,6 +7,8 @@ const buttonStyles = tv({
     color: {
       default:
         "text-gray-500",
+      primary:
+        "text-white bg-blue-500 hover:bg-blue-600",
       light:
         "text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100",
       danger:

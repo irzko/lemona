@@ -27,7 +27,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           },
         });
 
-        if (!user || !(await verify(user.password, password))) {
+        console.log("Authorizing")
+
+        if (!user || !(await verify(user.hashedPassword, password))) {
           throw new Error("Invaid credentials.");
         }
         return user;
