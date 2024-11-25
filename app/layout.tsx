@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Lẩu truyện - Đọc truyện tranh online miễn phí",
+  title: "Lemono",
   description:
     "Đọc truyện tranh online miễn phí tại Lẩu Truyện. Cập nhật truyện tranh mới nhất, nhanh nhất, hot nhất. Đọc truyện tranh chất lượng cao, cập nhật hàng ngày.",
 };
