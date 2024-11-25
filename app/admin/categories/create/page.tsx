@@ -11,11 +11,11 @@ export default function CreateCategoryPage() {
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-bold">Tạo danh mục</h1>
-      <form action={action}>
+      <form className="flex flex-con gap-6" action={action}>
         <Select>
-          <option>Chọn danh mục cha</option>
+          <option>Danh mục cha</option>
         </Select>
-        <Input placeholder="Tên danh mục" error={state?.errors.name}/>
+        <Input name="name" placeholder="Tên danh mục" error={state?.errors.name}/>
         <Input placeholder="Mô tả" />
         <SubmitButton>Tạo</SubmitButton>
       </form>

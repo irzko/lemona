@@ -7,12 +7,17 @@ import Image from "next/image";
 const getPosts = unstable_cache(
   async () => {
     return await prisma.post.findMany({
+      select: {
+        id: true,
+        title: true,
+        featuredImageURL: true,
+      },
       orderBy: [
         {
           createdAt: "desc",
         },
       ],
-})
+    });
   },
   ["posts"],
   { tags: ["posts"] },
