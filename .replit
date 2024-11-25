@@ -1,5 +1,5 @@
 modules = ["nodejs-20", "web", "nix"]
-run = "npm run dev"
+run = "npm run lint"
 
 [nix]
 channel = "stable-24_05"

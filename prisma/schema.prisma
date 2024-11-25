@@ -41,7 +41,7 @@ model User {
 
 model Category {
   id               String              @id
-  name             String
+  name             String              @unique
   description      String?
   parentCategoryId String?
   image            String?
@@ -51,7 +51,7 @@ model Category {
 
 model Tag {
   id        String        @id
-  name      String
+  name      String        @unique
   posts     TagsOnPosts[]
   createdAt DateTime      @default(now())
 }

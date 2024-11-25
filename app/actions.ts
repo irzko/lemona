@@ -4,7 +4,12 @@ import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { createId } from "@paralleldrive/cuid2";
 import { hash } from "argon2";
-import { SignupFormSchema, SignupFormState, CreateCategoryFormState, CreateCategoryFormSchema } from "@/lib/definitions";
+import {
+  SignupFormSchema,
+  SignupFormState,
+  CreateCategoryFormState,
+  CreateCategoryFormSchema,
+} from "@/lib/definitions";
 
 export async function createPost(formData: FormData) {
   const title = formData.get("title") as string;
@@ -37,6 +42,8 @@ export async function createUser(state: SignupFormState, formData: FormData) {
     };
   }
 
+  console.log(state);
+
   const username = formData.get("username") as string;
   const password = formData.get("password") as string;
   const hashedPassword = await hash(password);
@@ -66,6 +73,20 @@ export async function createCategory(
   }
 
   const name = formData.get("name") as string;
+
+  const category = await prisma.category.findFirst({
+    where: {
+      name: name,
+    },
+  });
+
+  console.log(state);
+
+  if (category) {
+    return {
+      errors: { name: "Category already exists" },
+    };
+  }
   const parentCategoryId = formData.get("parentCategoryId") as string;
   await prisma.category.create({
     data: {
