@@ -2,6 +2,7 @@ import Markdown from "react-markdown";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import remarkGfm from "remark-gfm";
+import remarkToc from 'remark-toc'
 
 const getPost = unstable_cache(
   async (id: string) => {
@@ -36,9 +37,9 @@ export default async function Page({
   return (
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-4">
-        <h3>{post.title || "(No title)"}</h3>
+        <h1>{post.title || "(No title)"}</h1>
         <i>{new Date(post.createdAt).toLocaleString()}</i>
-        <Markdown remarkPlugins={[[remarkGfm, { singleTilde: false }]]}>
+        <Markdown remarkPlugins={[[remarkGfm, { singleTilde: false }], [remarkToc]]}>
           {post.content || "(No content)"}
         </Markdown>
       </div>
