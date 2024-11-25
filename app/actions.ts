@@ -16,6 +16,7 @@ export async function createPost(formData: FormData) {
   const content = formData.get("content") as string;
   const authorId = formData.get("authorId") as string;
   const featuredImageURL = formData.get("featuredImageURL") as string;
+  const tagName = formData.get("tag") as string;
   await prisma.post.create({
     data: {
       id: createId(),
@@ -23,6 +24,34 @@ export async function createPost(formData: FormData) {
       content,
       authorId,
       featuredImageURL,
+      categories: {
+        create: [
+          {
+            category: {
+              connect: {
+                id: formData.get("categoryId") as string,
+              },
+            },
+          },
+        ],
+      },
+      tags: {
+        create: [
+          {
+            tag: {
+              connectOrCreate: {
+                where: {
+                  name: tagName,
+                },
+                create: {
+                  name: tagName,
+                  id: createId(),
+                },
+              },
+            },
+          },
+        ],
+      },
     },
   });
 
@@ -84,7 +113,7 @@ export async function createCategory(
 
   if (category) {
     return {
-      errors: { name: ["Category already exists" ]},
+      errors: { name: ["Category already exists"] },
     };
   }
   const parentCategoryId = formData.get("parentCategoryId") as string;

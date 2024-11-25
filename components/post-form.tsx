@@ -6,9 +6,21 @@ import LexicalEditor from "@/components/lexical";
 import { $convertToMarkdownString, TRANSFORMERS } from "@lexical/markdown";
 import { EditorState } from "lexical";
 import Button from "@/components/ui/Button";
+import Select from "@/components/ui/select";
 import { useCallback } from "react";
 
-export default function PostCreationForm({ authorId }: { authorId: string }) {
+interface Category {
+  id: string;
+  name: string;
+}
+
+export default function PostForm({
+  authorId,
+  categories,
+}: {
+  authorId: string;
+  categories: Category[];
+}) {
   const [content, setContent] = useState("");
   const handleChange = useCallback((editorState: EditorState) => {
     editorState.read(() => {
@@ -19,18 +31,29 @@ export default function PostCreationForm({ authorId }: { authorId: string }) {
 
   return (
     <form
-      className="space-y-4 p-4 flex flex-col"
+      className="gap-6 p-4 flex flex-col"
       action={(formData) => {
         formData.append("content", content);
         formData.append("authorId", authorId);
         createPost(formData);
       }}
     >
-      <div>
-        <Input id="title" name="title" placeholder="Tiêu đề" required />
-      </div>
+      <Input id="title" name="title" placeholder="Tiêu đề" required />
+
       <LexicalEditor onChange={handleChange} />
-      <Button className="w-full" color="light" type="submit">Đăng</Button>
+      <Select name="categoryId">
+        {categories.map((category) => {
+          return (
+            <option value={category.id} key={category.id}>
+              {category.name}
+            </option>
+          );
+        })}
+      </Select>
+      <Input id="tag" name="tag" placeholder="Thẻ bài viết" required />
+      <Button className="w-full" color="light" type="submit">
+        Đăng
+      </Button>
     </form>
   );
 }

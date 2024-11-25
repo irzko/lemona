@@ -9,9 +9,9 @@ import Select from "@/components/ui/select";
 export default function CreateCategoryPage() {
   const [state, action] = useActionState(createCategory, undefined);
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-bold">Tạo danh mục</h1>
-      <form className="flex flex-con gap-6" action={action}>
+      <form className="flex flex-col gap-6" action={action}>
         <Select>
           <option>Danh mục cha</option>
         </Select>
