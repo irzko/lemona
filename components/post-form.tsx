@@ -50,6 +50,7 @@ export default function PostForm({
           );
         })}
       </Select>
+      <Input id="featuredImageURL" name="featuredImageURL" placeholder="Featured image URL" required />
       <Input id="tag" name="tag" placeholder="Thẻ bài viết" required />
       <Button className="w-full" color="light" type="submit">
         Đăng
