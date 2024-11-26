@@ -18,6 +18,7 @@ import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
+import ImagesPlugin from './plugins/ImagesPlugin';
 import { useState } from "react";
 const placeholder = "Hãy bắt đầu viết...";
 
@@ -62,6 +63,7 @@ export default function Editor({ markdown }: { markdown?: string }) {
           hasCellBackgroundColor={true}
           hasTabHandler={true}
         />
+        <ImagesPlugin />
         <HistoryPlugin />
         <AutoFocusPlugin />
       </div>
