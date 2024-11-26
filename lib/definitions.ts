@@ -22,7 +22,7 @@ export type SignupFormState =
   | undefined
 
 
-export const CreateCategoryFormSchema = z.object({
+export const CategoryFormSchema = z.object({
   name: z
     .string()
     .min(1, { message: 'Tên danh mục quá ngắn.' })
@@ -31,7 +31,7 @@ export const CreateCategoryFormSchema = z.object({
   
 })
 
-export type CreateCategoryFormState =
+export type CategoryFormState =
   | {
       errors?: {
         name?: string[]

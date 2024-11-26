@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Input from "@/components/ui/Input";
-import { createPost } from "@/app/actions";
+import { updatePost } from "@/app/actions";
 import LexicalEditor from "@/components/lexical";
 import { $convertToMarkdownString, TRANSFORMERS } from "@lexical/markdown";
 import { EditorState } from "lexical";
@@ -20,7 +20,6 @@ interface Category {
 
 
 export default function EditPostForm({
-  authorId,
   categories,
   post
 }: {
@@ -41,8 +40,8 @@ post: Post & { tags: TagsOnPosts & {tag: Tag}[]}
       className="gap-6 p-4 flex flex-col"
       action={(formData) => {
         formData.append("content", content);
-        formData.append("authorId", authorId);
-        createPost(formData);
+        formData.append("id", post.id);
+        updatePost(formData);
       }}
     >
       <Input id="title" name="title" placeholder="Tiêu đề" defaultValue={post.title} required />
@@ -58,7 +57,7 @@ post: Post & { tags: TagsOnPosts & {tag: Tag}[]}
         })}
       </Select>
       <Input id="featuredImageURL" name="featuredImageURL" placeholder="Featured image URL" defaultValue={post.featuredImageURL} required />
-      <Input id="tag" name="tag" placeholder="Thẻ bài viết" required defaultValue={post.tags.map((i)=>i.tag.name).join(", ")} />
+      <Input id="tags" name="tags" placeholder="Thẻ bài viết" required defaultValue={post.tags.map((i)=>i.tag.name).join(", ")} />
       <Button className="w-full" color="light" type="submit">
         Đăng
       </Button>
