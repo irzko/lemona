@@ -9,6 +9,7 @@ const getCategories = unstable_cache(
         id: true,
         name: true,
         parentCategoryId: true,
+        
       },
       orderBy: [
         {

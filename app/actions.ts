@@ -55,7 +55,7 @@ export async function createPost(formData: FormData) {
   });
 
   revalidateTag("posts");
-  redirect("/post");
+  redirect("/");
 }
 
 export async function createUser(state: SignupFormState, formData: FormData) {

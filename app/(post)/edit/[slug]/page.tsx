@@ -2,6 +2,7 @@ import EditPostForm from "@/components/edit-post-form";
 import { auth } from "@/auth";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
+import {Post, TagsOnPosts, Tag} from "@prisma/client"
 
 const getPost = unstable_cache(
   async (id: string) => {
@@ -9,6 +10,13 @@ const getPost = unstable_cache(
       where: {
         id,
       },
+      include: {
+        tags: {
+          include: {
+            tag: true,
+          }
+        },
+      }
     });
   },
   ["posts"],
@@ -38,7 +46,7 @@ export default async function Page({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const postId = (await params).slug.split(".")[0].split("-").pop();
+  const postId = (await params).slug;
   if (!postId) {
     return null;
   }
@@ -47,21 +55,18 @@ export default async function Page({
   const session = await auth();
 
   if (!session?.user) return null;
-
-  if (!post) {
-    return (
-      <main>
-        <h2>404</h2>
-      </main>
-    );
+  if (!post || post.authorId !== session.user.id) {
+    return <div>Bài viết không tồn tại</div>;
   }
+
   return (
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-4">
         <EditPostForm
           authorId={session.user.id as string}
           categories={categories}
-          post={post}
+          post={post as unknown as Post & { tags: TagsOnPosts & {tag: Tag}[]}
+          }
         />
       </div>
     </main>
