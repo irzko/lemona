@@ -32,7 +32,7 @@ export default async function Page() {
         <h3 className="mb-4">Bài viết mới</h3>
         <ul className="grid grid-cols-2 space-y-0 list-none sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {allCategories.map((category) => {
-            return <li key={category.id}><Link href={`/admin/categories/edit/${category.id}`}>{category.id}</Link>>{category.name}</li>;
+            return <li key={category.id}><Link href={`/admin/categories/edit/${category.id}`}>{category.id}</Link>{category.name}</li>;
           })}
         </ul>
       </div>
