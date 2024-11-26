@@ -63,9 +63,9 @@ import {
 } from "./utils";
 
 import {
-  INSERT_IMAGE_COMMAND,
+  // INSERT_IMAGE_COMMAND,
   InsertImageDialog,
-  InsertImagePayload,
+  // InsertImagePayload,
 } from "../ImagesPlugin";
 
 import {
