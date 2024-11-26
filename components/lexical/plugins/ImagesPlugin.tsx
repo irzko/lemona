@@ -21,7 +21,7 @@ import * as React from "react";
 
 import { $createImageNode, ImageNode, ImagePayload } from "../nodes/ImageNode";
 import Button from "../../ui/Button";
-import { DialogActions, DialogButtonsList } from "../../ui/Dialog";
+import { DialogActions } from "../../ui/Dialog";
 
 import Input from "../../ui/Input";
 
@@ -43,26 +43,27 @@ export function InsertImageUriDialogBody({
   return (
     <>
       <Input
-        label="Image URL"
+        label="URL ảnh"
         placeholder="i.e. https://source.unsplash.com/random"
-        onChange={() => setSrc}
+        onChange={(e) => setSrc(e.target.value)}
         value={src}
         data-test-id="image-modal-url-input"
       />
       <Input
         label="Alt Text"
         placeholder="Random unsplash image"
-        onChange={() => setAltText}
+        onChange={(e) => setAltText(e.target.value)}
         value={altText}
         data-test-id="image-modal-alt-text-input"
       />
       <DialogActions>
         <Button
+          color="primary"
           data-test-id="image-modal-confirm-btn"
           disabled={isDisabled}
           onClick={() => onClick({ altText, src })}
         >
-          Confirm
+          Xác nhận
         </Button>
       </DialogActions>
     </>
@@ -76,7 +77,6 @@ export function InsertImageDialog({
   activeEditor: LexicalEditor;
   onClose: () => void;
 }): JSX.Element {
-  const [mode, setMode] = useState<null | "url" | "file">(null);
   const hasModifier = useRef(false);
 
   useEffect(() => {
@@ -97,23 +97,7 @@ export function InsertImageDialog({
 
   return (
     <>
-      {!mode && (
-        <DialogButtonsList>
-          <Button
-            data-test-id="image-modal-option-url"
-            onClick={() => setMode("url")}
-          >
-            URL
-          </Button>
-          <Button
-            data-test-id="image-modal-option-file"
-            onClick={() => setMode("file")}
-          >
-            File
-          </Button>
-        </DialogButtonsList>
-      )}
-      {mode === "url" && <InsertImageUriDialogBody onClick={onClick} />}
+      <InsertImageUriDialogBody onClick={onClick} />
     </>
   );
 }

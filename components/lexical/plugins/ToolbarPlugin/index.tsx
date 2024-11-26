@@ -1009,7 +1009,7 @@ export default function ToolbarPlugin({
           <Button
             isIconOnly
             onClick={() => {
-              showModal("Insert Image", (onClose) => (
+              showModal("Chèn ảnh", (onClose) => (
                 <InsertImageDialog
                   activeEditor={activeEditor}
                   onClose={onClose}
