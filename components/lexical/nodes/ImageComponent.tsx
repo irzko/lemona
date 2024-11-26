@@ -343,7 +343,7 @@ export default function ImageComponent({
     setSelected,
   ]);
 
-  const draggable = isSelected && $isNodeSelection(selection) && !isResizing;
+  const draggable = isSelected && $isNodeSelection(selection);
   const isFocused = (isSelected) && isEditable;
   return (
     <Suspense fallback={null}>
