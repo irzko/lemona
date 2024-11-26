@@ -1,50 +1,13 @@
 import {
   $isTextNode,
   DOMConversionMap,
-  DOMExportOutput,
-  DOMExportOutputMap,
-  Klass,
-  LexicalEditor,
-  LexicalNode,
-  ParagraphNode,
   TextNode,
 } from "lexical";
-import Nodes from "./nodes"
+import Nodes from "./nodes";
 import LexicalTheme from "./LexicalTheme";
 import { parseAllowedColor, parseAllowedFontSize } from "./styleConfig";
 
-const removeStylesExportDOM = (
-  editor: LexicalEditor,
-  target: LexicalNode,
-): DOMExportOutput => {
-  const output = target.exportDOM(editor);
-  if (output && output.element instanceof HTMLElement) {
-    // Remove all inline styles and classes if the element is an HTMLElement
-    // Children are checked as well since TextNode can be nested
-    // in i, b, and strong tags.
-    for (const el of [
-      output.element,
-      ...output.element.querySelectorAll('[style],[class],[dir="ltr"]'),
-    ]) {
-      el.removeAttribute("class");
-      el.removeAttribute("style");
-      if (el.getAttribute("dir") === "ltr") {
-        el.removeAttribute("dir");
-      }
-    }
-  }
-  return output;
-};
-
-const exportMap: DOMExportOutputMap = new Map<
-  Klass<LexicalNode>,
-  (editor: LexicalEditor, target: LexicalNode) => DOMExportOutput
->([
-  [ParagraphNode, removeStylesExportDOM],
-  [TextNode, removeStylesExportDOM],
-]);
-
-const getExtraStyles = (element: HTMLElement): string => {
+function getExtraStyles(element: HTMLElement): string {
   // Parse styles from pasted input, but only if they match exactly the
   // sort of styles that would be produced by exportDOM
   let extraStyles = "";
@@ -61,9 +24,9 @@ const getExtraStyles = (element: HTMLElement): string => {
     extraStyles += `color: ${color};`;
   }
   return extraStyles;
-};
+}
 
-const constructImportMap = (): DOMConversionMap => {
+function buildImportMap(): DOMConversionMap {
   const importMap: DOMConversionMap = {};
 
   // Wrap all TextNode importers with a function that also imports
@@ -107,17 +70,14 @@ const constructImportMap = (): DOMConversionMap => {
   }
 
   return importMap;
-};
+}
 
 export const editorConfig = {
   html: {
-    export: exportMap,
-    import: constructImportMap(),
+    import: buildImportMap(),
   },
   namespace: "React.js Demo",
-  nodes: [
-    ...Nodes
-  ],
+  nodes: [...Nodes],
   onError(error: Error) {
     throw error;
   },

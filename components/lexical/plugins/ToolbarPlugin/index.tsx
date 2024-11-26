@@ -50,7 +50,7 @@ import {
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
 } from "lexical";
-
+import useModal from "../../hooks/useModal";
 import {
   clearFormatting,
   formatBulletList,
@@ -61,6 +61,13 @@ import {
   formatParagraph,
   formatQuote,
 } from "./utils";
+
+import {
+  INSERT_IMAGE_COMMAND,
+  InsertImageDialog,
+  InsertImagePayload,
+} from "../ImagesPlugin";
+
 import {
   blockTypeToBlockName,
   useToolbarState,
@@ -567,7 +574,7 @@ export default function ToolbarPlugin({
   const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
     null,
   );
-  // const [modal, showModal] = useModal();
+  const [modal, showModal] = useModal();
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
   const { toolbarState, updateToolbarState } = useToolbarState();
 
@@ -803,7 +810,7 @@ export default function ToolbarPlugin({
   // const canViewerSeeInsertCodeButton = !toolbarState.isImageCaption;
 
   return (
-    <div className="sticky z-40 top-16 px-3 py-2 border-b flex items-center flex-wrap gap-2">
+    <div className="sticky z-40 top-16 px-3 py-2 border-b flex items-center flex-wrap gap-2 bg-gray-50">
       <Button
         disabled={!toolbarState.canUndo || !isEditable}
         onClick={() => {
@@ -999,7 +1006,45 @@ export default function ToolbarPlugin({
               />
             </svg>
           </Button>
-
+          <Button
+            isIconOnly
+            onClick={() => {
+              showModal("Insert Image", (onClose) => (
+                <InsertImageDialog
+                  activeEditor={activeEditor}
+                  onClose={onClose}
+                />
+              ));
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width={20}
+              height={20}
+              fill={"none"}
+            >
+              <circle
+                cx="7.5"
+                cy="7.5"
+                r="1.5"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
+                stroke="currentColor"
+                strokeWidth="2"
+              />
+              <path
+                d="M5 21C9.37246 15.775 14.2741 8.88406 21.4975 13.5424"
+                stroke="currentColor"
+                strokeWidth="2"
+              />
+            </svg>
+          </Button>
           <Divider />
           <DropDown
             disabled={!isEditable}
@@ -1208,6 +1253,7 @@ export default function ToolbarPlugin({
             <Divider />
           </>
         )}
+      {modal}
     </div>
   );
 }
