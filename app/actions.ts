@@ -119,11 +119,7 @@ export async function updatePost(formData: FormData) {
     },
   });
 
-  await prisma.tagsOnPosts.deleteMany({
-    where: {
-      name: {},
-    },
-  });
+  
   revalidateTag("posts");
   redirect("/");
 }
