@@ -47,7 +47,7 @@ post: Post & { tags: TagsOnPosts & {tag: Tag}[]}
     >
       <Input id="title" name="title" placeholder="Tiêu đề" defaultValue={post.title} required />
 
-      <LexicalEditor onChange={handleChange} />
+      <LexicalEditor onChange={handleChange} markdown={post.content} />
       <Select defaultValue={post.categoryId} name="categoryId">
         {categories.map((category) => {
           return (
