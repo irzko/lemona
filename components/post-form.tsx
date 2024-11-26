@@ -7,10 +7,7 @@ import { EditorState } from "lexical";
 import Button from "@/components/ui/Button";
 import Select from "@/components/ui/select";
 import { useCallback } from "react";
-import dynamic from 'next/dynamic'
-const LexicalEditor = dynamic(() => import('@/components/lexical'), {
-  ssr: false,
-})
+import LexicalEditor from '@/components/lexical'
 
 interface Category {
   id: string;

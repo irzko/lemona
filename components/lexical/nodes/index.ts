@@ -5,12 +5,14 @@ import { ListItemNode, ListNode } from "@lexical/list";
 import {TableCellNode, TableNode, TableRowNode} from '@lexical/table';
 import type { Klass, LexicalNode } from "lexical";
 import { ParagraphNode, TextNode } from "lexical";
+import {ImageNode} from './ImageNode';
 
 const Nodes: Array<Klass<LexicalNode>> = [
   AutoLinkNode,
   CodeHighlightNode,
   CodeNode,
   HeadingNode,
+  ImageNode,
   LinkNode,
   ListItemNode,
   ListNode,
