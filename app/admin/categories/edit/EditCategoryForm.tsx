@@ -11,7 +11,7 @@ import {Category} from "@prisma/client"
 export default function EditCategoryForm({category, allCategories}: {category: Category; allCategories: Category []}) {
   const [state, action] = useActionState(updateCategory, undefined);
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col space-y-6">
       <h1 className="text-2xl font-bold">Cập nhật danh mục</h1>
       <form className="flex flex-col gap-6" action={(formData)=>{
         formData.append("id", category.id);

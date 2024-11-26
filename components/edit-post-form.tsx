@@ -37,7 +37,7 @@ post: Post & { tags: TagsOnPosts & {tag: Tag}[]}
 
   return (
     <form
-      className="gap-6 p-4 flex flex-col"
+      className="gap-6 flex flex-col"
       action={(formData) => {
         formData.append("content", content);
         formData.append("id", post.id);

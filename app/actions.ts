@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { createId } from "@paralleldrive/cuid2";
 import { hash } from "argon2";
 import slugify from "slugify";
+
 import {
   SignupFormSchema,
   SignupFormState,
@@ -17,7 +18,7 @@ export async function createPost(formData: FormData) {
   const content = formData.get("content") as string;
   const authorId = formData.get("authorId") as string;
   const featuredImageURL = formData.get("featuredImageURL") as string;
-  const tags = formData.get("tags") as string;
+  const tags = (formData.get("tags") as string).split(",").map((i) => i.trim());
   await prisma.post.create({
     data: {
       id: createId(),
@@ -35,14 +36,14 @@ export async function createPost(formData: FormData) {
       }),
       categoryId: formData.get("categoryId") as string,
       tags: {
-        create: tags.split(",").map((tagName) => ({
+        create: tags.map((tagName) => ({
           tag: {
             connectOrCreate: {
               where: {
-                name: tagName.trim(),
+                name: tagName,
               },
               create: {
-                name: tagName.trim(),
+                name: tagName,
                 id: createId(),
               },
             },
@@ -77,7 +78,8 @@ export async function updatePost(formData: FormData) {
     },
   });
 
-  const unuseTags = existingTags.filter((tag) => !tags.includes(tag.tag.name));
+  const unuseTags = existingTags.filter(tag => !tags.includes(tag.tag.name))
+  const useTags = tags.filter(tag => !existingTags.map(tag => tag.tag.name).includes(tag))
 
   await prisma.post.update({
     where: {
@@ -102,7 +104,7 @@ export async function updatePost(formData: FormData) {
           tagId: tg.tag.id,
         })),
 
-        create: tags.map((tagName) => ({
+        create: useTags.map((tagName) => ({
           tag: {
             connectOrCreate: {
               where: {
