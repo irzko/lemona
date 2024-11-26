@@ -18,9 +18,12 @@ import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
-import ImagesPlugin from './plugins/ImagesPlugin';
 import { useState } from "react";
 const placeholder = "Hãy bắt đầu viết...";
+import dynamic from 'next/dynamic'
+const ImagesPlugin = dynamic(() => import('./plugins/ImagesPlugin'), {
+  ssr: false,
+})
 
 export default function Editor({ markdown }: { markdown?: string }) {
   const [editor] = useLexicalComposerContext();
