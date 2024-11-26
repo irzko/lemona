@@ -3,6 +3,7 @@ import { auth } from "@/auth";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 
+
 const getCategories = unstable_cache(
   async () => {
     return await prisma.category.findMany({

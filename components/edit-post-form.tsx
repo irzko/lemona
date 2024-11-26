@@ -2,14 +2,16 @@
 import { useState } from "react";
 import Input from "@/components/ui/Input";
 import { updatePost } from "@/app/actions";
-import LexicalEditor from "@/components/lexical";
 import { $convertToMarkdownString, TRANSFORMERS } from "@lexical/markdown";
 import { EditorState } from "lexical";
 import Button from "@/components/ui/Button";
 import Select from "@/components/ui/select";
 import { useCallback } from "react";
 import {Post, TagsOnPosts, Tag} from "@prisma/client"
-
+import dynamic from 'next/dynamic'
+const LexicalEditor = dynamic(() => import('@/components/lexical'), {
+  ssr: false,
+})
 
 
 interface Category {

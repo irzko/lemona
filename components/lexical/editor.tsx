@@ -19,21 +19,19 @@ import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPl
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import { useState } from "react";
+import ImagesPlugin from "./plugins/ImagesPlugin";
 const placeholder = "Hãy bắt đầu viết...";
-import dynamic from 'next/dynamic'
-const ImagesPlugin = dynamic(() => import('./plugins/ImagesPlugin'), {
-  ssr: false,
-})
+
 
 export default function Editor({ markdown }: { markdown?: string }) {
   const [editor] = useLexicalComposerContext();
   const [activeEditor, setActiveEditor] = useState(editor);
   if (markdown) {
     editor.update(() => {
-    $convertFromMarkdownString(markdown, TRANSFORMERS);
-  });
+      $convertFromMarkdownString(markdown, TRANSFORMERS);
+    });
   }
-  
+
   return (
     <div className="w-full border border-gray-200 rounded-lg bg-gray-50">
       <ToolbarPlugin
