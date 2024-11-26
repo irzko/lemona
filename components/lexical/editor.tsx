@@ -13,9 +13,7 @@ import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
-import {
-  TRANSFORMERS,
-} from "@lexical/markdown";
+import { $convertFromMarkdownString, TRANSFORMERS } from "@lexical/markdown";
 import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
@@ -23,11 +21,15 @@ import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import { useState } from "react";
 const placeholder = "Hãy bắt đầu viết...";
 
-export default function Editor() {
+export default function Editor({ markdown }: { markdown?: string }) {
   const [editor] = useLexicalComposerContext();
   const [activeEditor, setActiveEditor] = useState(editor);
-
-
+  if (markdown) {
+    editor.update(() => {
+    $convertFromMarkdownString(markdown, TRANSFORMERS);
+  });
+  }
+  
   return (
     <div className="w-full border border-gray-200 rounded-lg bg-gray-50">
       <ToolbarPlugin

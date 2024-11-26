@@ -8,17 +8,19 @@ datasource db {
 }
 
 model Post {
-  id               String              @id
-  createdAt        DateTime            @default(now())
-  updatedAt        DateTime            @updatedAt
-  title            String
+  id               String        @id
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  title            String        @unique
+  slug             String        @unique
   featuredImageURL String
   content          String
   authorId         String
-  published        Boolean             @default(false)
-  categories       CategoriesOnPosts[]
+  published        Boolean       @default(false)
+  categoryId       String
+  category         Category      @relation(fields: [categoryId], references: [id])
   tags             TagsOnPosts[]
-  author           User                @relation(fields: [authorId], references: [id])
+  author           User          @relation(fields: [authorId], references: [id])
 }
 
 enum Role {
@@ -40,13 +42,14 @@ model User {
 }
 
 model Category {
-  id               String              @id
-  name             String              @unique
+  id               String   @id
+  name             String   @unique
+  slug             String   @unique
   description      String?
   parentCategoryId String?
   image            String?
-  posts            CategoriesOnPosts[]
-  createdAt        DateTime            @default(now())
+  posts            Post[]
+  createdAt        DateTime @default(now())
 }
 
 model Tag {
@@ -54,16 +57,6 @@ model Tag {
   name      String        @unique
   posts     TagsOnPosts[]
   createdAt DateTime      @default(now())
-}
-
-model CategoriesOnPosts {
-  postId     String
-  post       Post     @relation(fields: [postId], references: [id])
-  categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
-  createdAt  DateTime @default(now())
-
-  @@id([postId, categoryId])
 }
 
 model TagsOnPosts {

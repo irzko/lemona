@@ -1,8 +1,7 @@
-import Markdown from "react-markdown";
+import EditPostForm from "@/components/edit-post-form";
+import { auth } from "@/auth";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
-import remarkGfm from "remark-gfm";
-import remarkToc from 'remark-toc'
 
 const getPost = unstable_cache(
   async (id: string) => {
@@ -16,6 +15,24 @@ const getPost = unstable_cache(
   { tags: ["posts"] },
 );
 
+const getCategories = unstable_cache(
+  async () => {
+    return await prisma.category.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+      orderBy: [
+        {
+          name: "asc",
+        },
+      ],
+    });
+  },
+  ["categories"],
+  { tags: ["categories"] },
+);
+
 export default async function Page({
   params,
 }: {
@@ -26,6 +43,10 @@ export default async function Page({
     return null;
   }
   const post = await getPost(postId);
+  const categories = await getCategories();
+  const session = await auth();
+
+  if (!session?.user) return null;
 
   if (!post) {
     return (
@@ -37,11 +58,11 @@ export default async function Page({
   return (
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-4">
-        <h1>{post.title || "(No title)"}</h1>
-        <i>{new Date(post.createdAt).toLocaleString()}</i>
-        <Markdown remarkPlugins={[[remarkGfm, { singleTilde: false }], [remarkToc]]}>
-          {post.content || "(No content)"}
-        </Markdown>
+        <EditPostForm
+          authorId={session.user.id as string}
+          categories={categories}
+          post={post}
+        />
       </div>
     </main>
   );

@@ -7,11 +7,11 @@ import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 import { memo } from "react";
 
 const LexicalEditor = memo(
-  ({ onChange }: { onChange: (editorState: EditorState) => void }) => {
+  ({ onChange, markdown }: { onChange: (editorState: EditorState) => void; markdown?: string }) => {
     return (
       <LexicalComposer initialConfig={editorConfig}>
         <ToolbarContext>
-          <Editor />
+          <Editor markdown={markdown}/>
         </ToolbarContext>
         <OnChangePlugin onChange={onChange} />
       </LexicalComposer>

@@ -1,6 +1,5 @@
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
-import slugify from "slugify";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -10,6 +9,7 @@ const getPosts = unstable_cache(
       select: {
         id: true,
         title: true,
+        slug: true,
         featuredImageURL: true,
       },
       orderBy: [
@@ -34,14 +34,7 @@ export default async function Page() {
             <li className="overflow-hidden bg-white" key={post.id}>
               <Link
                 className="text-gray-800 hover:no-underline"
-                href={`/post/${slugify(post.title, {
-                  replacement: "-",
-                  remove: undefined,
-                  lower: true,
-                  strict: false,
-                  locale: "vi",
-                  trim: true,
-                })}-${post.id}.html`}
+                href={`/${post.slug}`}
               >
                 <div className="relative w-full aspect-video">
                   <Image
@@ -64,19 +57,12 @@ export default async function Page() {
             <li className="overflow-hidden bg-white" key={post.id}>
               <Link
                 className="text-gray-800 hover:no-underline flex gap-4"
-                href={`/post/${slugify(post.title, {
-                  replacement: "-",
-                  remove: undefined,
-                  lower: true,
-                  strict: false,
-                  locale: "vi",
-                  trim: true,
-                })}-${post.id}.html`}
+                href={`/${post.slug}`}
               >
                 <div className="w-2/5">
                   <div className="relative w-full aspect-video">
                     <Image
-                      src={"/no-image.jpg"}
+                      src={post.title || "/no-image.jpg"}
                       alt={post.title}
                       fill
                       className="object-cover rounded-lg"

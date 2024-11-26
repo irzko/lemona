@@ -4,6 +4,7 @@ import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { createId } from "@paralleldrive/cuid2";
 import { hash } from "argon2";
+import slugify from "slugify";
 import {
   SignupFormSchema,
   SignupFormState,
@@ -24,17 +25,15 @@ export async function createPost(formData: FormData) {
       content,
       authorId,
       featuredImageURL,
-      categories: {
-        create: [
-          {
-            category: {
-              connect: {
-                id: formData.get("categoryId") as string,
-              },
-            },
-          },
-        ],
-      },
+      slug: slugify(title, {
+                  replacement: "-",
+                  remove: undefined,
+                  lower: true,
+                  strict: true,
+                  locale: "vi",
+                  trim: true,
+                }),
+      categoryId: formData.get("categoryId") as string,
       tags: {
         create: [
           {
@@ -120,6 +119,14 @@ export async function createCategory(
   await prisma.category.create({
     data: {
       id: createId(),
+      slug: slugify(name, {
+                  replacement: "-",
+                  remove: undefined,
+                  lower: true,
+                  strict: true,
+                  locale: "vi",
+                  trim: true,
+                }),
       name,
       parentCategoryId,
     },
