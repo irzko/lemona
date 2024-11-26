@@ -55,7 +55,7 @@ export default async function Page({
   const session = await auth();
 
   if (!session?.user) return null;
-  if (!post || post.authorId !== session.user.id) {
+  if (!post) {
     return <div>Bài viết không tồn tại</div>;
   }
 
