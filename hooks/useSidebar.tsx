@@ -29,7 +29,7 @@ export default function useSidebar(): [
     if (sidebarContent === null) {
       return null;
     }
-    const {title, content, closeOnClickOutside} = modalContent;
+    const {title, content, closeOnClickOutside} = sidebarContent;
     return (
       <Sidebar
         onClose={onClose}
