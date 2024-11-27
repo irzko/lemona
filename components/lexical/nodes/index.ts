@@ -11,6 +11,7 @@ import {EquationNode} from './EquationNode';
 import {ImageNode} from './ImageNode';
 import {KeywordNode} from './KeywordNode';
 import {EmojiNode} from './EmojiNode';
+import {TweetNode} from './TweetNode';
 
 const Nodes: Array<Klass<LexicalNode>> = [
   AutoLinkNode,
@@ -32,6 +33,7 @@ const Nodes: Array<Klass<LexicalNode>> = [
   TableCellNode,
   TableRowNode,
   TextNode,
+  TweetNode,
 ];
 
 export default Nodes;
