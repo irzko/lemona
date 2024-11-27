@@ -1,3 +1,4 @@
+import "./styles.css";
 import { ToolbarContext } from "@/components/lexical/context/ToolbarContext";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import Editor from "@/components/lexical/editor";
