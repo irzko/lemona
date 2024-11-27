@@ -2,7 +2,8 @@
 import { useState } from "react";
 import Input from "@/components/ui/Input";
 import { createPost } from "@/app/actions";
-import { $convertToMarkdownString, TRANSFORMERS } from "@lexical/markdown";
+import { $convertToMarkdownString } from "@lexical/markdown";
+import {PLAYGROUND_TRANSFORMERS} from "@/components/lexical/plugins/MarkdownTransformers";
 import { EditorState } from "lexical";
 import Button from "@/components/ui/Button";
 import Select from "@/components/ui/select";
@@ -24,7 +25,7 @@ export default function PostForm({
   const [content, setContent] = useState("");
   const handleChange = useCallback((editorState: EditorState) => {
     editorState.read(() => {
-      const markdownText = $convertToMarkdownString(TRANSFORMERS);
+      const markdownText = $convertToMarkdownString(PLAYGROUND_TRANSFORMERS);
       setContent(markdownText);
     });
   }, []);

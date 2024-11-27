@@ -14,7 +14,8 @@ import {useSharedHistoryContext} from './context/SharedHistoryContext';
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
-import { $convertFromMarkdownString, TRANSFORMERS } from "@lexical/markdown";
+import { $convertFromMarkdownString } from "@lexical/markdown";
+import {PLAYGROUND_TRANSFORMERS} from "@/components/lexical/plugins/MarkdownTransformers";
 import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
@@ -32,7 +33,7 @@ export default function Editor({ markdown }: { markdown?: string }) {
   console.log(isLinkEditMode)
   if (markdown) {
     editor.update(() => {
-      $convertFromMarkdownString(markdown, TRANSFORMERS);
+      $convertFromMarkdownString(markdown, PLAYGROUND_TRANSFORMERS);
     });
   }
 

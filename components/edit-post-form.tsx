@@ -2,8 +2,9 @@
 import { useState } from "react";
 import Input from "@/components/ui/Input";
 import { updatePost } from "@/app/actions";
-import { $convertToMarkdownString, TRANSFORMERS } from "@lexical/markdown";
+import { $convertToMarkdownString } from "@lexical/markdown";
 import { EditorState } from "lexical";
+import {PLAYGROUND_TRANSFORMERS} from "@/components/lexical/plugins/MarkdownTransformers";
 import Button from "@/components/ui/Button";
 import Select from "@/components/ui/select";
 import { useCallback } from "react";
@@ -29,7 +30,7 @@ post: Post & { tags: TagsOnPosts & {tag: Tag}[]}
   const [content, setContent] = useState("");
   const handleChange = useCallback((editorState: EditorState) => {
     editorState.read(() => {
-      const markdownText = $convertToMarkdownString(TRANSFORMERS);
+      const markdownText = $convertToMarkdownString(PLAYGROUND_TRANSFORMERS);
       setContent(markdownText);
     });
   }, []);
