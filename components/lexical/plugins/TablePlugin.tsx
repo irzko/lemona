@@ -24,11 +24,11 @@ import {
 } from 'lexical';
 import {createContext, useContext, useEffect, useMemo, useState} from 'react';
 import * as React from 'react';
-import invariant from 'shared/invariant';
+import invariant from '../shared/invariant';
 
-import Button from '../ui/Button';
-import {DialogActions} from '../ui/Dialog';
-import TextInput from '../ui/TextInput';
+import Button from '../../ui/Button';
+import {DialogActions} from '../../ui/Dialog';
+import Input from '../../ui/Input';
 
 export type InsertTableCommandPayload = Readonly<{
   columns: string;
@@ -121,18 +121,18 @@ export function InsertTableDialog({
 
   return (
     <>
-      <TextInput
+      <Input
         placeholder={'# of rows (1-500)'}
         label="Rows"
-        onChange={setRows}
+        onChange={(e) => setRows(e.target.value)}
         value={rows}
         data-test-id="table-modal-rows"
         type="number"
       />
-      <TextInput
+      <Input
         placeholder={'# of columns (1-50)'}
         label="Columns"
-        onChange={setColumns}
+        onChange={(e) => setColumns(e.target.value)}
         value={columns}
         data-test-id="table-modal-columns"
         type="number"
