@@ -10,6 +10,7 @@ import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import {useSharedHistoryContext} from './context/SharedHistoryContext';
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
@@ -25,6 +26,7 @@ const placeholder = "Hãy bắt đầu viết...";
 
 export default function Editor({ markdown }: { markdown?: string }) {
   const [editor] = useLexicalComposerContext();
+  const {historyState} = useSharedHistoryContext();
   const [activeEditor, setActiveEditor] = useState(editor);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
   console.log(isLinkEditMode)
@@ -42,6 +44,7 @@ export default function Editor({ markdown }: { markdown?: string }) {
         setActiveEditor={setActiveEditor}
         setIsLinkEditMode={setIsLinkEditMode}
       />
+      <HistoryPlugin externalHistoryState={historyState} />
       <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
       <div className="relative">
         <RichTextPlugin
@@ -67,7 +70,6 @@ export default function Editor({ markdown }: { markdown?: string }) {
           hasTabHandler={true}
         />
         <ImagesPlugin />
-        <HistoryPlugin />
         <AutoFocusPlugin />
       </div>
     </div>
