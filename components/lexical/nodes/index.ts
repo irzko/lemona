@@ -7,7 +7,7 @@ import type { Klass, LexicalNode } from "lexical";
 import { ParagraphNode, TextNode } from "lexical";
 import {OverflowNode} from '@lexical/overflow';
 import {HorizontalRuleNode} from '@lexical/react/LexicalHorizontalRuleNode';
-
+import {EquationNode} from './EquationNode';
 import {ImageNode} from './ImageNode';
 import {KeywordNode} from './KeywordNode';
 import {EmojiNode} from './EmojiNode';
@@ -17,6 +17,7 @@ const Nodes: Array<Klass<LexicalNode>> = [
   CodeHighlightNode,
   CodeNode,
   EmojiNode,
+  EquationNode,
   HeadingNode,
   HorizontalRuleNode,
   ImageNode,
