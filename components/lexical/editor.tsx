@@ -46,7 +46,7 @@ export default function Editor({ markdown }: { markdown?: string }) {
         setIsLinkEditMode={setIsLinkEditMode}
       />
       <HistoryPlugin externalHistoryState={historyState} />
-      <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+      <MarkdownShortcutPlugin transformers={PLAYGROUND_TRANSFORMERS} />
       <div className="relative">
         <RichTextPlugin
           contentEditable={
