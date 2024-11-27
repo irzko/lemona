@@ -14,7 +14,7 @@ const theme: EditorThemeClasses = {
   autocomplete: 'PlaygroundEditorTheme__autocomplete',
   blockCursor: 'PlaygroundEditorTheme__blockCursor',
   characterLimit: 'PlaygroundEditorTheme__characterLimit',
-  code: 'PlaygroundEditorTheme__code',
+  // code: 'PlaygroundEditorTheme__code',
   codeHighlight: {
     atrule: 'PlaygroundEditorTheme__tokenAttr',
     attr: 'PlaygroundEditorTheme__tokenAttr',
@@ -52,6 +52,7 @@ const theme: EditorThemeClasses = {
     focus: 'PlaygroundEditorTheme__embedBlockFocus',
   },
   hashtag: 'PlaygroundEditorTheme__hashtag',
+  /*
   heading: {
     h1: 'PlaygroundEditorTheme__h1',
     h2: 'PlaygroundEditorTheme__h2',
@@ -60,6 +61,7 @@ const theme: EditorThemeClasses = {
     h5: 'PlaygroundEditorTheme__h5',
     h6: 'PlaygroundEditorTheme__h6',
   },
+  */
   hr: 'PlaygroundEditorTheme__hr',
   image: 'editor-image',
   indent: 'PlaygroundEditorTheme__indent',
@@ -88,8 +90,9 @@ const theme: EditorThemeClasses = {
   mark: 'PlaygroundEditorTheme__mark',
   markOverlap: 'PlaygroundEditorTheme__markOverlap',
   paragraph: 'PlaygroundEditorTheme__paragraph',
-  quote: 'PlaygroundEditorTheme__quote',
+  // quote: 'PlaygroundEditorTheme__quote',
   rtl: 'PlaygroundEditorTheme__rtl',
+  /*
   table: 'PlaygroundEditorTheme__table',
   tableCell: 'PlaygroundEditorTheme__tableCell',
   tableCellActionButton: 'PlaygroundEditorTheme__tableCellActionButton',
@@ -102,6 +105,7 @@ const theme: EditorThemeClasses = {
   tableScrollableWrapper: 'PlaygroundEditorTheme__tableScrollableWrapper',
   tableSelected: 'PlaygroundEditorTheme__tableSelected',
   tableSelection: 'PlaygroundEditorTheme__tableSelection',
+  */
   text: {
     bold: 'PlaygroundEditorTheme__textBold',
     code: 'PlaygroundEditorTheme__textCode',

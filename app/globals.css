@@ -42,6 +42,9 @@
   ol {
     @apply space-y-1 text-gray-500 list-decimal list-inside;
   }
+  li>p {
+    @apply inline;
+  }
   a {
     @apply font-medium text-blue-600 hover:underline;
   }
@@ -55,5 +58,29 @@
 
   pre>code {
     @apply bg-inherit text-inherit border-none rounded-none;
+  }
+
+  table {
+    @apply w-full text-sm text-left rtl:text-right text-gray-400;
+  }
+
+  thead {
+    @apply text-xs uppercase bg-gray-700 text-gray-400;
+  }
+
+  thead>tr>th {
+    @apply px-6 py-3;
+  }
+
+  tbody>tr {
+    @apply border-b bg-gray-800 border-gray-700
+  }
+
+  tbody>tr>th {
+    @apply px-6 py-4 font-medium whitespace-nowrap text-white;
+  }
+
+  td {
+    @apply px-6 py-4;
   }
 }
