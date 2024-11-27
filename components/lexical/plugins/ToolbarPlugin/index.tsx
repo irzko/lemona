@@ -12,7 +12,7 @@ import {
   $isEditorIsNestedEditor,
   mergeRegister,
 } from "@lexical/utils";
-// import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
+import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { $isListNode, ListNode } from "@lexical/list";
 import { $isTableNode, $isTableSelection } from "@lexical/table";
 import {
@@ -33,11 +33,12 @@ import {
   /* $isQuoteNode,
   HeadingTagType, */
 } from "@lexical/rich-text";
+import {InsertTableDialog} from '../TablePlugin';
 import {
   $getNodeByKey,
   // $getRoot,
   $getSelection,
-  // $isElementNode,
+  $isElementNode,
   $isRangeSelection,
   $isRootOrShadowRoot,
   CAN_REDO_COMMAND,
@@ -73,7 +74,7 @@ import {
   blockTypeToBlockName,
   useToolbarState,
 } from "@/components/lexical/context/ToolbarContext";
-// import { sanitizeUrl } from "@/components/lexical/utils/url";
+import { sanitizeUrl } from "@/components/lexical/utils/url";
 import { Dispatch, useCallback, useEffect, useState } from "react";
 import { getSelectedNode } from "@/components/lexical/utils/getSelectedNode";
 import Button from "@/components/ui/Button";
@@ -565,12 +566,12 @@ export default function ToolbarPlugin({
   editor,
   activeEditor,
   setActiveEditor,
-  // setIsLinkEditMode,
+  setIsLinkEditMode,
 }: {
   editor: LexicalEditor;
   activeEditor: LexicalEditor;
   setActiveEditor: Dispatch<LexicalEditor>;
-  // setIsLinkEditMode: Dispatch<boolean>;
+  setIsLinkEditMode: Dispatch<boolean>;
 }) {
   const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
     null,
@@ -614,9 +615,9 @@ export default function ToolbarPlugin({
 
       // Update links
       const node = getSelectedNode(selection);
-      // const parent = node.getParent();
-      // const isLink = $isLinkNode(parent) || $isLinkNode(node);
-      // updateToolbarState("isLink", isLink);
+      const parent = node.getParent();
+      const isLink = $isLinkNode(parent) || $isLinkNode(node);
+      updateToolbarState("isLink", isLink);
 
       const tableNode = $findMatchingParent(node, $isTableNode);
       if ($isTableNode(tableNode)) {
@@ -658,7 +659,7 @@ export default function ToolbarPlugin({
           }
         }
       }
-      /*
+      updateToolbarState("isEditable", true);
       let matchingParent;
       
       if ($isLinkNode(parent)) {
@@ -678,7 +679,7 @@ export default function ToolbarPlugin({
           : $isElementNode(node)
             ? node.getFormatType()
             : parent?.getFormatType() || "left",
-      );*/
+      );
     }
 
     if ($isRangeSelection(selection) || $isTableSelection(selection)) {
@@ -774,7 +775,7 @@ export default function ToolbarPlugin({
     [applyStyleText],
   );
   */
-  /*
+
   const insertLink = useCallback(() => {
     if (!toolbarState.isLink) {
       setIsLinkEditMode(true);
@@ -787,7 +788,7 @@ export default function ToolbarPlugin({
       activeEditor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
     }
   }, [activeEditor, setIsLinkEditMode, toolbarState.isLink]);
-*/
+
   const onCodeLanguageSelect = useCallback(
     (value: string) => {
       activeEditor.update(() => {
@@ -1045,6 +1046,58 @@ export default function ToolbarPlugin({
                 strokeWidth="2"
               />
             </svg>
+          </Button>
+          <Button
+            isIconOnly
+            disabled={!isEditable}
+            onClick={insertLink}
+            className={
+            (toolbarState.isLink ? 'active' : '')
+            }
+            aria-label="Insert link"
+            >
+            <i className="format link" />
+          </Button>
+          <Button
+            isIconOnly
+      
+              onClick={() => {
+                    showModal('Insert Table', (onClose) => (
+                      <InsertTableDialog
+                        activeEditor={activeEditor}
+                        onClose={onClose}
+                      />
+                    ));
+                  }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width={20}
+                height={20}
+                fill={"none"}
+              >
+                <circle
+                  cx="7.5"
+                  cy="7.5"
+                  r="1.5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M5 21C9.37246 15.775 14.2741 8.88406 21.4975 13.5424"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+              </svg>
+
           </Button>
           <Divider />
           <DropDown

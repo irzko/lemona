@@ -55,6 +55,7 @@ const INITIAL_TOOLBAR_STATE = {
   fontSizeInputValue: `${DEFAULT_FONT_SIZE}`,
   isBold: false,
   isCode: false,
+  isEditable: false,
   isImageCaption: false,
   isItalic: false,
   isLink: false,
