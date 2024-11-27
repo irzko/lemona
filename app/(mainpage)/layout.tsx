@@ -2,7 +2,7 @@ import { Navbar, NavbarContent, NavbarItem } from "@/components/ui/navbar";
 import { Bangers } from "next/font/google";
 import Link from "next/link";
 import React from "react";
-import Menu from "@/components/menu";
+import PostSidebar from "@/components/PostSidebar";
 import { SessionProvider } from "next-auth/react";
 
 const bangers = Bangers({
@@ -17,7 +17,7 @@ export default async function HomeLayout({
     <>
       <Navbar>
         <SessionProvider>
-          <Menu />
+          <PostSidebar/>
         </SessionProvider>
 
         <Link
