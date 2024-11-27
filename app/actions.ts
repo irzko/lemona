@@ -14,18 +14,16 @@ import {
 } from "@/lib/definitions";
 
 export async function createPost(formData: FormData) {
-  const title = formData.get("title") as string;
-  const content = formData.get("content") as string;
-  const authorId = formData.get("authorId") as string;
-  const featuredImageURL = formData.get("featuredImageURL") as string;
+  const title = formData.get("title") as string
   const tags = (formData.get("tags") as string).split(",").map((i) => i.trim());
   await prisma.post.create({
     data: {
       id: createId(),
+      description: formData.get("description") as string,
       title,
-      content,
-      authorId,
-      featuredImageURL,
+      content: formData.get("content") as string,
+      authorId: formData.get("authorId") as string,
+      featuredImageURL: formData.get("featuredImageURL") as string,
       slug: slugify(title, {
         replacement: "-",
         remove: undefined,
@@ -63,6 +61,7 @@ export async function updatePost(formData: FormData) {
   const featuredImageURL = formData.get("featuredImageURL") as string;
   const tags = (formData.get("tags") as string).split(",").map((i) => i.trim());
   const id = formData.get("id") as string;
+  const description = formData.get("description") as string;
   
   const existingTags = await prisma.tagsOnPosts.findMany({
     where: {
@@ -88,6 +87,7 @@ export async function updatePost(formData: FormData) {
     data: {
       title,
       content,
+      description,
       featuredImageURL,
       slug: slugify(title, {
         replacement: "-",

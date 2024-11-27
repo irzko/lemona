@@ -57,6 +57,7 @@ post: Post & { tags: TagsOnPosts & {tag: Tag}[]}
         })}
       </Select>
       <Input id="featuredImageURL" name="featuredImageURL" placeholder="Featured image URL" defaultValue={post.featuredImageURL} required />
+      <Input id="description" name="description" placeholder="Nhập mô tả" defaultValue={post.description} required />
       <Input id="tags" name="tags" placeholder="Thẻ bài viết" required defaultValue={post.tags.map((i)=>i.tag.name).join(", ")} />
       <Button className="w-full" color="light" type="submit">
         Đăng

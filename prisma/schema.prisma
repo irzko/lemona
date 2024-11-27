@@ -14,6 +14,7 @@ model Post {
   title            String        @unique
   slug             String        @unique
   featuredImageURL String
+  description      String
   content          String
   authorId         String
   published        Boolean       @default(false)
