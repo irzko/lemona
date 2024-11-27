@@ -26,6 +26,8 @@ const placeholder = "Hãy bắt đầu viết...";
 export default function Editor({ markdown }: { markdown?: string }) {
   const [editor] = useLexicalComposerContext();
   const [activeEditor, setActiveEditor] = useState(editor);
+  const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
+  console.log(isLinkEditMode)
   if (markdown) {
     editor.update(() => {
       $convertFromMarkdownString(markdown, TRANSFORMERS);
@@ -38,7 +40,7 @@ export default function Editor({ markdown }: { markdown?: string }) {
         editor={editor}
         activeEditor={activeEditor}
         setActiveEditor={setActiveEditor}
-        // setIsLinkEditMode={setIsLinkEditMode}
+        setIsLinkEditMode={setIsLinkEditMode}
       />
       <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
       <div className="relative">
