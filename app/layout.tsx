@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Roboto } from 'next/font/google'
+ 
+const roboto = Roboto({
+  weight: ["100", "300", "400", "500", "700", "900"],
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: "Lemono",
@@ -26,7 +34,7 @@ export default function RootLayout({
           content="ca-pub-4568231404553117"
         ></meta>
       </head>
-      <body className={`font-sans`}>{children}</body>
+      <body className={`${roboto.className}`}>{children}</body>
     </html>
   );
 }
