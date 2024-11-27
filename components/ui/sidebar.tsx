@@ -59,8 +59,8 @@ function PortalImpl({
   }, [closeOnClickOutside, onClose]);
 
   return (
-    <div className="fixed inset-0 bg-gray-100/70 backdrop-blur-xl backdrop-saturate-150" role="dialog">
-      <div className="w-64 h-full bg-white rounded-e-lg" tabIndex={-1} ref={modalRef}>
+    <div className="fixed inset-0 z-50 bg-gray-100/70 backdrop-blur-xl backdrop-saturate-150" role="dialog">
+      <div className="w-80 h-full bg-white rounded-r-lg" tabIndex={-1} ref={modalRef}>
         <h3 className="Modal__title">{title}</h3>
         <Button
           isIconOnly
