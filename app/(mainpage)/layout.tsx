@@ -2,6 +2,8 @@ import { Navbar, NavbarContent, NavbarItem } from "@/components/ui/navbar";
 import { Bangers } from "next/font/google";
 import Link from "next/link";
 import React from "react";
+import Menu from "@/components/menu";
+import { SessionProvider } from "next-auth/react";
 
 const bangers = Bangers({
   weight: ["400"],
@@ -14,28 +16,10 @@ export default async function HomeLayout({
   return (
     <>
       <Navbar>
-        <Link
-          href={"/menu"}
-          type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-        >
-          <span className="sr-only">Open main menu</span>
-          <svg
-            className="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 17 14"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M1 1h15M1 7h15M1 13h15"
-            />
-          </svg>
-        </Link>
+        <SessionProvider>
+          <Menu />
+        </SessionProvider>
+
         <Link
           href="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
