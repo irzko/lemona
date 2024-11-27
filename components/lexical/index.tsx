@@ -4,16 +4,25 @@ import Editor from "@/components/lexical/editor";
 import { editorConfig } from "@/components/lexical/editorConfig";
 import { EditorState } from "lexical";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import { SharedHistoryContext } from "./context/SharedHistoryContext";
 import { memo } from "react";
 
 const LexicalEditor = memo(
-  ({ onChange, markdown }: { onChange: (editorState: EditorState) => void; markdown?: string }) => {
+  ({
+    onChange,
+    markdown,
+  }: {
+    onChange: (editorState: EditorState) => void;
+    markdown?: string;
+  }) => {
     return (
       <LexicalComposer initialConfig={editorConfig}>
-        <ToolbarContext>
-          <Editor markdown={markdown}/>
-        </ToolbarContext>
-        <OnChangePlugin onChange={onChange} />
+        <SharedHistoryContext>
+          <ToolbarContext>
+            <Editor markdown={markdown} />
+          </ToolbarContext>
+          <OnChangePlugin onChange={onChange} />
+        </SharedHistoryContext>
       </LexicalComposer>
     );
   },

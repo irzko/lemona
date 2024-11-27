@@ -17,14 +17,14 @@ export default function EditCategoryForm({category, allCategories}: {category: C
         formData.append("id", category.id);
         action(formData)
       }}>
-        <Select defaultValue={category.id}>
+        <Select defaultValue={category.parentCategoryId || undefined}>
           <option>Danh mục cha</option>
           {allCategories.map((category) =>{
       return <option key={category.id} value={category.id}>{category.name}</option>
           })}
         </Select>
         <Input name="name" placeholder="Tên danh mục" error={state?.errors.name} defaultValue={category.name}/>
-        <Input placeholder="Mô tả" defaultValue={category.description || ""} />
+        <Input placeholder="Mô tả" defaultValue={category.description || undefined} />
         <SubmitButton>Cập nhật</SubmitButton>
       </form>
     </div>
