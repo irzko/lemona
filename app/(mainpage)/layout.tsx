@@ -18,7 +18,7 @@ export default async function HomeLayout({
   return (
     <>
       <Navbar>
-        <SessionProvider basePath={"/auth"} session={session}>
+        <SessionProvider basePath={"/auth"} session={session} refetchOnWindowFocus={false}>
           <PostSidebar/>
         </SessionProvider>
 

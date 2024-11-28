@@ -1,24 +1,39 @@
-"use client";
+import CreateCategoryForm from "../CreateCategoryForm";
+import { auth } from "@/auth";
+import { unstable_cache } from "next/cache";
+import prisma from "@/lib/prisma";
 
-import { useActionState } from "react";
-import { createCategory } from "@/app/actions";
-import SubmitButton from "@/components/SubmitButton";
-import Input from "@/components/ui/Input";
-import Select from "@/components/ui/select";
 
-export default function CreateCategoryPage() {
-  const [state, action] = useActionState(createCategory, undefined);
+const getCategories = unstable_cache(
+  async () => {
+    return await prisma.category.findMany({
+      orderBy: [
+        {
+          name: "asc",
+        },
+      ],
+    });
+  },
+  ["categories"],
+  { tags: ["categories"] },
+);
+
+export default async function Page() {
+  const categoryId = (await params).slug;
+  if (!categoryId) {
+    return null;
+  }
+  const categories = await getCategories();
+  const session = await auth();
+
+  if (!session?.user) return null;
+
+
   return (
-    <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-bold">Tạo danh mục</h1>
-      <form className="flex flex-col gap-6" action={action}>
-        <Select>
-          <option>Danh mục cha</option>
-        </Select>
-        <Input name="name" placeholder="Tên danh mục" error={state?.errors.name}/>
-        <Input placeholder="Mô tả" />
-        <SubmitButton>Tạo</SubmitButton>
-      </form>
-    </div>
+    <main className="flex justify-center">
+      <div className="max-w-screen-lg w-full p-4">
+        <CreateCategoryForm categories={categories} />
+      </div>
+    </main>
   );
 }
