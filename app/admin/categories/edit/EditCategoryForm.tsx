@@ -17,8 +17,8 @@ export default function EditCategoryForm({category, allCategories}: {category: C
         formData.append("id", category.id);
         action(formData)
       }}>
-        <Select defaultValue={category.parentCategoryId || undefined}>
-          <option>Danh mục cha</option>
+        <Select name="parentCategoryId" defaultValue={category.parentCategoryId || undefined}>
+          <option>Danh mục gốc</option>
           {allCategories.map((category) =>{
       return <option key={category.id} value={category.id}>{category.name}</option>
           })}

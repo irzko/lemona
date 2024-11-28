@@ -13,8 +13,8 @@ export default function CreateCategoryForm({categories}:{categories: Category[]}
     <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-bold">Tạo danh mục</h1>
       <form className="flex flex-col gap-6 px-4" action={action}>
-        <Select>
-          <option selected disabled>Chọn mục cha</option>
+        <Select name="parentCategoryId">
+          <option selected>Danh mục gốc</option>
           {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
         </Select>
         <Input name="name" placeholder="Tên danh mục" error={state?.errors.name}/>
