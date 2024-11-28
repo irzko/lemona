@@ -55,7 +55,7 @@ export default async function Page({
               ></Image>
             ) : (
               <svg
-                className="absolute w-12 h-12 text-gray-400 -left-1"
+                className="absolute w-28 h-28 text-gray-400 -left-1"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -67,10 +67,10 @@ export default async function Page({
                 ></path>
               </svg>
             )}
-            <h4>{user.name || user.username}</h4>
           </div>
+          <h4>{user.name || user.username}</h4>
         </div>
-        <div>
+        <ul className="p-4 flex flex-col list-none gap-4">
                   {user.posts.map((post) => (
             <li className="overflow-hidden bg-white" key={post.id}>
               <Link
@@ -80,7 +80,7 @@ export default async function Page({
                 <div className="w-2/5">
                   <div className="relative w-full aspect-video">
                     <Image
-                      src={post.title || "/no-image.jpg"}
+                      src={post.featuredImageURL || "/no-image.jpg"}
                       alt={post.title}
                       fill
                       className="object-cover rounded-lg"
@@ -94,7 +94,7 @@ export default async function Page({
               </Link>
             </li>
           ))}
-        </div>
+        </ul>
       </div>
     </main>
   );
