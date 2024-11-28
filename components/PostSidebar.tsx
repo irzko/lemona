@@ -13,14 +13,18 @@ export default function PostSidebar() {
         onClick={() =>
           showSidebar("Menu", () => {
             return (
-              <div>
+              <ul clasName="flex flex-col gap-4">
                 {session?.user ? (
-                  <div>{session.user.username}</div>
+                  <li>{session.user.username}</li>
                 ) : (
-                  <Link href="/login">Login</Link>
+                  <li>
+                    <Link href="/login">Login</Link>
+                  </li>
                 )}
-                <Link href="/create">Viết bài</Link>
-              </div>
+                <li>
+                  <Link href="/create">Viết bài</Link>
+                </li>
+              </ul>
             );
           })
         }
