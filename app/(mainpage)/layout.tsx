@@ -25,10 +25,10 @@ export default async function HomeLayout({
 
         <Link
           href="/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
+          className="flex items-center space-x-3 hover:no-underline rtl:space-x-reverse"
         >
           <span
-            className={`self-center text-2xl hover:no-underline text-gray-900 font-semibold whitespace-nowrap ${bangers.className}`}
+            className={`self-center text-2xl text-gray-900 font-semibold whitespace-nowrap ${bangers.className}`}
           >
             Lemona
           </span>

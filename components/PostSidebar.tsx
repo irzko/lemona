@@ -39,7 +39,7 @@ export default function PostSidebar() {
                 )}
                 {sidebarItems.map((item)=> {
                 return (
-                  <li className="w-full" key={item.id}>
+                  <li className="flex" key={item.id}>
                     <Link className="w-full p-4 hover:no-underline text-gray-500 hover:bg-gray-100 rounded-lg" href={item.href}>{item.name}</Link>
                   </li>
                 )
