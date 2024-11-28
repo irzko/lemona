@@ -29,7 +29,7 @@ export default function PostSidebar() {
         onClick={() =>
           showSidebar("Menu", () => {
             return (
-              <ul className="flex flex-col w-full gap-2 list-none px-4">
+              <ul className="flex flex-col w-full list-none px-4">
                 {session?.user ? (
                   <li>{session.user.name || session.user.username}</li>
                 ) : (
@@ -40,7 +40,7 @@ export default function PostSidebar() {
                 {sidebarItems.map((item)=> {
                 return (
                   <li className="flex" key={item.id}>
-                    <Link className="w-full p-4 hover:no-underline text-gray-500 hover:bg-gray-100 rounded-lg" href={item.href}>{item.name}</Link>
+                    <Link className="w-full px-4 py-2 hover:no-underline text-gray-500 hover:bg-gray-100 rounded-lg" href={item.href}>{item.name}</Link>
                   </li>
                 )
                 })}
