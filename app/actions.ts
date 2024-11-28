@@ -151,7 +151,7 @@ export async function createUser(state: SignupFormState, formData: FormData) {
     },
   });
   revalidateTag("users");
-  redirect("/login");
+  redirect("/auth/login");
 }
 
 export async function createCategory(

@@ -14,6 +14,7 @@ const bangers = Bangers({
 export default async function HomeLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const session = await auth()
   return (
     <>
       <Navbar>
