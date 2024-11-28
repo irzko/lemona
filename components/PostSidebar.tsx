@@ -3,6 +3,8 @@ import Button from "@/components/ui/Button";
 import useSidebar from "@/hooks/useSidebar";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
+
 
 
 const sidebarItems = [
@@ -31,9 +33,13 @@ export default function PostSidebar() {
             return (
               <ul className="flex flex-col w-full list-none px-2">
                 {session?.user ? (
-                  <li className="flex w-full items-center p-4 gap-2 border border-gray-200 rounded-lg">
-                    <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                      <svg
+                <li className="flex">
+                  <Link href={`/profile/${session?.user?.username}`} className="flex w-full hover:no-underline text-gray-500 hover:bg-gray-100 items-center p-2 gap-2 border border-gray-200 rounded-lg">
+                    <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full">
+                      {session.user.image
+                      ? (<Image fill src={session.user.image} alt={session.user.name || session.user.username}></Image>)
+                        :
+                      (<svg
                         className="absolute w-12 h-12 text-gray-400 -left-1"
                         fill="currentColor"
                         viewBox="0 0 20 20"
@@ -44,15 +50,18 @@ export default function PostSidebar() {
                           d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                           clip-rule="evenodd"
                         ></path>
-                      </svg>
+                      </svg>)
+                      }
                     </div>
                     <span>{session.user.name || session.user.username}</span>
-                  </li>
+                  </Link>
+                </li>
                 ) : (
                   <li>
                     <Link href="/auth/login">Login</Link>
                   </li>
                 )}
+                    
                 {sidebarItems.map((item)=> {
                 return (
                   <li className="flex" key={item.id}>
