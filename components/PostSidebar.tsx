@@ -25,7 +25,7 @@ export default function PostSidebar() {
     <>
       <Button
         isIconOnly
-        className="hover:bg-gray-100 text-gray-500""
+        className="hover:bg-gray-100 text-gray-500"
         onClick={() =>
           showSidebar("Menu", () => {
             return (

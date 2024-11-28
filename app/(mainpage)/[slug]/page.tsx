@@ -38,7 +38,7 @@ export default async function Page({
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full space-y-4 p-4">
         <h1>{post.title || "(No title)"}</h1>
-        <time>{new Date(post.createdAt).toLocaleString()}</i>
+        <time>{new Date(post.createdAt).toLocaleString()}</time>
         <Markdown remarkPlugins={[[remarkGfm, { singleTilde: false }]]}>
           {post.content || "(No content)"}
         </Markdown>
