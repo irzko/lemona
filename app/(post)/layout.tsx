@@ -27,7 +27,7 @@ export default async function HomeLayout({
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <span
-            className={`self-center underline-none text-gray-900 text-2xl font-semibold whitespace-nowrap ${bangers.className}`}
+            className={`self-center hover:underline-none text-gray-900 text-2xl font-semibold whitespace-nowrap ${bangers.className}`}
           >
             Lemona
           </span>
