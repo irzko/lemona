@@ -1,10 +1,11 @@
-import { Navbar, NavbarContent, NavbarItem } from "@/components/ui/navbar";
+import { Navbar } from "@/components/ui/navbar";
 import { Bangers } from "next/font/google";
 import Link from "next/link";
 import React from "react";
 import PostSidebar from "@/components/PostSidebar";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth"
+
 
 const bangers = Bangers({
   weight: ["400"],
@@ -32,9 +33,6 @@ export default async function HomeLayout({
             Kuzt
           </span>
         </Link>
-        <NavbarContent>
-          <NavbarItem>{/*<GenreMenu genres={genres.data} />*/}</NavbarItem>
-        </NavbarContent>
         <Link
           href="/search"
           type="button"

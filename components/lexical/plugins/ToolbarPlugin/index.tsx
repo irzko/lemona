@@ -33,7 +33,7 @@ import {
   /* $isQuoteNode,
   HeadingTagType, */
 } from "@lexical/rich-text";
-import {InsertTableDialog} from '../TablePlugin';
+import { InsertTableDialog } from "../TablePlugin";
 import {
   $getNodeByKey,
   // $getRoot,
@@ -68,7 +68,6 @@ import {
   InsertImageDialog,
   // InsertImagePayload,
 } from "../ImagesPlugin";
-
 
 import {
   blockTypeToBlockName,
@@ -661,7 +660,7 @@ export default function ToolbarPlugin({
       }
       updateToolbarState("isEditable", true);
       let matchingParent;
-      
+
       if ($isLinkNode(parent)) {
         // If node is a link, we need to fetch the parent paragraph node to set format
         matchingParent = $findMatchingParent(
@@ -669,7 +668,6 @@ export default function ToolbarPlugin({
           (parentNode) => $isElementNode(parentNode) && !parentNode.isInline(),
         );
       }
-    
 
       // If matchingParent is a valid node, pass it's format type
       updateToolbarState(
@@ -1051,53 +1049,65 @@ export default function ToolbarPlugin({
             isIconOnly
             disabled={!isEditable}
             onClick={insertLink}
-            className={
-            (toolbarState.isLink ? 'active' : '')
-            }
+            className={toolbarState.isLink ? "active" : ""}
             aria-label="Insert link"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width={20}
+              height={20}
+              fill={"none"}
             >
-            <i className="format link" />
+              <path
+                d="M13.5 17H17C19.7614 17 22 14.7614 22 12C22 9.23858 19.7614 7 17 7H13.5M10.5 17H7C4.23858 17 2 14.7614 2 12C2 9.23858 4.23858 7 7 7H10.5"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <path
+                d="M9 12H15"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
           </Button>
           <Button
             isIconOnly
-      
-              onClick={() => {
-                    showModal('Insert Table', (onClose) => (
-                      <InsertTableDialog
-                        activeEditor={activeEditor}
-                        onClose={onClose}
-                      />
-                    ));
-                  }}
+            onClick={() => {
+              showModal("Chèn bảng", (onClose) => (
+                <InsertTableDialog
+                  activeEditor={activeEditor}
+                  onClose={onClose}
+                />
+              ));
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width={20}
+              height={20}
+              fill={"none"}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width={20}
-                height={20}
-                fill={"none"}
-              >
-                <circle
-                  cx="7.5"
-                  cy="7.5"
-                  r="1.5"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-                <path
-                  d="M5 21C9.37246 15.775 14.2741 8.88406 21.4975 13.5424"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                />
-              </svg>
-
+              <path
+                d="M3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088Z"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path d="M2.5 9L21.5 9" stroke="currentColor" strokeWidth="2" />
+              <path d="M2.5 13L21.5 13" stroke="currentColor" strokeWidth="2" />
+              <path d="M2.5 17L21.5 17" stroke="currentColor" strokeWidth="2" />
+              <path
+                d="M12 21.5L12 9"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
           </Button>
           <Divider />
           <DropDown
