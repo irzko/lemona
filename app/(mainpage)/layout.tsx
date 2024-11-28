@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import PostSidebar from "@/components/PostSidebar";
 import { SessionProvider } from "next-auth/react";
+import { auth } from "auth"
 
 const bangers = Bangers({
   weight: ["400"],
@@ -16,7 +17,7 @@ export default async function HomeLayout({
   return (
     <>
       <Navbar>
-        <SessionProvider>
+        <SessionProvider basePath={"/auth"} session={session}>
           <PostSidebar/>
         </SessionProvider>
 
