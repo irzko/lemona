@@ -1,4 +1,4 @@
-import CreateCategoryForm from "../CreateCategoryForm";
+import CreateCategoryForm from "./CreateCategoryForm";
 import { auth } from "@/auth";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
