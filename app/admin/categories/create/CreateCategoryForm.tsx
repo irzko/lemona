@@ -15,7 +15,7 @@ export default function CreateCategoryForm({categories}:{categories: Category[]}
       <form className="flex flex-col gap-6 px-4" action={action}>
         <Select>
           <option selected disabled>Chọn mục cha</option>
-          {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>}
+          {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
         </Select>
         <Input name="name" placeholder="Tên danh mục" error={state?.errors.name}/>
         <Input placeholder="Mô tả" />
