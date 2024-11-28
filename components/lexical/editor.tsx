@@ -41,7 +41,7 @@ export default function Editor({ markdown }: { markdown?: string }) {
   }
 
   return (
-    <div className="w-full border border-gray-200 overflow-hidden rounded-lg bg-gray-50">
+    <div className="w-full border border-gray-200 rounded-lg bg-gray-50">
       <ToolbarPlugin
         editor={editor}
         activeEditor={activeEditor}
@@ -54,7 +54,7 @@ export default function Editor({ markdown }: { markdown?: string }) {
         <RichTextPlugin
           contentEditable={
             <ContentEditable
-              className="block w-full relative min-h-40 outline-none px-4 py-2 bg-white rounded-b-lg text-sm text-gray-800 border-0 focus:ring-0"
+              className="block w-full relative min-h-40 outline-none px-4 py-2 bg-white rounded-b-lg text-sm text-gray-800 border-0 overflow-auto focus:ring-0"
               aria-placeholder={placeholder}
               placeholder={
                 <div className="absolute text-sm top-2 left-4 text-gray-400 text-ellipsis user-select-none pointer-events-none inline">
