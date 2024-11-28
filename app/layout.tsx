@@ -10,7 +10,7 @@ const roboto = Roboto({
 })
 
 export const metadata: Metadata = {
-  title: "Lemono",
+  title: "Lemona",
   description:
     "Đọc truyện tranh online miễn phí tại Lẩu Truyện. Cập nhật truyện tranh mới nhất, nhanh nhất, hot nhất. Đọc truyện tranh chất lượng cao, cập nhật hàng ngày.",
 };

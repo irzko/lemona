@@ -4,26 +4,46 @@ import useSidebar from "@/hooks/useSidebar";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
+
+const sidebarItems = [
+  {
+    id: 1,
+    name: "Viết bài",
+    href: "/create",
+  },
+  {
+    id: 2,
+    name: "Danh mục",
+    href: "/categories",
+  }
+]
+
 export default function PostSidebar() {
   const [sidebar, showSidebar] = useSidebar();
   const { data: session } = useSession();
   return (
     <>
       <Button
+        isIconOnly
+        className="hover:bg-gray-100 text-gray-500""
         onClick={() =>
           showSidebar("Menu", () => {
             return (
               <ul className="flex flex-col gap-4 list-none px-4">
                 {session?.user ? (
-                  <li>{session.user.username}</li>
+                  <li>{session.user.name || session.user.username}</li>
                 ) : (
                   <li>
-                    <Link href="/login">Login</Link>
+                    <Link href="/auth/login">Login</Link>
                   </li>
                 )}
-                <li>
-                  <Link href="/create">Viết bài</Link>
-                </li>
+                {sidebarItems.map((item)=> {
+                return (
+                  <li key={item.id}>
+                    <Link className="w-full px-4 py-2 hover:bg-gray-100 rounded-lg" href={item.href}>{item.name}</Link>
+                  </li>
+                )
+                })}
               </ul>
             );
           })
