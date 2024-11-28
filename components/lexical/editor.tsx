@@ -10,6 +10,8 @@ import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import {ClickableLinkPlugin} from '@lexical/react/LexicalClickableLinkPlugin';
+import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
 import {useSharedHistoryContext} from './context/SharedHistoryContext';
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
@@ -29,6 +31,7 @@ export default function Editor({ markdown }: { markdown?: string }) {
   const [editor] = useLexicalComposerContext();
   const {historyState} = useSharedHistoryContext();
   const [activeEditor, setActiveEditor] = useState(editor);
+  const isEditable = useLexicalEditable();
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
   console.log(isLinkEditMode)
   if (markdown) {
@@ -38,7 +41,7 @@ export default function Editor({ markdown }: { markdown?: string }) {
   }
 
   return (
-    <div className="w-full border border-gray-200 rounded-lg bg-gray-50">
+    <div className="w-full border border-gray-200 overflow-hidden rounded-lg bg-gray-50">
       <ToolbarPlugin
         editor={editor}
         activeEditor={activeEditor}
@@ -64,6 +67,7 @@ export default function Editor({ markdown }: { markdown?: string }) {
         />
 
         <ListPlugin />
+        <ClickableLinkPlugin disabled={isEditable} />
         <CheckListPlugin />
         <TablePlugin
           hasCellMerge={true}
