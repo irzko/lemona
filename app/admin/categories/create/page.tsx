@@ -19,10 +19,6 @@ const getCategories = unstable_cache(
 );
 
 export default async function Page() {
-  const categoryId = (await params).slug;
-  if (!categoryId) {
-    return null;
-  }
   const categories = await getCategories();
   const session = await auth();
 
