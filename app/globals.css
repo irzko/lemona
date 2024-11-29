@@ -61,11 +61,11 @@
   }
 
   table {
-    @apply w-full text-sm text-left rtl:text-right text-gray-400;
+    @apply w-full text-sm text-left rtl:text-right text-gray-500 overflow-x-auto;
   }
 
   thead {
-    @apply text-xs uppercase bg-gray-700 text-gray-400;
+    @apply text-xs uppercase bg-gray-50 text-gray-700;
   }
 
   thead>tr>th {
@@ -73,11 +73,11 @@
   }
 
   tbody>tr {
-    @apply border-b bg-gray-800 border-gray-700
+    @apply border-b bg-white;
   }
 
   tbody>tr>th {
-    @apply px-6 py-4 font-medium whitespace-nowrap text-white;
+    @apply px-6 py-4 font-medium whitespace-nowrap text-gray-900;
   }
 
   td {
