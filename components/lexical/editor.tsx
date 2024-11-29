@@ -68,9 +68,9 @@ export default function Editor({ markdown }: { markdown?: string }) {
                 <div className="absolute text-sm top-2 left-4 text-gray-400 text-ellipsis user-select-none pointer-events-none inline">
                   {placeholder}
                 </div>
-              }
-            />
             </div>
+                }
+            />
             
           }
           ErrorBoundary={LexicalErrorBoundary}
