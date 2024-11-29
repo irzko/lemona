@@ -24,6 +24,9 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import { useState } from "react";
 import ImagesPlugin from "./plugins/ImagesPlugin";
+import LinkPlugin from './plugins/LinkPlugin';
+
+
 const placeholder = "Hãy bắt đầu viết...";
 
 
@@ -60,23 +63,21 @@ export default function Editor({ markdown }: { markdown?: string }) {
       <div className="relative">
         <RichTextPlugin
           contentEditable={
-            <div ref={onRef}>
-              <ContentEditable
+            <ContentEditable
               className="block w-full relative min-h-40 outline-none px-4 py-2 bg-white rounded-b-lg text-sm text-gray-800 border-0 overflow-auto focus:ring-0"
               aria-placeholder={placeholder}
               placeholder={
                 <div className="absolute text-sm top-2 left-4 text-gray-400 text-ellipsis user-select-none pointer-events-none inline">
                   {placeholder}
                 </div>
-            </div>
-                }
+              }
             />
-            
           }
           ErrorBoundary={LexicalErrorBoundary}
         />
 
         <ListPlugin />
+        <LinkPlugin hasLinkAttributes={false} />
         <ClickableLinkPlugin disabled={isEditable} />
         <CheckListPlugin />
         <TablePlugin
