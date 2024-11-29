@@ -36,8 +36,6 @@ export default function Editor({ markdown }: { markdown?: string }) {
   const [activeEditor, setActiveEditor] = useState(editor);
   const isEditable = useLexicalEditable();
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
-  const [floatingAnchorElem, setFloatingAnchorElem] =
-    useState<HTMLDivElement | null>(null);
   
   console.log(isLinkEditMode)
   if (markdown) {
@@ -45,11 +43,7 @@ export default function Editor({ markdown }: { markdown?: string }) {
       $convertFromMarkdownString(markdown, PLAYGROUND_TRANSFORMERS);
     });
   }
-  const onRef = (_floatingAnchorElem: HTMLDivElement) => {
-    if (_floatingAnchorElem !== null) {
-      setFloatingAnchorElem(_floatingAnchorElem);
-    }
-
+  
   return (
     <div className="w-full border border-gray-200 rounded-lg bg-gray-50">
       <ToolbarPlugin
