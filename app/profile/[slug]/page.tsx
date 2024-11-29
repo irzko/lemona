@@ -26,7 +26,7 @@ const getUser = unstable_cache(
 
 const getPosts = unstable_cache(
   async (authorId: string) => {
-    return await prisma.post.findUnique({
+    return await prisma.post.findMany({
       where: {
         authorId,
       },
