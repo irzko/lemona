@@ -33,12 +33,19 @@ export default function Editor({ markdown }: { markdown?: string }) {
   const [activeEditor, setActiveEditor] = useState(editor);
   const isEditable = useLexicalEditable();
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
+  const [floatingAnchorElem, setFloatingAnchorElem] =
+    useState<HTMLDivElement | null>(null);
+  
   console.log(isLinkEditMode)
   if (markdown) {
     editor.update(() => {
       $convertFromMarkdownString(markdown, PLAYGROUND_TRANSFORMERS);
     });
   }
+  const onRef = (_floatingAnchorElem: HTMLDivElement) => {
+    if (_floatingAnchorElem !== null) {
+      setFloatingAnchorElem(_floatingAnchorElem);
+    }
 
   return (
     <div className="w-full border border-gray-200 rounded-lg bg-gray-50">
@@ -53,7 +60,8 @@ export default function Editor({ markdown }: { markdown?: string }) {
       <div className="relative">
         <RichTextPlugin
           contentEditable={
-            <ContentEditable
+            <div ref={onRef}>
+              <ContentEditable
               className="block w-full relative min-h-40 outline-none px-4 py-2 bg-white rounded-b-lg text-sm text-gray-800 border-0 overflow-auto focus:ring-0"
               aria-placeholder={placeholder}
               placeholder={
@@ -62,6 +70,8 @@ export default function Editor({ markdown }: { markdown?: string }) {
                 </div>
               }
             />
+            </div>
+            
           }
           ErrorBoundary={LexicalErrorBoundary}
         />
