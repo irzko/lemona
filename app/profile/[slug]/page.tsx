@@ -24,6 +24,23 @@ const getUser = unstable_cache(
   { tags: ["users"] },
 );
 
+const getPosts = unstable_cache(
+  async (authorId: string) => {
+    return await prisma.post.findUnique({
+      where: {
+        authorId,
+      },
+      select: {
+        id: true,
+        title: true,
+        featuredImageURL: true,
+      },
+    });
+  },
+  ["posts"],
+  { tags: ["posts"] },
+);
+
 export default async function Page({
   params,
 }: {
@@ -42,6 +59,8 @@ export default async function Page({
       </main>
     );
   }
+  
+  const posts = await getPosts(user.id);
   return (
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full space-y-4 p-4">
@@ -55,7 +74,7 @@ export default async function Page({
               ></Image>
             ) : (
               <svg
-                className="absolute w-28 h-28 text-gray-400 -left-1"
+                className="absolute w-[136px] h-[136px] text-gray-400 -left-1"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -70,8 +89,8 @@ export default async function Page({
           </div>
           <h4>{user.name || user.username}</h4>
         </div>
-        <ul className="p-4 flex flex-col list-none gap-4">
-                  {user.posts.map((post) => (
+        <ul className="flex flex-col list-none gap-4">
+                  {posts.map((post) => (
             <li className="overflow-hidden bg-white" key={post.id}>
               <Link
                 className="text-gray-800 hover:no-underline flex gap-4"
