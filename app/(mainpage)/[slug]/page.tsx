@@ -2,7 +2,7 @@
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import { MDXRemote } from "remote-mdx/rsc";
-import remarkGfm from "remark-gfm";
+// import remarkGfm from "remark-gfm";
 
 const getPost = unstable_cache(
   async (slug: string) => {
@@ -42,7 +42,7 @@ export default async function Page({
         <MDXRemote
           options={{
             mdxOptions: {
-              remarkPlugins: [remarkGfm],
+              remarkPlugins: [],
               rehypePlugins: [],
             },
           }}
