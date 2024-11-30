@@ -1,8 +1,8 @@
-import Markdown from "react-markdown";
+// import Markdown from "react-markdown";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
+import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-
 
 const getPost = unstable_cache(
   async (slug: string) => {
@@ -39,9 +39,18 @@ export default async function Page({
       <div className="max-w-screen-lg w-full space-y-4 p-4">
         <h1>{post.title || "(No title)"}</h1>
         <time>{new Date(post.createdAt).toLocaleString()}</time>
-        <Markdown remarkPlugins={[[remarkGfm, { singleTilde: false }]]}>
+        <MDXRemote
+          options={{
+            mdxOptions: {
+              remarkPlugins: [remarkGfm],
+              rehypePlugins: [],
+            },
+          }}
+          source={post.content || "(No content)"}
+        />
+        {/*<Markdown remarkPlugins={[[remarkGfm, { singleTilde: false }]]}>
           {post.content || "(No content)"}
-        </Markdown>
+        </Markdown>*/}
       </div>
     </main>
   );
