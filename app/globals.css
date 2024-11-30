@@ -60,13 +60,7 @@
     @apply bg-inherit text-inherit border-none rounded-none;
   }
 
-  table {
-    @apply w-full block text-sm text-left rtl:text-right text-gray-500 overflow-x-auto max-w-fit;
-  }
 
-  thead {
-    @apply text-xs uppercase bg-gray-50 text-gray-700;
-  }
 
   thead>tr>th {
     @apply px-6 py-3;
@@ -82,9 +76,5 @@
 
   td {
     @apply px-6 py-4;
-  }
-
-  img {
-    @apply w-full h-auto;
   }
 }

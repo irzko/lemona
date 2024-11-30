@@ -1,8 +1,9 @@
-import Markdown from "react-markdown";
+import Markdown, { type Components } from "react-markdown";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 // import { MDXRemote } from "remote-mdx/rsc";
 import remarkGfm from "remark-gfm";
+import Image, { ImageProps } from "next/image";
 
 const getPost = unstable_cache(
   async (slug: string) => {
@@ -15,6 +16,39 @@ const getPost = unstable_cache(
   ["posts"],
   { tags: ["posts"] },
 );
+
+const components: Components = {
+  img(props) {
+    return (
+      <Image
+        sizes="100vw"
+        style={{ width: "100%", height: "auto" }}
+        {...(props as ImageProps)}
+      />
+    );
+  },
+  table(props) {
+    const { children, ...rest } = props;
+    return (
+      <div className="relative overflow-x-auto">
+        <table
+          className="w-full text-sm text-left rtl:text-right text-gray-500"
+          {...rest}
+        >
+          {children}
+        </table>
+      </div>
+    );
+  },
+  thead(props) {
+    const { children, ...rest } = props;
+    return <thead className="text-xs text-gray-700 uppercase bg-gray-50" {...rest}>{children}</thead>
+  },
+  /*th(props) {
+    const { children, ...rest } = props;
+    return <th className="px-6 py-3" {...rest}>{children}</th>
+  }*/
+};
 
 export default async function Page({
   params,
@@ -48,7 +82,10 @@ export default async function Page({
           }}
           source={post.content || "(No content)"}
         />*/}
-        <Markdown remarkPlugins={[[remarkGfm, { singleTilde: false }]]}>
+        <Markdown
+          components={components}
+          remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+        >
           {post.content || "(No content)"}
         </Markdown>
       </div>
