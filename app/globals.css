@@ -59,22 +59,4 @@
   pre>code {
     @apply bg-inherit text-inherit border-none rounded-none;
   }
-
-
-
-  thead>tr>th {
-    @apply px-6 py-3;
-  }
-
-  tbody>tr {
-    @apply border-b bg-white;
-  }
-
-  tbody>tr>th {
-    @apply px-6 py-4 font-medium whitespace-nowrap text-gray-900;
-  }
-
-  td {
-    @apply px-6 py-4;
-  }
 }

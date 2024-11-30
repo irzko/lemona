@@ -19,6 +19,7 @@ const getPost = unstable_cache(
 
 const components: Components = {
   img(props) {
+    // eslint-disable-next-line no-unused-vars
     const { node, ...rest } = props;
     return (
       <Image
@@ -29,6 +30,7 @@ const components: Components = {
     );
   },
   table(props) {
+    // eslint-disable-next-line no-unused-vars
     const { children, node, ...rest } = props;
     return (
       <div className="relative overflow-x-auto">
@@ -42,22 +44,45 @@ const components: Components = {
     );
   },
   thead(props) {
+    // eslint-disable-next-line no-unused-vars
     const { children, node, ...rest } = props;
-    return <thead className="text-xs text-gray-700 uppercase bg-gray-50" {...rest}>{children}</thead>
+    return (
+      <thead className="text-xs text-gray-700 uppercase bg-gray-50" {...rest}>
+        {children}
+      </thead>
+    );
   },
   th(props) {
+    // eslint-disable-next-line no-unused-vars
     const { children, node, ...rest } = props;
-    return <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap" {...rest}>{children}</th>
+    return (
+      <th
+        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+        {...rest}
+      >
+        {children}
+      </th>
+    );
   },
   td(props) {
+    // eslint-disable-next-line no-unused-vars
     const { children, node, ...rest } = props;
-    return <td className="px-6 py-4" {...rest}>{children}</td>
+    return (
+      <td className="px-6 py-4" {...rest}>
+        {children}
+      </td>
+    );
   },
 
   tr(props) {
+    // eslint-disable-next-line no-unused-vars
     const { children, node, ...rest } = props;
-    return <tr className="border-b" {...rest}>{children}</tr>
-}
+    return (
+      <tr className="border-b" {...rest}>
+        {children}
+      </tr>
+    );
+  },
 };
 
 export default async function Page({
