@@ -19,16 +19,17 @@ const getPost = unstable_cache(
 
 const components: Components = {
   img(props) {
+    const { node, ...rest } = props;
     return (
       <Image
         sizes="100vw"
         style={{ width: "100%", height: "auto" }}
-        {...(props as ImageProps)}
+        {...(rest as ImageProps)}
       />
     );
   },
   table(props) {
-    const { children, ...rest } = props;
+    const { children, node, ...rest } = props;
     return (
       <div className="relative overflow-x-auto">
         <table
@@ -41,13 +42,22 @@ const components: Components = {
     );
   },
   thead(props) {
-    const { children, ...rest } = props;
+    const { children, node, ...rest } = props;
     return <thead className="text-xs text-gray-700 uppercase bg-gray-50" {...rest}>{children}</thead>
   },
-  /*th(props) {
-    const { children, ...rest } = props;
-    return <th className="px-6 py-3" {...rest}>{children}</th>
-  }*/
+  th(props) {
+    const { children, node, ...rest } = props;
+    return <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap" {...rest}>{children}</th>
+  },
+  td(props) {
+    const { children, node, ...rest } = props;
+    return <td className="px-6 py-4" {...rest}>{children}</td>
+  },
+
+  tr(props) {
+    const { children, node, ...rest } = props;
+    return <tr className="border-b" {...rest}>{children}</tr>
+}
 };
 
 export default async function Page({
