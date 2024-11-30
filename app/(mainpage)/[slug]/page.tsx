@@ -1,7 +1,7 @@
 // import Markdown from "react-markdown";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { MDXRemote } from "remote-mdx/rsc";
 import remarkGfm from "remark-gfm";
 
 const getPost = unstable_cache(
