@@ -33,7 +33,7 @@ export default async function Page() {
           {allPosts.slice(0, 4).map((post) => (
             <li className="overflow-hidden bg-white" key={post.id}>
               <Link
-                className="text-gray-800 hover:no-underline"
+                className="text-gray-800"
                 href={`/${post.slug}`}
               >
                 <div className="relative w-full aspect-video">
@@ -52,11 +52,11 @@ export default async function Page() {
             </li>
           ))}
         </ul>
-        <ul className="grid grid-cols-1 mt-4 space-y-0 list-none sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+        <ul className="grid grid-cols-1 mt-4 space-y-0 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {allPosts.slice(4).map((post) => (
             <li className="overflow-hidden bg-white" key={post.id}>
               <Link
-                className="text-gray-800 hover:no-underline flex gap-4"
+                className="text-gray-800 flex gap-4"
                 href={`/${post.slug}`}
               >
                 <div className="w-2/5">

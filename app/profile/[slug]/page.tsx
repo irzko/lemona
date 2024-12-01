@@ -89,11 +89,11 @@ export default async function Page({
           </div>
           <h4>{user.name || user.username}</h4>
         </div>
-        <ul className="flex flex-col list-none gap-4">
+        <ul className="flex flex-col gap-4">
                   {posts.map((post) => (
             <li className="overflow-hidden bg-white" key={post.id}>
               <Link
-                className="text-gray-800 hover:no-underline flex gap-4"
+                className="text-gray-800 flex gap-4"
                 href={`/edit/${post.id}`}
               >
                 <div className="w-2/5">

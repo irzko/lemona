@@ -36,18 +36,7 @@
   blockquote {
     @apply p-4 my-4 border-s-4 border-gray-300 bg-gray-50;
   }
-  ul {
-    @apply space-y-1 text-gray-500 list-disc list-inside;
-  }
-  ol {
-    @apply space-y-1 text-gray-500 list-decimal list-inside;
-  }
-  li>p {
-    @apply inline;
-  }
-  a {
-    @apply font-medium text-blue-600 hover:underline;
-  }
+  
   code {
     @apply px-1 text-sm font-normal font-mono text-[#1c63f2];
   }

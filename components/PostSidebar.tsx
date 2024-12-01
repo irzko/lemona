@@ -31,10 +31,10 @@ export default function PostSidebar() {
         onClick={() =>
           showSidebar("Menu", () => {
             return (
-              <ul className="flex flex-col w-full list-none px-2">
+              <ul className="flex flex-col w-full px-2">
                 {session?.user ? (
                 <li className="flex">
-                  <Link href={`/profile/${session?.user?.username}`} className="flex w-full hover:no-underline text-gray-500 hover:bg-gray-100 items-center p-2 gap-2 border border-gray-200 rounded-lg">
+                  <Link href={`/profile/${session?.user?.username}`} className="flex w-full text-gray-500 hover:bg-gray-100 items-center p-2 gap-2 border border-gray-200 rounded-lg">
                     <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full">
                       {session.user.image
                       ? (<Image fill src={session.user.image} alt={session.user.name || session.user.username}></Image>)
@@ -65,7 +65,7 @@ export default function PostSidebar() {
                 {sidebarItems.map((item)=> {
                 return (
                   <li className="flex" key={item.id}>
-                    <Link className="w-full px-2 py-2 hover:no-underline text-gray-500 hover:bg-gray-100 rounded-lg" href={item.href}>{item.name}</Link>
+                    <Link className="w-full px-2 py-2 text-gray-500 hover:bg-gray-100 rounded-lg" href={item.href}>{item.name}</Link>
                   </li>
                 )
                 })}

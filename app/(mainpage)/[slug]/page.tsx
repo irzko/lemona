@@ -3,7 +3,10 @@ import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 // import { MDXRemote } from "remote-mdx/rsc";
 import remarkGfm from "remark-gfm";
-import Image, { ImageProps } from "next/image";
+import Image from "next/image";
+import Link from "next/link";
+
+import { Post } from "@prisma/client";
 
 const getPost = unstable_cache(
   async (slug: string) => {
@@ -17,72 +20,83 @@ const getPost = unstable_cache(
   { tags: ["posts"] },
 );
 
-const components: Components = {
-  img(props) {
-    const { node, ...rest } = props;
-    console.log(node?.tagName)
-    return (
-      <Image
-        sizes="100vw"
-        style={{ width: "100%", height: "auto" }}
-        {...(rest as ImageProps)}
-      />
-    );
-  },
-  table(props) {
-    const { children, node, ...rest } = props;
-    console.log(node?.tagName)
-    return (
-      <div className="relative overflow-x-auto">
-        <table
-          className="w-full text-sm text-left rtl:text-right text-gray-500"
-          {...rest}
+const components = (post: Post): Components => {
+  return {
+    img({ alt, src }) {
+      return (
+        <Image
+          alt={alt || ""}
+          sizes="100vw"
+          style={{ width: "100%", height: "auto" }}
+          src={src || "./no-image.jpg"}
+        />
+      );
+    },
+    table({ children }) {
+      return (
+        <div className="relative overflow-x-auto">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+            {children}
+          </table>
+        </div>
+      );
+    },
+    thead({ children }) {
+      return (
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50" {...rest}>
+          {children}
+        </thead>
+      );
+    },
+    th({ children }) {
+      return (
+        <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+          {children}
+        </th>
+      );
+    },
+    td({ children }) {
+      return (
+        <td className="px-6 py-4" {...rest}>
+          {children}
+        </td>
+      );
+    },
+    tr({ children }) {
+      return (
+        <tr className="border-b" {...rest}>
+          {children}
+        </tr>
+      );
+    },
+    ul({ children }) {
+      return (
+        <ul className="space-y-1 text-gray-500 list-disc list-inside">
+          {children}
+        </ul>
+      );
+    },
+    ol({ children }) {
+      return (
+        <ol className="space-y-1 text-gray-500 list-decimal list-inside">
+          {children}
+        </ol>
+      );
+    },
+    li({ children }) {
+      return <li>{children}</li>;
+    },
+    a({ href, children }) {
+      return (
+        <Link
+          className="font-medium text-blue-600 hover:underline"
+          href={href || ""}
         >
           {children}
-        </table>
-      </div>
-    );
-  },
-  thead(props) {
-    const { children, node, ...rest } = props;
-    console.log(node?.tagName)
-    return (
-      <thead className="text-xs text-gray-700 uppercase bg-gray-50" {...rest}>
-        {children}
-      </thead>
-    );
-  },
-  th(props) {
-    const { children, node, ...rest } = props;
-    console.log(node?.tagName)
-    return (
-      <th
-        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-        {...rest}
-      >
-        {children}
-      </th>
-    );
-  },
-  td(props) {
-    const { children, node, ...rest } = props;
-    console.log(node?.tagName)
-    return (
-      <td className="px-6 py-4" {...rest}>
-        {children}
-      </td>
-    );
-  },
-
-  tr(props) {
-    const { children, node, ...rest } = props;
-    console.log(node?.tagName)
-    return (
-      <tr className="border-b" {...rest}>
-        {children}
-      </tr>
-    );
-  },
+        </Link>
+      );
+    },
+  };
 };
 
 export default async function Page({
@@ -118,7 +132,7 @@ export default async function Page({
           source={post.content || "(No content)"}
         />*/}
         <Markdown
-          components={components}
+          components={components(post)}
           remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
         >
           {post.content || "(No content)"}
