@@ -19,81 +19,122 @@ const getPost = unstable_cache(
 );
 
 const components: Components = {
-    img({ alt, src }) {
-      return (
-        <Image
-          alt={alt || ""}
-          sizes="100vw"
-          style={{ width: "100%", height: "auto" }}
-          src={src || "./no-image.jpg"}
-        />
-      );
-    },
-    table({ children }) {
-      return (
-        <div className="relative overflow-x-auto">
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-            {children}
-          </table>
-        </div>
-      );
-    },
-    thead({ children }) {
-      return (
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+  h1({ children }) {
+    return <h1 className="text-3xl font-bold">{children}</h1>;
+  },
+  h2({ children }) {
+    return <h2 className="text-2xl font-semibold">{children}</h2>;
+  },
+  h3({ children }) {
+    return <h3 className="text-xl font-semibold">{children}</h3>;
+  },
+  h4({ children }) {
+    return <h4 className="text-lg font-semibold">{children}</h4>;
+  },
+  h5({ children }) {
+    return <h5 className="text-sm font-semibold">{children}</h5>;
+  },
+
+  h6({ children }) {
+    return <h6 className="text-xs font-semibold">{children}</h6>;
+  },
+  strong({ children }) {
+    return <strong className="font-semibold">{children}</strong>;
+  },
+  u({ children }) {
+    return <u className="underline">{children}</u>;
+  },
+  em({ children }) {
+    return <em className="italic">{children}</em>;
+  },
+  p({ children }) {
+    return <p className="text-gray-500">{children}</p>;
+  },
+  blockquote({ children }) {
+    return (
+      <blockquote className="p-4 my-4 border-s-4 border-gray-300 bg-gray-50">
+        {children}
+      </blockquote>
+    );
+  },
+  code({ children }) {
+    return <code className="px-1 text-sm font-normal font-mono text-[#1c63f2]">{children}</code>;
+  },
+  pre({ children }) {
+    return (
+      <pre className="border text-sm rounded-lg p-2.5 bg-gray-50 border-gray-200 overflow-x-auto text-[#1c63f2]">
+        {children}
+      </pre>
+    );
+  },
+  
+  img({ alt, src }) {
+    return (
+      <Image
+        alt={alt || ""}
+        sizes="100vw"
+        style={{ width: "100%", height: "auto" }}
+        src={src || "./no-image.jpg"}
+      />
+    );
+  },
+  table({ children }) {
+    return (
+      <div className="relative overflow-x-auto">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500">
           {children}
-        </thead>
-      );
-    },
-    th({ children }) {
-      return (
-        <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-          {children}
-        </th>
-      );
-    },
-    td({ children }) {
-      return (
-        <td className="px-6 py-4">
-          {children}
-        </td>
-      );
-    },
-    tr({ children }) {
-      return (
-        <tr className="border-b">
-          {children}
-        </tr>
-      );
-    },
-    ul({ children }) {
-      return (
-        <ul className="space-y-1 text-gray-500 list-disc list-inside">
-          {children}
-        </ul>
-      );
-    },
-    ol({ children }) {
-      return (
-        <ol className="space-y-1 text-gray-500 list-decimal list-inside">
-          {children}
-        </ol>
-      );
-    },
-    li({ children }) {
-      return <li>{children}</li>;
-    },
-    a({ href, children }) {
-      return (
-        <Link
-          className="font-medium text-blue-600 hover:underline"
-          href={href || ""}
-        >
-          {children}
-        </Link>
-      );
-    },
-  };
+        </table>
+      </div>
+    );
+  },
+  thead({ children }) {
+    return (
+      <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+        {children}
+      </thead>
+    );
+  },
+  th({ children }) {
+    return (
+      <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+        {children}
+      </th>
+    );
+  },
+  td({ children }) {
+    return <td className="px-6 py-4">{children}</td>;
+  },
+  tr({ children }) {
+    return <tr className="border-b">{children}</tr>;
+  },
+  ul({ children }) {
+    return (
+      <ul className="space-y-1 text-gray-500 list-disc list-inside">
+        {children}
+      </ul>
+    );
+  },
+  ol({ children }) {
+    return (
+      <ol className="space-y-1 text-gray-500 list-decimal list-inside">
+        {children}
+      </ol>
+    );
+  },
+  li({ children }) {
+    return <li>{children}</li>;
+  },
+  a({ href, children }) {
+    return (
+      <Link
+        className="font-medium text-blue-600 hover:underline"
+        href={href || ""}
+      >
+        {children}
+      </Link>
+    );
+  },
+};
 
 export default async function Page({
   params,
@@ -116,17 +157,9 @@ export default async function Page({
   return (
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full space-y-4 p-4">
-        <h1>{post.title || "(No title)"}</h1>
+        <h1 className="text-3xl font-bold">{post.title || "(No title)"}</h1>
         <time>{new Date(post.createdAt).toLocaleString()}</time>
-        {/*<MDXRemote
-          options={{
-            mdxOptions: {
-              remarkPlugins: [],
-              rehypePlugins: [],
-            },
-          }}
-          source={post.content || "(No content)"}
-        />*/}
+        <strong className="font-semibold text-gray-900">{post.description}</strong>
         <Markdown
           components={components}
           remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
