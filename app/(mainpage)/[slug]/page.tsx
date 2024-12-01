@@ -19,8 +19,8 @@ const getPost = unstable_cache(
 
 const components: Components = {
   img(props) {
-    // eslint-disable-line @typescript-eslint/no-unused-vars
     const { node, ...rest } = props;
+    console.log(node?.tagName)
     return (
       <Image
         sizes="100vw"
@@ -30,8 +30,8 @@ const components: Components = {
     );
   },
   table(props) {
-    // eslint-disable-line @typescript-eslint/no-unused-vars
     const { children, node, ...rest } = props;
+    console.log(node?.tagName)
     return (
       <div className="relative overflow-x-auto">
         <table
@@ -44,8 +44,8 @@ const components: Components = {
     );
   },
   thead(props) {
-    // eslint-disable-line @typescript-eslint/no-unused-vars
     const { children, node, ...rest } = props;
+    console.log(node?.tagName)
     return (
       <thead className="text-xs text-gray-700 uppercase bg-gray-50" {...rest}>
         {children}
@@ -53,8 +53,8 @@ const components: Components = {
     );
   },
   th(props) {
-    // eslint-disable-line @typescript-eslint/no-unused-vars
     const { children, node, ...rest } = props;
+    console.log(node?.tagName)
     return (
       <th
         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
@@ -65,8 +65,8 @@ const components: Components = {
     );
   },
   td(props) {
-    // eslint-disable-line @typescript-eslint/no-unused-vars
     const { children, node, ...rest } = props;
+    console.log(node?.tagName)
     return (
       <td className="px-6 py-4" {...rest}>
         {children}
@@ -75,8 +75,8 @@ const components: Components = {
   },
 
   tr(props) {
-    // eslint-disable-line @typescript-eslint/no-unused-vars
     const { children, node, ...rest } = props;
+    console.log(node?.tagName)
     return (
       <tr className="border-b" {...rest}>
         {children}
