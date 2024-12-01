@@ -6,8 +6,6 @@ import remarkGfm from "remark-gfm";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Post } from "@prisma/client";
-
 const getPost = unstable_cache(
   async (slug: string) => {
     return await prisma.post.findUnique({
@@ -20,8 +18,7 @@ const getPost = unstable_cache(
   { tags: ["posts"] },
 );
 
-const components = (post: Post): Components => {
-  return {
+const components: Components = {
     img({ alt, src }) {
       return (
         <Image
@@ -57,14 +54,14 @@ const components = (post: Post): Components => {
     },
     td({ children }) {
       return (
-        <td className="px-6 py-4" {...rest}>
+        <td className="px-6 py-4">
           {children}
         </td>
       );
     },
     tr({ children }) {
       return (
-        <tr className="border-b" {...rest}>
+        <tr className="border-b">
           {children}
         </tr>
       );
@@ -97,7 +94,6 @@ const components = (post: Post): Components => {
       );
     },
   };
-};
 
 export default async function Page({
   params,
@@ -132,7 +128,7 @@ export default async function Page({
           source={post.content || "(No content)"}
         />*/}
         <Markdown
-          components={components(post)}
+          components={components}
           remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
         >
           {post.content || "(No content)"}
