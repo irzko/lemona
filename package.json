@@ -16,6 +16,7 @@
     "@paralleldrive/cuid2": "^2.2.2",
     "@prisma/client": "^6.0.0",
     "argon2": "^0.41.1",
+    "highlight.js": "^11.10.0",
     "katex": "^0.16.11",
     "lexical": "^0.20.0",
     "lodash-es": "^4.17.21",

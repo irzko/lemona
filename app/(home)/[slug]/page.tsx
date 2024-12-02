@@ -9,7 +9,9 @@ import remarkIns from "remark-ins";
 import Image from "next/image";
 import Link from "next/link";
 import rehypeHighlight from "rehype-highlight";
-import "react-lowlight/all";
+
+//import hljs from 'highlight.js';
+import 'highlight.js/styles/github.css';
 
 //import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 //import { dracula } from "react-syntax-highlighter/dist/cjs/styles/prism";
