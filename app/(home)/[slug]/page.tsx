@@ -6,10 +6,10 @@ import remarkGfm from "remark-gfm";
 import emoji from "remark-emoji";
 import supersub from "remark-supersub";
 import remarkIns from "remark-ins";
-// import remarkPrism from "remark-prism";
 import Image from "next/image";
 import Link from "next/link";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dracula } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 const getPost = unstable_cache(
   async (slug: string) => {
@@ -62,11 +62,11 @@ const components: Components = {
       </blockquote>
     );
   },
-  
+
   code({ children, className }) {
     const match = /language-(\w+)/.exec(className || "");
     return match ? (
-      <SyntaxHighlighter PreTag="pre" language={match[1]}>
+      <SyntaxHighlighter PreTag="div" language={match[1]} style={dracula}>
         {String(children).replace(/\n$/, "")}
       </SyntaxHighlighter>
     ) : (
