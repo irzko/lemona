@@ -8,8 +8,9 @@ import supersub from "remark-supersub";
 import remarkIns from "remark-ins";
 import Image from "next/image";
 import Link from "next/link";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dracula } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import rehypeHighlight from "rehype-highlight";
+//import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+//import { dracula } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 const getPost = unstable_cache(
   async (slug: string) => {
@@ -62,7 +63,7 @@ const components: Components = {
       </blockquote>
     );
   },
-
+  /*
   code({ children, className }) {
     const match = /language-(\w+)/.exec(className || "");
     return match ? (
@@ -73,6 +74,7 @@ const components: Components = {
       <code className={className}>{children}</code>
     );
   },
+  */
 
   /*
   pre({ children }) {
@@ -182,6 +184,7 @@ export default async function Page({
         </p>
         <Markdown
           components={components}
+          rehypePlugins={[[rehypeHighlight]]}
           remarkPlugins={[
             [remarkGfm, { singleTilde: false }],
             [emoji, { emoticon: true }],
