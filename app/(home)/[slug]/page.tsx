@@ -166,14 +166,16 @@ export default async function Page({
       <div className="max-w-screen-lg w-full space-y-4 p-4">
         <h1 className="text-3xl font-bold">{post.title || "(No title)"}</h1>
         <time>{new Date(post.createdAt).toLocaleString()}</time>
-        <strong className="font-semibold text-gray-900">
-          {post.description}
-        </strong>
+        <p>
+          <strong className="font-semibold text-gray-900">
+            {post.description}
+          </strong>
+        </p>
         <Markdown
           components={components}
           remarkPlugins={[
             [remarkGfm, { singleTilde: false }],
-            [emoji],
+            [emoji, { emoticon: true }],
             [supersub],
             [remarkIns],
           ]}
