@@ -10,6 +10,8 @@ import Image from "next/image";
 import Link from "next/link";
 import rehypeHighlight from "rehype-highlight";
 import rehypeHighlightLines from "rehype-highlight-code-lines";
+import remarkFlexibleMarkers from "remark-flexible-markers";
+import remarkFlexibleContainers from "remark-flexible-containers";
 
 //import hljs from 'highlight.js';
 import "highlight.js/styles/github.min.css";
@@ -188,6 +190,8 @@ export default async function Page({
             [emoji, { emoticon: true }],
             [supersub],
             [remarkIns],
+            [remarkFlexibleMarkers],
+            [remarkFlexibleContainers],
           ]}
         >
           {post.content || "(No content)"}
