@@ -6,9 +6,10 @@ import remarkGfm from "remark-gfm";
 import emoji from "remark-emoji";
 import supersub from "remark-supersub";
 import remarkIns from "remark-ins";
+import remarkPrism from "remark-prism";
 import Image from "next/image";
 import Link from "next/link";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+// import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 
 const getPost = unstable_cache(
   async (slug: string) => {
@@ -61,6 +62,7 @@ const components: Components = {
       </blockquote>
     );
   },
+  /*
   code({ children, className }) {
     const match = /language-(\w+)/.exec(className || "");
     return match ? (
@@ -71,6 +73,7 @@ const components: Components = {
       <code className={className}>{children}</code>
     );
   },
+  */
   pre({ children }) {
     return (
       <pre className="border text-sm rounded-lg p-2.5 bg-gray-50 border-gray-200 overflow-x-auto text-[#1c63f2]">
@@ -182,6 +185,7 @@ export default async function Page({
             [emoji, { emoticon: true }],
             [supersub],
             [remarkIns],
+            [remarkPrism]<
           ]}
         >
           {post.content || "(No content)"}
