@@ -3,6 +3,9 @@ import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 // import { MDXRemote } from "remote-mdx/rsc";
 import remarkGfm from "remark-gfm";
+import emoji from "remark-emoji";
+import supersub from "remark-supersub";
+import remarkIns from "remark-ins";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,26 +23,26 @@ const getPost = unstable_cache(
 
 const components: Components = {
   h1({ children }) {
-    return <h1 className="text-3xl font-bold">{children}</h1>;
+    return <h1 className="text-4xl">{children}</h1>;
   },
   h2({ children }) {
-    return <h2 className="text-2xl font-semibold">{children}</h2>;
+    return <h2 className="text-3xl font-medium">{children}</h2>;
   },
   h3({ children }) {
-    return <h3 className="text-xl font-semibold">{children}</h3>;
+    return <h3 className="text-2xl font-medium">{children}</h3>;
   },
   h4({ children }) {
-    return <h4 className="text-lg font-semibold">{children}</h4>;
+    return <h4 className="text-lg font-medium">{children}</h4>;
   },
   h5({ children }) {
-    return <h5 className="text-sm font-semibold">{children}</h5>;
+    return <h5 className="text-sm font-medium">{children}</h5>;
   },
 
   h6({ children }) {
-    return <h6 className="text-xs font-semibold">{children}</h6>;
+    return <h6 className="text-xs font-medium">{children}</h6>;
   },
   strong({ children }) {
-    return <strong className="font-semibold">{children}</strong>;
+    return <strong className="font-bold">{children}</strong>;
   },
   u({ children }) {
     return <u className="underline">{children}</u>;
@@ -58,7 +61,11 @@ const components: Components = {
     );
   },
   code({ children }) {
-    return <code className="px-1 text-sm font-normal font-mono text-[#1c63f2]">{children}</code>;
+    return (
+      <code className="px-1 text-sm font-normal font-mono text-[#1c63f2]">
+        {children}
+      </code>
+    );
   },
   pre({ children }) {
     return (
@@ -67,7 +74,7 @@ const components: Components = {
       </pre>
     );
   },
-  
+
   img({ alt, src }) {
     return (
       <Image
@@ -159,10 +166,17 @@ export default async function Page({
       <div className="max-w-screen-lg w-full space-y-4 p-4">
         <h1 className="text-3xl font-bold">{post.title || "(No title)"}</h1>
         <time>{new Date(post.createdAt).toLocaleString()}</time>
-        <strong className="font-semibold text-gray-900">{post.description}</strong>
+        <strong className="font-semibold text-gray-900">
+          {post.description}
+        </strong>
         <Markdown
           components={components}
-          remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+          remarkPlugins={[
+            [remarkGfm, { singleTilde: false }],
+            [emoji],
+            [supersub],
+            [remarkIns],
+          ]}
         >
           {post.content || "(No content)"}
         </Markdown>

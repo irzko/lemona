@@ -52,18 +52,18 @@ const theme: EditorThemeClasses = {
     focus: 'PlaygroundEditorTheme__embedBlockFocus',
   },
   hashtag: 'PlaygroundEditorTheme__hashtag',
-  /*
+  
   heading: {
-    h1: 'PlaygroundEditorTheme__h1',
-    h2: 'PlaygroundEditorTheme__h2',
-    h3: 'PlaygroundEditorTheme__h3',
-    h4: 'PlaygroundEditorTheme__h4',
-    h5: 'PlaygroundEditorTheme__h5',
-    h6: 'PlaygroundEditorTheme__h6',
+    h1: 'text-4xl font-medium',
+    h2: 'text-3xl font-medium',
+    h3: 'text-3xl font-medium',
+    h4: 'text-lg font-medium',
+    h5: 'text-sm font-medium',
+    h6: 'text-xs font-medium',
   },
-  */
+  
   hr: 'PlaygroundEditorTheme__hr',
-  image: 'editor-image',
+  image: 'w-full h-auto',
   indent: 'PlaygroundEditorTheme__indent',
   inlineImage: 'inline-editor-image',
   layoutContainer: 'PlaygroundEditorTheme__layoutContainer',
@@ -107,13 +107,13 @@ const theme: EditorThemeClasses = {
   tableSelection: 'PlaygroundEditorTheme__tableSelection',
   
   text: {
-    bold: 'PlaygroundEditorTheme__textBold',
+    bold: 'font-bold',
     code: 'PlaygroundEditorTheme__textCode',
-    italic: 'PlaygroundEditorTheme__textItalic',
-    strikethrough: 'PlaygroundEditorTheme__textStrikethrough',
+    italic: 'italic',
+    strikethrough: 'line-through',
     subscript: 'PlaygroundEditorTheme__textSubscript',
     superscript: 'PlaygroundEditorTheme__textSuperscript',
-    underline: 'PlaygroundEditorTheme__textUnderline',
+    underline: 'underline',
     underlineStrikethrough: 'PlaygroundEditorTheme__textUnderlineStrikethrough',
   },
 };
