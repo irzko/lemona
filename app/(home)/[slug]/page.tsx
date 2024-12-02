@@ -9,9 +9,10 @@ import remarkIns from "remark-ins";
 import Image from "next/image";
 import Link from "next/link";
 import rehypeHighlight from "rehype-highlight";
+import rehypeHighlightLines from "rehype-highlight-code-lines";
 
 //import hljs from 'highlight.js';
-import 'highlight.js/styles/github.css';
+import "highlight.js/styles/github.min.css";
 
 const getPost = unstable_cache(
   async (slug: string) => {
@@ -65,8 +66,7 @@ const components: Components = {
     );
   },
 
-
-
+  /*
   pre({ children }) {
     return (
       <pre className="border text-sm rounded-lg p-2.5 bg-gray-50 border-gray-200 overflow-x-auto">
@@ -74,7 +74,7 @@ const components: Components = {
       </pre>
     );
   },
-
+*/
 
   img({ alt, src }) {
     return (
@@ -175,8 +175,9 @@ export default async function Page({
         <Markdown
           components={components}
           rehypePlugins={[
+            [rehypeHighlight],
             [
-              rehypeHighlight,
+              rehypeHighlightLines,
               {
                 showLineNumbers: true,
               },
