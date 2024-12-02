@@ -8,6 +8,8 @@ import supersub from "remark-supersub";
 import remarkIns from "remark-ins";
 import Image from "next/image";
 import Link from "next/link";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const getPost = unstable_cache(
   async (slug: string) => {
@@ -60,11 +62,17 @@ const components: Components = {
       </blockquote>
     );
   },
-  code({ children }) {
-    return (
-      <code className="px-1 text-sm font-normal font-mono text-[#1c63f2]">
-        {children}
-      </code>
+  code({ children, className }) {
+    const match = /language-(\w+)/.exec(className || "");
+    return match ? (
+      <SyntaxHighlighter
+        PreTag="div"
+        children={String(children).replace(/\n$/, "")}
+        language={match[1]}
+        style={dark}
+      />
+    ) : (
+      <code className={className}>{children}</code>
     );
   },
   pre({ children }) {
@@ -164,7 +172,7 @@ export default async function Page({
   return (
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full space-y-4 p-4">
-        <h1 className="text-3xl font-bold">{post.title || "(No title)"}</h1>
+        <h1 className="text-4xl font-medium">{post.title || "(No title)"}</h1>
         <time>{new Date(post.createdAt).toLocaleString()}</time>
         <p>
           <strong className="font-semibold text-gray-900">
