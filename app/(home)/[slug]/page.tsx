@@ -9,7 +9,6 @@ import remarkIns from "remark-ins";
 import Image from "next/image";
 import Link from "next/link";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const getPost = unstable_cache(
   async (slug: string) => {
@@ -65,7 +64,7 @@ const components: Components = {
   code({ children, className }) {
     const match = /language-(\w+)/.exec(className || "");
     return match ? (
-      <SyntaxHighlighter PreTag="div" language={match[1]} style={dark}>
+      <SyntaxHighlighter PreTag="div" language={match[1]}>
         {String(children).replace(/\n$/, "")}
       </SyntaxHighlighter>
     ) : (
