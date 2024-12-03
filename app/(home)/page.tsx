@@ -30,7 +30,7 @@ export default async function Page() {
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-4">
         <h3 className="mb-4">Bài viết mới</h3>
-        <ul className="grid divide-y grid-cols space-y-0 list-none sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
+        <ul className="grid divide-y-2 grid-cols space-y-4 sm:space-y-0 list-none sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 sm:gap-4">
           {allPosts.slice(0, 4).map((post) => (
             <li
               className="bg-white"
