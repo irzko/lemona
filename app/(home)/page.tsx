@@ -32,7 +32,7 @@ export default async function Page() {
         <ul className="grid grid-cols space-y-0 list-none sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {allPosts.slice(0, 4).map((post) => (
             <li key={post.id}>
-              <Link className="text-gray-800" href={`/${post.slug}`}>
+              <Link className="p-4 border border-gray-200 rounded-2xl shadow-md" href={`/${post.slug}`}>
                 <div className="relative w-full h-auto">
                   <div className="relative z-10 w-full aspect-video">
                     <Image
@@ -53,7 +53,7 @@ export default async function Page() {
                   </div>
                 </div>
 
-                <h3 className="px-2 px-2 font-semibold text-lg line-clamp-3">
+                <h3 className="py-2 px-2 font-medium text-2xl line-clamp-3">
                   {post.title || "(No title)"}
                 </h3>
               </Link>
