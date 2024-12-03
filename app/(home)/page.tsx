@@ -11,6 +11,7 @@ const getPosts = unstable_cache(
         title: true,
         slug: true,
         featuredImageURL: true,
+        createdAt: true,
       },
       orderBy: [
         {
@@ -31,31 +32,27 @@ export default async function Page() {
         <h3 className="mb-4">Bài viết mới</h3>
         <ul className="grid grid-cols space-y-0 list-none sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {allPosts.slice(0, 4).map((post) => (
-            <li className="border border-gray-200 rounded-2xl bg-white" key={post.id}>
+            <li
+              className="border border-gray-200 rounded-2xl bg-white"
+              key={post.id}
+            >
               <Link href={`/${post.slug}`}>
-                <div className="relative w-full p-4 h-auto">
-                  <div className="relative z-10 w-full aspect-video">
-                    <Image
-                      src={post.featuredImageURL || "/no-image.jpg"}
-                      alt={post.title}
-                      fill
-                      className="object-cover rounded-xl"
-                    />
-                  </div>
-                  <div className="absolute z-0 inset-0 w-full aspect-video">
-                    <Image
-                      className="object-cover rounded-xl filter blur-lg scale-105 saturate-150 opacity-30 translate-y-1"
-                      src={post.featuredImageURL || "/no-image.jpg"}
-                      alt={post.title}
-                      priority={false}
-                      fill
-                    />
-                  </div>
+                <div className="relative w-full aspect-video">
+                  <Image
+                    src={post.featuredImageURL || "/no-image.jpg"}
+                    alt={post.title}
+                    fill
+                    className="object-cover rounded-xl"
+                  />
                 </div>
-
-                <h3 className="px-4 pb-4 font-bold text-lg line-clamp-3">
-                  {post.title || "(No title)"}
-                </h3>
+                <div className="px-4 pb-4 ">
+                  <h3 className="font-bold text-lg line-clamp-3">
+                    {post.title || "(No title)"}
+                  </h3>
+                  <time>
+                    {new Date(post.createdAt).toLocaleDateString("vi-VN")}
+                  </time>
+                </div>
               </Link>
             </li>
           ))}

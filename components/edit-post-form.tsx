@@ -27,7 +27,7 @@ export default function EditPostForm({
   categories: Category[];
 post: Post & { tags: TagsOnPosts & {tag: Tag}[]}
 }) {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(post.content);
   const handleChange = useCallback((editorState: EditorState) => {
     editorState.read(() => {
       const markdownText = $convertToMarkdownString(PLAYGROUND_TRANSFORMERS);
@@ -60,7 +60,7 @@ post: Post & { tags: TagsOnPosts & {tag: Tag}[]}
       <Input id="description" name="description" placeholder="Nhập mô tả" defaultValue={post.description} required />
       <Input id="tags" name="tags" placeholder="Thẻ bài viết" required defaultValue={post.tags.map((i)=>i.tag.name).join(", ")} />
       <Button className="w-full" color="light" type="submit">
-        Lưug
+        Lưu
       </Button>
     </form>
   );
