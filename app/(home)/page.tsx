@@ -30,10 +30,10 @@ export default async function Page() {
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-4">
         <h3 className="mb-4">Bài viết mới</h3>
-        <ul className="grid grid-cols space-y-0 list-none sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
+        <ul className="grid divide-y grid-cols space-y-0 list-none sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {allPosts.slice(0, 4).map((post) => (
             <li
-              className="border overflow-hidden border-gray-200 rounded-2xl bg-white"
+              className="bg-white"
               key={post.id}
             >
               <Link href={`/${post.slug}`}>
@@ -42,16 +42,13 @@ export default async function Page() {
                     src={post.featuredImageURL || "/no-image.jpg"}
                     alt={post.title}
                     fill
-                    className="object-cover"
+                    className="object-cover rounded-lg"
                   />
                 </div>
-                <div className="p-4 ">
+                <div className="py-4 ">
                   <h3 className="font-bold text-lg line-clamp-3">
                     {post.title || "(No title)"}
                   </h3>
-                  <time>
-                    {new Date(post.createdAt).toLocaleDateString("vi-VN", { day: '2-digit', month: '2-digit', year: 'numeric' })}
-                  </time>
                 </div>
               </Link>
             </li>
