@@ -31,7 +31,7 @@ export default async function Page() {
         <h3 className="mb-4">Bài viết mới</h3>
         <ul className="grid grid-cols space-y-0 list-none sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {allPosts.slice(0, 4).map((post) => (
-            <li className="border border-gray-200 rounded-2xl shadow-lg bg-white" key={post.id}>
+            <li className="border border-gray-200 rounded-2xl bg-white" key={post.id}>
               <Link href={`/${post.slug}`}>
                 <div className="relative w-full p-4 h-auto">
                   <div className="relative z-10 w-full aspect-video">
