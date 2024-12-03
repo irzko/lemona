@@ -31,7 +31,7 @@ export default async function Page() {
         <h3 className="mb-4">Bài viết mới</h3>
         <ul className="grid grid-cols space-y-0 list-none sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {allPosts.slice(0, 4).map((post) => (
-            <li className="overflow-hidden bg-white shadow-md" key={post.id}>
+            <li key={post.id}>
               <Link className="text-gray-800" href={`/${post.slug}`}>
                 <div className="relative w-full h-auto">
                   <div className="relative z-10 w-full aspect-video">
@@ -53,9 +53,9 @@ export default async function Page() {
                   </div>
                 </div>
 
-                <h6 className="pt-2 font-semibold text-base line-clamp-3">
+                <h3 className="px-2 px-2 font-semibold text-lg line-clamp-3">
                   {post.title || "(No title)"}
-                </h6>
+                </h3>
               </Link>
             </li>
           ))}
