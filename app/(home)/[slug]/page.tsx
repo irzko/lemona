@@ -144,6 +144,9 @@ const components: Components = {
       </Link>
     );
   },
+  hr() {
+    return <hr className="h-px my-8 bg-gray-200 border-0"/>
+  }
 };
 
 export default async function Page({

@@ -30,14 +30,14 @@ export default async function Page() {
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-4">
         <h3 className="mb-4">Bài viết mới</h3>
-        <ul className="grid divide-y-2 grid-cols space-y-4 sm:space-y-0 list-none sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 sm:gap-4">
+        <ul className="grid grid-cols sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {allPosts.slice(0, 4).map((post) => (
             <li
-              className="bg-white"
+              className="bg-white p-4 border border-gray-200 rounded-xl"
               key={post.id}
             >
-              <Link href={`/${post.slug}`}>
-                <div className="relative w-full aspect-video pt-4 py-4">
+              <Link className="space-y-4" href={`/${post.slug}`}>
+                <div className="relative w-full aspect-video">
                   <Image
                     src={post.featuredImageURL || "/no-image.jpg"}
                     alt={post.title}
@@ -45,7 +45,7 @@ export default async function Page() {
                     className="object-cover rounded-lg"
                   />
                 </div>
-                <div className="py-4 ">
+                <div className="">
                   <h3 className="font-bold text-lg line-clamp-3">
                     {post.title || "(No title)"}
                   </h3>

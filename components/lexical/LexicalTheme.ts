@@ -62,7 +62,7 @@ const theme: EditorThemeClasses = {
     h6: "text-xs font-medium",
   },
 
-  hr: "PlaygroundEditorTheme__hr",
+  hr: "h-px my-8 bg-gray-200 border-0",
   image: "w-full h-auto",
   indent: "PlaygroundEditorTheme__indent",
   inlineImage: "inline-editor-image",
