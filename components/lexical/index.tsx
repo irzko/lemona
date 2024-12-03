@@ -12,7 +12,7 @@ const LexicalEditor = memo(
     onChange,
     markdown,
   }: {
-    onChange: (editorState: EditorState) => void;
+    onChange?: (editorState: EditorState) => void;
     markdown?: string;
   }) => {
     return (
@@ -21,7 +21,7 @@ const LexicalEditor = memo(
           <ToolbarContext>
             <Editor markdown={markdown} />
           </ToolbarContext>
-          <OnChangePlugin onChange={onChange} />
+          {onChange && <OnChangePlugin onChange={onChange} />}
         </SharedHistoryContext>
       </LexicalComposer>
     );

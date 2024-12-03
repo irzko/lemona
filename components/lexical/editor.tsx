@@ -25,6 +25,7 @@ import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import { useState } from "react";
 import ImagesPlugin from "./plugins/ImagesPlugin";
 import LinkPlugin from './plugins/LinkPlugin';
+import CodeHighlightPlugin from './plugins/CodeHighlightPlugin';
 
 
 const placeholder = "Hãy bắt đầu viết...";
@@ -73,6 +74,7 @@ export default function Editor({ markdown }: { markdown?: string }) {
         <ListPlugin />
         <LinkPlugin hasLinkAttributes={false} />
         <ClickableLinkPlugin disabled={isEditable} />
+        <CodeHighlightPlugin />
         <CheckListPlugin />
         <TablePlugin
           hasCellMerge={true}

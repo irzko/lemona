@@ -14,7 +14,7 @@ import remarkFlexibleMarkers from "remark-flexible-markers";
 import remarkFlexibleContainers from "remark-flexible-containers";
 
 //import hljs from 'highlight.js';
-import "highlight.js/styles/github.min.css";
+import "highlight.js/styles/github-dark.min.css";
 
 const getPost = unstable_cache(
   async (slug: string) => {

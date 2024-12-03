@@ -129,7 +129,7 @@ function DropDownItems({
   return (
     <DropDownContext.Provider value={contextValue}>
       <div
-        className="z-10 p-2 absolute bg-white rounded-lg shadow"
+        className="z-40 p-2 absolute bg-white rounded-lg shadow"
         ref={dropDownRef}
         onKeyDown={handleKeyDown}
       >
