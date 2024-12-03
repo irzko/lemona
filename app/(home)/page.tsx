@@ -33,24 +33,24 @@ export default async function Page() {
         <ul className="grid grid-cols space-y-0 list-none sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {allPosts.slice(0, 4).map((post) => (
             <li
-              className="border border-gray-200 rounded-2xl bg-white"
+              className="border overflow-hidden border-gray-200 rounded-2xl bg-white"
               key={post.id}
             >
               <Link href={`/${post.slug}`}>
-                <div className="relative w-full aspect-video">
+                <div className="relative w-full aspect-video pt-4 py-4">
                   <Image
                     src={post.featuredImageURL || "/no-image.jpg"}
                     alt={post.title}
                     fill
-                    className="object-cover rounded-xl"
+                    className="object-cover"
                   />
                 </div>
-                <div className="px-4 pb-4 ">
+                <div className="p-4 ">
                   <h3 className="font-bold text-lg line-clamp-3">
                     {post.title || "(No title)"}
                   </h3>
                   <time>
-                    {new Date(post.createdAt).toLocaleDateString("vi-VN")}
+                    {new Date(post.createdAt).toLocaleDateString("vi-VN", { day: '2-digit', month: '2-digit', year: 'numeric' })}
                   </time>
                 </div>
               </Link>

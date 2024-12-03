@@ -168,7 +168,7 @@ export default async function Page({
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full space-y-4 p-4">
         <h1 className="text-4xl font-medium">{post.title || "(No title)"}</h1>
-        <time>{new Date(post.createdAt).toLocaleDateString("vi-VN")}</time>
+        <time>{new Date(post.createdAt).toLocaleDateString("vi-VN", { day: '2-digit', month: '2-digit', year: 'numeric' })}</time>
         <p>
           <strong className="font-semibold text-gray-900">
             {post.description}
