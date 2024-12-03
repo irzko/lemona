@@ -53,7 +53,7 @@ export default async function Page() {
                   </div>
                 </div>
 
-                <h3 className="px-2 font-medium text-lg line-clamp-3">
+                <h3 className="px-4 pb-4 font-bold text-lg line-clamp-3">
                   {post.title || "(No title)"}
                 </h3>
               </Link>
