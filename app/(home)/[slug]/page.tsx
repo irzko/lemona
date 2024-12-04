@@ -17,10 +17,10 @@ import remarkFlexibleContainers from "remark-flexible-containers";
 import "highlight.js/styles/github-dark.min.css";
 
 const getPost = unstable_cache(
-  async (slug: string) => {
+  async (id: string) => {
     return await prisma.post.findUnique({
       where: {
-        slug,
+        id,
       },
     });
   },
@@ -155,7 +155,10 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const slug = (await params).slug;
-  if (!slug) {
+  const postId = slug.split(".")[0].split("-").pop();
+
+  
+  if (!postId) {
     return null;
   }
   const post = await getPost(slug);

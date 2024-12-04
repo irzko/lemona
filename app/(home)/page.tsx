@@ -2,6 +2,7 @@ import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import Image from "next/image";
+import slugify from "slugify";
 
 const getPosts = unstable_cache(
   async () => {
@@ -9,7 +10,6 @@ const getPosts = unstable_cache(
       select: {
         id: true,
         title: true,
-        slug: true,
         featuredImageURL: true,
         createdAt: true,
       },
@@ -30,13 +30,22 @@ export default async function Page() {
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-4">
         <h3 className="mb-4">Bài viết mới</h3>
-        <ul className="grid grid-cols sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
+        <ul className="grid grid-cols divide-y-2 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {allPosts.slice(0, 4).map((post) => (
             <li
-              className="bg-white p-4 border border-gray-200 rounded-xl"
+              className="bg-white pt-4"
               key={post.id}
             >
-              <Link className="space-y-4" href={`/${post.slug}`}>
+              <Link
+                href={`/${slugify(post.title, {
+                  replacement: "-",
+                  remove: undefined,
+                  lower: true,
+                  strict: true,
+                  locale: "vi",
+                  trim: true,
+                })}-${post.id}.html`}
+              >
                 <div className="relative w-full aspect-video">
                   <Image
                     src={post.featuredImageURL || "/no-image.jpg"}
@@ -57,7 +66,17 @@ export default async function Page() {
         <ul className="grid grid-cols-1 mt-4 space-y-0 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {allPosts.slice(4).map((post) => (
             <li className="overflow-hidden bg-white" key={post.id}>
-              <Link className="text-gray-800 flex gap-4" href={`/${post.slug}`}>
+              <Link
+                className="text-gray-800 flex gap-4"
+                href={`/${slugify(post.title, {
+                  replacement: "-",
+                  remove: undefined,
+                  lower: true,
+                  strict: true,
+                  locale: "vi",
+                  trim: true,
+                })}-${post.id}.html`}
+              >
                 <div className="w-2/5">
                   <div className="relative w-full aspect-video">
                     <Image

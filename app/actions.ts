@@ -2,9 +2,8 @@
 import prisma from "@/lib/prisma";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
-import { createId } from "@paralleldrive/cuid2";
+import { init, createId } from "@paralleldrive/cuid2";
 import { hash } from "argon2";
-import slugify from "slugify";
 
 import {
   SignupFormSchema,
@@ -16,22 +15,15 @@ import {
 export async function createPost(formData: FormData) {
   const title = formData.get("title") as string
   const tags = (formData.get("tags") as string).split(",").map((i) => i.trim());
+  const cuid = init({ length: 12 });
   await prisma.post.create({
     data: {
-      id: createId(),
+      id: cuid(),
       description: formData.get("description") as string,
       title,
       content: formData.get("content") as string,
       authorId: formData.get("authorId") as string,
       featuredImageURL: formData.get("featuredImageURL") as string,
-      slug: slugify(title, {
-        replacement: "-",
-        remove: undefined,
-        lower: true,
-        strict: true,
-        locale: "vi",
-        trim: true,
-      }),
       categoryId: formData.get("categoryId") as string,
       tags: {
         create: tags.map((tagName) => ({
@@ -89,14 +81,6 @@ export async function updatePost(formData: FormData) {
       content,
       description,
       featuredImageURL,
-      slug: slugify(title, {
-        replacement: "-",
-        remove: undefined,
-        lower: true,
-        strict: true,
-        locale: "vi",
-        trim: true,
-      }),
       categoryId: formData.get("categoryId") as string,
       tags: {
         deleteMany: unuseTags.map((tg) => ({
@@ -187,14 +171,6 @@ export async function createCategory(
   await prisma.category.create({
     data: {
       id: createId(),
-      slug: slugify(name, {
-        replacement: "-",
-        remove: undefined,
-        lower: true,
-        strict: true,
-        locale: "vi",
-        trim: true,
-      }),
       name,
       parentCategoryId,
     },
@@ -228,14 +204,6 @@ export async function updateCategory(
       id,
     },
     data: {
-      slug: slugify(name, {
-        replacement: "-",
-        remove: undefined,
-        lower: true,
-        strict: true,
-        locale: "vi",
-        trim: true,
-      }),
       name,
       parentCategoryId,
     },

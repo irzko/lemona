@@ -3,12 +3,12 @@ import { useState } from "react";
 import Input from "@/components/ui/Input";
 import { createPost } from "@/app/actions";
 import { $convertToMarkdownString } from "@lexical/markdown";
-import {PLAYGROUND_TRANSFORMERS} from "@/components/lexical/plugins/MarkdownTransformers";
+import { PLAYGROUND_TRANSFORMERS } from "@/components/lexical/plugins/MarkdownTransformers";
 import { EditorState } from "lexical";
 import Button from "@/components/ui/Button";
 import Select from "@/components/ui/select";
 import { useCallback } from "react";
-import LexicalEditor from '@/components/lexical'
+import LexicalEditor from "@/components/lexical";
 
 interface Category {
   id: string;
@@ -39,7 +39,13 @@ export default function PostForm({
         createPost(formData);
       }}
     >
-      <Input id="title" name="title" placeholder="Tiêu đề" required />
+      <Input
+        id="title"
+        name="title"
+        placeholder="Tiêu đề"
+        autoComplete="false"
+        required
+      />
 
       <LexicalEditor onChange={handleChange} />
       <Select name="categoryId">
@@ -51,9 +57,27 @@ export default function PostForm({
           );
         })}
       </Select>
-      <Input id="featuredImageURL" name="featuredImageURL" placeholder="Featured image URL" required />
-      <Input id="description" name="description" placeholder="Nhập mô tả" required />
-      <Input id="tags" name="tags" placeholder="Thẻ bài viết" required />
+      <Input
+        id="featuredImageURL"
+        name="featuredImageURL"
+        placeholder="Featured image URL"
+        required
+        autoComplete="false"
+      />
+      <Input
+        id="description"
+        name="description"
+        placeholder="Nhập mô tả"
+        required
+        autoComplete="false"
+      />
+      <Input
+        id="tags"
+        name="tags"
+        placeholder="Thẻ bài viết"
+        required
+        autoComplete="false"
+      />
       <Button className="w-full" color="light" type="submit">
         Đăng
       </Button>

@@ -12,7 +12,6 @@ model Post {
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
   title            String        @unique
-  slug             String        @unique
   featuredImageURL String
   description      String
   content          String
@@ -45,7 +44,6 @@ model User {
 model Category {
   id               String   @id
   name             String   @unique
-  slug             String   @unique
   description      String?
   parentCategoryId String?
   image            String?
