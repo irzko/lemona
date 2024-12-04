@@ -13,8 +13,14 @@ import {
 } from "@/lib/definitions";
 
 export async function createPost(formData: FormData) {
-  const title = formData.get("title") as string
-  const tags = (formData.get("tags") as string).split(",").map((i) => i.trim());
+  const title = formData.get("title") as string;
+  const tagNames = (formData.get("tagNames") as string)
+    .split(",")
+    .map((i) => i.trim());
+  const categoryIds = (formData.get("categoryIds") as string)
+    .split(",")
+    .map((i) => i.trim());
+
   const cuid = init({ length: 12 });
   await prisma.post.create({
     data: {
@@ -24,9 +30,8 @@ export async function createPost(formData: FormData) {
       content: formData.get("content") as string,
       authorId: formData.get("authorId") as string,
       featuredImageURL: formData.get("featuredImageURL") as string,
-      categoryId: formData.get("categoryId") as string,
       tags: {
-        create: tags.map((tagName) => ({
+        create: tagNames.map((tagName) => ({
           tag: {
             connectOrCreate: {
               where: {
@@ -36,6 +41,15 @@ export async function createPost(formData: FormData) {
                 name: tagName,
                 id: createId(),
               },
+            },
+          },
+        })),
+      },
+      categories: {
+        create: categoryIds.map((categoryId) => ({
+          category: {
+            connect: {
+              id: categoryId,
             },
           },
         })),
@@ -51,28 +65,16 @@ export async function updatePost(formData: FormData) {
   const title = formData.get("title") as string;
   const content = formData.get("content") as string;
   const featuredImageURL = formData.get("featuredImageURL") as string;
-  const tags = (formData.get("tags") as string).split(",").map((i) => i.trim());
+  const tagNames = (formData.get("tagNames") as string)
+    .split(",")
+    .map((i) => i.trim());
   const id = formData.get("id") as string;
   const description = formData.get("description") as string;
+  const categoryIds = (formData.get("categoryIds") as string)
+  .split(",")
+  .map((i) => i.trim());
   
-  const existingTags = await prisma.tagsOnPosts.findMany({
-    where: {
-      postId: id,
-    },
-    select: {
-      tag: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-    },
-  });
-
-  const unuseTags = existingTags.filter(tag => !tags.includes(tag.tag.name))
-  const useTags = tags.filter(tag => !existingTags.map(tag => tag.tag.name).includes(tag))
-
-  await prisma.post.update({
+  const post = await prisma.post.update({
     where: {
       id,
     },
@@ -81,14 +83,8 @@ export async function updatePost(formData: FormData) {
       content,
       description,
       featuredImageURL,
-      categoryId: formData.get("categoryId") as string,
       tags: {
-        deleteMany: unuseTags.map((tg) => ({
-          postId: id,
-          tagId: tg.tag.id,
-        })),
-
-        create: useTags.map((tagName) => ({
+        create: tagNames.map((tagName) => ({
           tag: {
             connectOrCreate: {
               where: {
@@ -102,10 +98,55 @@ export async function updatePost(formData: FormData) {
           },
         })),
       },
+      categories: {
+        create: categoryIds.map((categoryId) => ({
+          category: {
+            connect: {
+              id: categoryId,
+            },
+          },
+        })),
+      },
+    },
+    include: {
+      categories: {
+        include: {
+          category: true,
+        },
+      },
+      tags: {
+        include: {
+          tag: true,
+        },
+      },
     },
   });
 
-  
+  const unuseTags = post.tags.filter((tag) => !tagNames.includes(tag.tag.name));
+  const unuseCategories = post.categories.filter(
+    (category) => !categoryIds.includes(category.category.id),
+  );
+
+  await prisma.post.update({
+    where: {
+      id,
+    },
+    data: {
+      tags: {
+        deleteMany: unuseTags.map((tg) => ({
+          postId: id,
+          tagId: tg.tag.id,
+        })),
+      },
+      categories: {
+        deleteMany: unuseCategories.map((ctg) => ({
+          postId: id,
+          tagId: ctg.category.id,
+        })),
+      }
+    },
+  });
+
   revalidateTag("posts");
   redirect("/");
 }
