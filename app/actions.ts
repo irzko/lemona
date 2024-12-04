@@ -74,51 +74,6 @@ export async function updatePost(formData: FormData) {
     .split(",")
     .map((i) => i.trim());
 
-  const currentPost = await prisma.post.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      tags: {
-        select: {
-          tag: {
-            select: {
-              id: true,
-              name: true,
-            },
-          },
-        },
-      },
-      categories: {
-        select: {
-          category: {
-            select: {
-              id: true,
-            },
-          },
-        },
-      },
-    },
-  });
-
-  const unusedTags = currentPost?.tags.filter(
-    (tag) => !tagNames.includes(tag.tag.name)
-  );
-  const useTags = tagNames.filter(
-    (tag) => !currentPost?.tags.map((tag) => tag.tag.name).includes(tag)
-  );
-
-  const unusedCategories = currentPost?.categories.filter(
-    (category) => !categoryIds.includes(category.category.id)
-  );
-
-  const useCategories = categoryIds.filter(
-    (category) =>
-      !currentPost?.categories
-        .map((category) => category.category.id)
-        .includes(category)
-  );
-
   await prisma.post.update({
     where: {
       id,
@@ -129,11 +84,8 @@ export async function updatePost(formData: FormData) {
       description,
       featuredImageURL,
       tags: {
-        deleteMany: unusedTags?.map((tg) => ({
-          postId: id,
-          tagId: tg.tag.id,
-        })),
-        create: useTags.map((tagName) => ({
+        deleteMany: {},
+        create: tagNames.map((tagName) => ({
           tag: {
             connectOrCreate: {
               where: {
@@ -148,29 +100,14 @@ export async function updatePost(formData: FormData) {
         })),
       },
       categories: {
-        deleteMany: unusedCategories?.map((ct) => ({
-          postId: id,
-          categoryId: ct.category.id,
-        })),
-        create: useCategories.map((categoryId) => ({
+        deleteMany: {},
+        create: categoryIds.map((categoryId) => ({
           category: {
             connect: {
               id: categoryId,
             },
           },
         })),
-      },
-    },
-    include: {
-      categories: {
-        include: {
-          category: true,
-        },
-      },
-      tags: {
-        include: {
-          tag: true,
-        },
       },
     },
   });
@@ -191,6 +128,8 @@ export async function createUser(state: SignupFormState, formData: FormData) {
     };
   }
 
+  console.log(state);
+
   const username = formData.get("username") as string;
   const password = formData.get("password") as string;
   const hashedPassword = await hash(password);
@@ -207,7 +146,7 @@ export async function createUser(state: SignupFormState, formData: FormData) {
 
 export async function createCategory(
   state: CategoryFormState,
-  formData: FormData
+  formData: FormData,
 ) {
   const validatedFields = CategoryFormSchema.safeParse({
     name: formData.get("name"),
@@ -219,6 +158,8 @@ export async function createCategory(
     };
   }
 
+  console.log(state);
+
   const name = formData.get("name") as string;
 
   const category = await prisma.category.findFirst({
@@ -226,8 +167,6 @@ export async function createCategory(
       name: name,
     },
   });
-
-  console.log(state);
 
   if (category) {
     return {
@@ -248,7 +187,7 @@ export async function createCategory(
 
 export async function updateCategory(
   state: CategoryFormState,
-  formData: FormData
+  formData: FormData,
 ) {
   const validatedFields = CategoryFormSchema.safeParse({
     name: formData.get("name"),
