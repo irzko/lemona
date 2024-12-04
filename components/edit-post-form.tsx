@@ -8,7 +8,7 @@ import { PLAYGROUND_TRANSFORMERS } from "@/components/lexical/plugins/MarkdownTr
 import Button from "@/components/ui/Button";
 import Select from "@/components/ui/select";
 import { useCallback } from "react";
-import { Post, TagsOnPosts, Tag } from "@prisma/client";
+import { Post, TagsOnPosts, Tag, CategoriesOnPosts } from "@prisma/client";
 import LexicalEditor from "@/components/lexical";
 
 interface Category {
@@ -22,7 +22,10 @@ export default function EditPostForm({
 }: {
   authorId: string;
   categories: Category[];
-  post: Post & { tags: TagsOnPosts & { tag: Tag }[] };
+  post: Post & {
+    tags: TagsOnPosts & { tag: Tag }[];
+    categories: CategoriesOnPosts & { category: Category }[];
+  };
 }) {
   const [content, setContent] = useState(post.content);
   const handleChange = useCallback((editorState: EditorState) => {
@@ -51,7 +54,7 @@ export default function EditPostForm({
       />
 
       <LexicalEditor onChange={handleChange} markdown={post.content} />
-      <Select defaultValue={post.categoryId} name="categoryId">
+      <Select defaultValue={undefined} name="categoryIds">
         {categories.map((category) => {
           return (
             <option value={category.id} key={category.id}>
@@ -78,8 +81,8 @@ export default function EditPostForm({
       />
       <Input
         autoComplete="false"
-        id="tags"
-        name="tags"
+        id="tagNames"
+        name="tagNames"
         placeholder="Thẻ bài viết"
         required
         defaultValue={post.tags.map((i) => i.tag.name).join(", ")}

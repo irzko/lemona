@@ -74,6 +74,8 @@ function LazyImage({
   return (
     <NextImage
       className={className || undefined}
+      width={0}
+      height={0}
       src={src}
       alt={altText}
       ref={imageRef}

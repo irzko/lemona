@@ -25,7 +25,7 @@ const getPost = unstable_cache(
     });
   },
   ["posts"],
-  { tags: ["posts"] },
+  { tags: ["posts"] }
 );
 
 const components: Components = {
@@ -81,6 +81,8 @@ const components: Components = {
   img({ alt, src }) {
     return (
       <Image
+        width={0}
+        height={0}
         alt={alt || ""}
         sizes="100vw"
         style={{ width: "100%", height: "auto" }}
@@ -145,8 +147,8 @@ const components: Components = {
     );
   },
   hr() {
-    return <hr className="h-px my-8 bg-gray-200 border-0"/>
-  }
+    return <hr className="h-px my-8 bg-gray-200 border-0" />;
+  },
 };
 
 export default async function Page({
@@ -157,7 +159,6 @@ export default async function Page({
   const slug = (await params).slug;
   const postId = slug.split(".")[0].split("-").pop();
 
-  
   if (!postId) {
     return null;
   }
@@ -172,36 +173,41 @@ export default async function Page({
   }
   return (
     <main className="flex justify-center">
-      <div className="max-w-screen-lg w-full space-y-4 p-4">
-        <h1 className="text-4xl font-medium">{post.title || "(No title)"}</h1>
-        <time>{new Date(post.createdAt).toLocaleDateString("vi-VN", { day: '2-digit', month: '2-digit', year: 'numeric' })}</time>
-        <p>
-          <strong className="font-semibold text-gray-900">
-            {post.description}
-          </strong>
-        </p>
-        <Markdown
-          components={components}
-          rehypePlugins={[
-            [rehypeHighlight],
-            [
-              rehypeHighlightLines,
-              {
-                showLineNumbers: true,
-              },
-            ],
-          ]}
-          remarkPlugins={[
-            [remarkGfm, { singleTilde: false }],
-            [emoji, { emoticon: true }],
-            [supersub],
-            [remarkIns],
-            [remarkFlexibleMarkers],
-            [remarkFlexibleContainers],
-          ]}
-        >
-          {post.content || "(No content)"}
-        </Markdown>
+      <div className="flex md:flex-row justify-center flex-col max-w-screen-lg w-full p-4 gap-4">
+        <div className="w-full space-y-4">
+          <h1 className="text-4xl font-medium">{post.title || "(No title)"}</h1>
+          <p>
+            {new Date(post.createdAt).toLocaleDateString("vi-VN", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })}
+          </p>
+          <p className="font-semibold text-gray-900">{post.description}</p>
+          <Markdown
+            components={components}
+            rehypePlugins={[
+              [rehypeHighlight],
+              [
+                rehypeHighlightLines,
+                {
+                  showLineNumbers: true,
+                },
+              ],
+            ]}
+            remarkPlugins={[
+              [remarkGfm, { singleTilde: false }],
+              [emoji, { emoticon: true }],
+              [supersub],
+              [remarkIns],
+              [remarkFlexibleMarkers],
+              [remarkFlexibleContainers],
+            ]}
+          >
+            {post.content || "(No content)"}
+          </Markdown>
+        </div>
+        <div className="md:w-96 w-full h-96 border"></div>
       </div>
     </main>
   );

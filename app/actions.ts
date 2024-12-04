@@ -71,10 +71,55 @@ export async function updatePost(formData: FormData) {
   const id = formData.get("id") as string;
   const description = formData.get("description") as string;
   const categoryIds = (formData.get("categoryIds") as string)
-  .split(",")
-  .map((i) => i.trim());
-  
-  const post = await prisma.post.update({
+    .split(",")
+    .map((i) => i.trim());
+
+  const currentPost = await prisma.post.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      tags: {
+        select: {
+          tag: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      },
+      categories: {
+        select: {
+          category: {
+            select: {
+              id: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const unusedTags = currentPost?.tags.filter(
+    (tag) => !tagNames.includes(tag.tag.name)
+  );
+  const useTags = tagNames.filter(
+    (tag) => !currentPost?.tags.map((tag) => tag.tag.name).includes(tag)
+  );
+
+  const unusedCategories = currentPost?.categories.filter(
+    (category) => !categoryIds.includes(category.category.id)
+  );
+
+  const useCategories = categoryIds.filter(
+    (category) =>
+      !currentPost?.categories
+        .map((category) => category.category.id)
+        .includes(category)
+  );
+
+  await prisma.post.update({
     where: {
       id,
     },
@@ -84,7 +129,11 @@ export async function updatePost(formData: FormData) {
       description,
       featuredImageURL,
       tags: {
-        create: tagNames.map((tagName) => ({
+        deleteMany: unusedTags?.map((tg) => ({
+          postId: id,
+          tagId: tg.tag.id,
+        })),
+        create: useTags.map((tagName) => ({
           tag: {
             connectOrCreate: {
               where: {
@@ -99,7 +148,11 @@ export async function updatePost(formData: FormData) {
         })),
       },
       categories: {
-        create: categoryIds.map((categoryId) => ({
+        deleteMany: unusedCategories?.map((ct) => ({
+          postId: id,
+          categoryId: ct.category.id,
+        })),
+        create: useCategories.map((categoryId) => ({
           category: {
             connect: {
               id: categoryId,
@@ -122,31 +175,6 @@ export async function updatePost(formData: FormData) {
     },
   });
 
-  const unuseTags = post.tags.filter((tag) => !tagNames.includes(tag.tag.name));
-  const unuseCategories = post.categories.filter(
-    (category) => !categoryIds.includes(category.category.id),
-  );
-
-  await prisma.post.update({
-    where: {
-      id,
-    },
-    data: {
-      tags: {
-        deleteMany: unuseTags.map((tg) => ({
-          postId: id,
-          tagId: tg.tag.id,
-        })),
-      },
-      categories: {
-        deleteMany: unuseCategories.map((ctg) => ({
-          postId: id,
-          tagId: ctg.category.id,
-        })),
-      }
-    },
-  });
-
   revalidateTag("posts");
   redirect("/");
 }
@@ -162,8 +190,6 @@ export async function createUser(state: SignupFormState, formData: FormData) {
       errors: validatedFields.error.flatten().fieldErrors,
     };
   }
-
-  console.log(state);
 
   const username = formData.get("username") as string;
   const password = formData.get("password") as string;
@@ -181,7 +207,7 @@ export async function createUser(state: SignupFormState, formData: FormData) {
 
 export async function createCategory(
   state: CategoryFormState,
-  formData: FormData,
+  formData: FormData
 ) {
   const validatedFields = CategoryFormSchema.safeParse({
     name: formData.get("name"),
@@ -222,7 +248,7 @@ export async function createCategory(
 
 export async function updateCategory(
   state: CategoryFormState,
-  formData: FormData,
+  formData: FormData
 ) {
   const validatedFields = CategoryFormSchema.safeParse({
     name: formData.get("name"),

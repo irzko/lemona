@@ -3,7 +3,6 @@ import { auth } from "@/auth";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 
-
 const getCategories = unstable_cache(
   async () => {
     return await prisma.category.findMany({
@@ -13,13 +12,13 @@ const getCategories = unstable_cache(
       },
       orderBy: [
         {
-            name: "asc",
+          name: "asc",
         },
       ],
     });
   },
   ["categories"],
-  { tags: ["categories"] },
+  { tags: ["categories"] }
 );
 export default async function Page() {
   const categories = await getCategories();
@@ -28,8 +27,13 @@ export default async function Page() {
   if (!session?.user) return null;
 
   return (
-    <>
-      <PostForm authorId={session.user.id as string} categories={categories} />
-    </>
+    <div className="flex justify-center">
+      <div className="max-w-screen-lg w-full">
+        <PostForm
+          authorId={session.user.id as string}
+          categories={categories}
+        />
+      </div>
+    </div>
   );
 }

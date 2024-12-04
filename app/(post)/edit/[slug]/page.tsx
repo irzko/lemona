@@ -2,7 +2,13 @@ import EditPostForm from "@/components/edit-post-form";
 import { auth } from "@/auth";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
-import {Post, TagsOnPosts, Tag} from "@prisma/client"
+import {
+  Post,
+  TagsOnPosts,
+  Tag,
+  Category,
+  CategoriesOnPosts,
+} from "@prisma/client";
 
 const getPost = unstable_cache(
   async (id: string) => {
@@ -14,13 +20,18 @@ const getPost = unstable_cache(
         tags: {
           include: {
             tag: true,
-          }
+          },
         },
-      }
+        categories: {
+          include: {
+            category: true,
+          },
+        },
+      },
     });
   },
   ["posts"],
-  { tags: ["posts"] },
+  { tags: ["posts"] }
 );
 
 const getCategories = unstable_cache(
@@ -38,7 +49,7 @@ const getCategories = unstable_cache(
     });
   },
   ["categories"],
-  { tags: ["categories"] },
+  { tags: ["categories"] }
 );
 
 export default async function Page({
@@ -65,7 +76,11 @@ export default async function Page({
         <EditPostForm
           authorId={session.user.id as string}
           categories={categories}
-          post={post as unknown as Post & { tags: TagsOnPosts & {tag: Tag}[]}
+          post={
+            post as unknown as Post & {
+              tags: TagsOnPosts & { tag: Tag }[];
+              categories: CategoriesOnPosts & { category: Category }[];
+            }
           }
         />
       </div>
