@@ -161,7 +161,7 @@ export default async function Page({
   if (!postId) {
     return null;
   }
-  const post = await getPost(slug);
+  const post = await getPost(postId);
 
   if (!post) {
     return (

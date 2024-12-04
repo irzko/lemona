@@ -55,7 +55,7 @@ export default async function Page() {
                   />
                 </div>
                 <div className="">
-                  <h3 className="font-bold text-lg line-clamp-3">
+                  <h3 className="font-bold uppercase text-lg line-clamp-3">
                     {post.title || "(No title)"}
                   </h3>
                 </div>
