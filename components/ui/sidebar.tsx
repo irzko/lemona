@@ -102,7 +102,7 @@ export default function Sidebar({
   onClose,
   children,
   title,
-  closeOnClickOutside = true,
+  closeOnClickOutside = false,
 }: {
   children: ReactNode;
   closeOnClickOutside?: boolean;

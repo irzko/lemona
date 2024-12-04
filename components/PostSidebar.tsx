@@ -81,7 +81,7 @@ export default function PostSidebar() {
                 })}
               </ul>
             );
-          })
+          }, true)
         }
       >
         <svg

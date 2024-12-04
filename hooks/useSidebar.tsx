@@ -6,14 +6,18 @@
  *
  */
 
-import {useCallback, useMemo, useState} from 'react';
-import * as React from 'react';
+import { useCallback, useMemo, useState } from "react";
+import * as React from "react";
 
 import Sidebar from "@/components/ui/sidebar";
 
 export default function useSidebar(): [
   JSX.Element | null,
-  (title: string, showSidebar: (onClose: () => void) => JSX.Element) => void,
+  (
+    title: string,
+    showSidebar: (onClose: () => void) => JSX.Element,
+    closeOnClickOutside: boolean,
+  ) => void,
 ] {
   const [sidebarContent, setSidebarContent] = useState<null | {
     closeOnClickOutside: boolean;
@@ -29,12 +33,13 @@ export default function useSidebar(): [
     if (sidebarContent === null) {
       return null;
     }
-    const {title, content, closeOnClickOutside} = sidebarContent;
+    const { title, content, closeOnClickOutside } = sidebarContent;
     return (
       <Sidebar
         onClose={onClose}
         title={title}
-        closeOnClickOutside={closeOnClickOutside}>
+        closeOnClickOutside={closeOnClickOutside}
+      >
         {content}
       </Sidebar>
     );
