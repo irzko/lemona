@@ -182,7 +182,7 @@ export async function createCategory(
     },
   });
   revalidateTag("categories");
-  redirect("/admin/categories");
+  redirect("/dashboard/categories");
 }
 
 export async function updateCategory(
@@ -215,5 +215,5 @@ export async function updateCategory(
     },
   });
   revalidateTag("categories");
-  redirect("/admin/categories");
+  redirect("/dashboard/categories");
 }
