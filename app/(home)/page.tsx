@@ -30,7 +30,7 @@ export default async function Page() {
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-4">
         <h3 className="mb-4">Bài viết mới</h3>
-        <ul className="grid grid-cols divide-y-2 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
+        <ul className="grid grid-cols divide-y sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-4">
           {allPosts.slice(0, 4).map((post) => (
             <li
               className="bg-white pt-4"
@@ -55,7 +55,7 @@ export default async function Page() {
                   />
                 </div>
                 <div className="">
-                  <h3 className="font-bold uppercase text-lg line-clamp-3">
+                  <h3 className="font-bold mt-4 uppercase text-lg line-clamp-3">
                     {post.title || "(No title)"}
                   </h3>
                 </div>
@@ -88,7 +88,7 @@ export default async function Page() {
                   </div>
                 </div>
 
-                <h6 className="font-semibold w-3/5 mt-4 text-base line-clamp-3">
+                <h6 className="font-semibold w-3/5 text-base line-clamp-3">
                   {post.title || "(No title)"}
                 </h6>
               </Link>
