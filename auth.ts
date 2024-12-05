@@ -1,19 +1,14 @@
 import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import { authConfig } from "./auth.config";
+import Credentials from "next-auth/providers/credentials";
 import prisma from "@/lib/prisma";
 import { verify } from "argon2";
-import "next-auth/jwt";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
-  debug: !!process.env.AUTH_DEBUG,
-  theme: { logo: "https://authjs.dev/img/logo-sm.png" },
+export const { auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   providers: [
-    CredentialsProvider({
-      credentials: {
-        username: {},
-        password: {},
-      },
-      async authorize(credentials): Promise<any> {
+    Credentials({
+      async authorize(credentials) {
         const { username, password } = credentials as {
           username: string;
           password: string;
@@ -27,7 +22,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           },
         });
 
-        console.log("Authorizing")
+        console.log("Authorizing");
 
         if (!user || !(await verify(user.passwordHash, password))) {
           throw new Error("Invaid credentials.");
@@ -36,60 +31,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  basePath: "/auth",
-  pages: {
-    signIn: "/auth/login",
-  },
-  session: { strategy: "jwt" },
-
-  callbacks: {
-    jwt: async ({ token, user }) => {
-      if (user && user.id && user.role) {
-        token.id = user.id;
-        token.role = user.role;
-        token.username = user.username;
-      }
-      return token;
-    },
-    session: async ({ session, token }) => {
-      session.user.id = token.id;
-      session.user.role = token.role;
-      session.user.username = token.username;
-      return session;
-    },
-
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
-      if (isOnDashboard) {
-        if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL('/dashboard', nextUrl));
-      }
-      return true;
-    },
-  },
 });
-
-declare module "next-auth" {
-  interface Session {
-    id: string;
-    role: string;
-    username: string;
-  }
-  interface User {
-    id?: string;
-    role: string;
-    username: string;
-    name?: string | null;
-  }
-}
-
-declare module "next-auth/jwt" {
-  interface JWT {
-    id: string;
-    role: string;
-    username: string;
-  }
-}

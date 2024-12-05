@@ -27,61 +27,66 @@ export default function PostSidebar() {
         isIconOnly
         className="hover:bg-gray-100 text-gray-500"
         onClick={() =>
-          showSidebar("Menu", () => {
-            return (
-              <ul className="flex flex-col w-full px-2">
-                {session?.user ? (
-                  <li className="flex">
-                    <Link
-                      href={`/profile/${session?.user?.username}`}
-                      className="flex w-full text-gray-500 hover:bg-gray-100 items-center p-2 gap-2 border border-gray-200 rounded-lg"
-                    >
-                      <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full">
-                        {session.user.image ? (
-                          <Image
-                            fill
-                            src={session.user.image}
-                            alt={session.user.name || session.user.username}
-                          ></Image>
-                        ) : (
-                          <svg
-                            className="absolute w-12 h-12 text-gray-400 -left-1"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                              clipRule="evenodd"
-                            ></path>
-                          </svg>
-                        )}
-                      </div>
-                      <span>{session.user.name || session.user.username}</span>
-                    </Link>
-                  </li>
-                ) : (
-                  <li>
-                    <Link href="/auth/login">Login</Link>
-                  </li>
-                )}
-
-                {sidebarItems.map((item) => {
-                  return (
-                    <li className="flex" key={item.id}>
+          showSidebar(
+            "Menu",
+            () => {
+              return (
+                <ul className="flex flex-col w-full px-2">
+                  {session?.user ? (
+                    <li className="flex">
                       <Link
-                        className="w-full px-2 py-2 text-gray-500 hover:bg-gray-100 rounded-lg"
-                        href={item.href}
+                        href={`/profile/${session?.user?.username}`}
+                        className="flex w-full text-gray-500 hover:bg-gray-100 items-center p-2 gap-2 border border-gray-200 rounded-lg"
                       >
-                        {item.name}
+                        <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full">
+                          {session.user.image ? (
+                            <Image
+                              fill
+                              src={session.user.image}
+                              alt={session.user.name || session.user.username}
+                            ></Image>
+                          ) : (
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="mt-0.5 absolute inset-0 m-auto"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                fill="currentColor"
+                                d="M17.806 14.837c.116.07.26.15.423.242.712.402 1.79 1.01 2.528 1.733.462.452.9 1.047.98 1.777.085.776-.253 1.504-.932 2.15-1.172 1.117-2.578 2.011-4.396 2.011H7.59c-1.819 0-3.224-.894-4.396-2.01-.679-.647-1.017-1.375-.933-2.151.08-.73.519-1.325.98-1.777.739-.723 1.816-1.33 2.529-1.733q.246-.137.423-.242a11.41 11.41 0 0 1 11.612 0M6.75 6.5a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0"
+                              ></path>
+                            </svg>
+                          )}
+                        </div>
+                        <span>
+                          {session.user.name || session.user.username}
+                        </span>
                       </Link>
                     </li>
-                  );
-                })}
-              </ul>
-            );
-          }, true)
+                  ) : (
+                    <li>
+                      <Link href="/auth/login">Login</Link>
+                    </li>
+                  )}
+
+                  {sidebarItems.map((item) => {
+                    return (
+                      <li className="flex" key={item.id}>
+                        <Link
+                          className="w-full px-2 py-2 text-gray-500 hover:bg-gray-100 rounded-lg"
+                          href={item.href}
+                        >
+                          {item.name}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              );
+            },
+            true
+          )
         }
       >
         <svg
