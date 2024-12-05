@@ -10,9 +10,7 @@ export default function SignIn() {
           className="space-y-4"
           action={async (formData) => {
             "use server";
-            await signIn("credentials", formData, {
-              redirectTo: "/",
-            });
+            await signIn("credentials", formData);
           }}
         >
           <h3>Đăng nhập</h3>
