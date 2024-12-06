@@ -1,8 +1,10 @@
 import prisma from "@/lib/prisma";
-import { getCategoryTree } from "@prisma/client/sql";
 import { NextResponse } from "next/server";
+import buildCategoryTree from "@/lib/buildCategoryTree";
+
+
 
 export const GET = async () => {
-  const categoryTree = await prisma.$queryRawTyped(getCategoryTree());
-  return NextResponse.json(categoryTree);
+  const categoryTree = await prisma.category.findMany();
+  return NextResponse.json(buildCategoryTree(categoryTree));
 };
