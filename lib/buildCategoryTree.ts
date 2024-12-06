@@ -1,23 +1,29 @@
-interface Category {
-  id: string;
-  name: string;
-  parentCategoryId?: string;
-  childs?: Category[];
+import { Category } from "@prisma/client";
+
+export interface CategoryTree extends Category {
+  subcategories?: CategoryTree[];
 }
 
-export default function buildCategoryTree(categories: Category[]): Category[] {
-  const categoryMap = new Map<string, Category>();
-  const rootCategories: Category[] = [];
+export default function buildCategoryTree(
+  categories: Category[]
+): CategoryTree[] {
+  const categoryMap = new Map<string, CategoryTree>();
+  const rootCategories: CategoryTree[] = [];
+  console.log(categories);
 
   categories.forEach((category) => {
     categoryMap.set(category.id, category);
   });
 
   categories.forEach((category) => {
-    const parent = categoryMap.get(category.parentCategoryId);
-    if (parent) {
-      parent.childs = parent.childs || [];
-      parent.childs.push(category);
+    if (category.parentCategoryId) {
+      const parent = categoryMap.get(category.parentCategoryId);
+      if (parent) {
+        parent.subcategories = parent.subcategories || [];
+        parent.subcategories.push(category);
+      } else {
+        rootCategories.push(category);
+      }
     } else {
       rootCategories.push(category);
     }

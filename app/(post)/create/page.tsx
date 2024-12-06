@@ -6,10 +6,6 @@ import prisma from "@/lib/prisma";
 const getCategories = unstable_cache(
   async () => {
     return await prisma.category.findMany({
-      select: {
-        id: true,
-        name: true,
-      },
       orderBy: [
         {
           name: "asc",

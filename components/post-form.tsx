@@ -1,19 +1,86 @@
 "use client";
-import { useState } from "react";
+import { memo, useMemo, useState } from "react";
 import Input from "@/components/ui/Input";
 import { createPost } from "@/app/actions";
 import { $convertToMarkdownString } from "@lexical/markdown";
 import { PLAYGROUND_TRANSFORMERS } from "@/components/lexical/plugins/MarkdownTransformers";
 import { EditorState } from "lexical";
 import Button from "@/components/ui/Button";
-import Select from "@/components/ui/select";
 import { useCallback } from "react";
 import LexicalEditor from "@/components/lexical";
+import buildCategoryTree, { CategoryTree } from "@/lib/buildCategoryTree";
+import { Category } from "@prisma/client";
 
-interface Category {
-  id: string;
-  name: string;
-}
+const CategorySelect = memo(function CategorySelect({
+  categories,
+}: {
+  categories: Category[];
+}) {
+  const [selectedCategories, setSelectedCategories] = useState<string[]>();
+
+  const categoryTree = useMemo(
+    () => buildCategoryTree(categories),
+    [categories]
+  );
+
+  const handleCheckCategory = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const categoryId = e.target.value;
+      const checked = e.target.checked;
+      const category = categories.find(
+        (category) => category.id === categoryId
+      );
+      if (!category) return;
+      const parentCategoryId = category.parentCategoryId;
+      if (parentCategoryId) {
+        const parentElement = document.querySelector(
+          `input[value="${parentCategoryId}"]`
+        ) as HTMLInputElement;
+        if (parentElement) {
+          parentElement.checked = checked;
+          handleCheckCategory({
+            target: parentElement,
+          } as React.ChangeEvent<HTMLInputElement>);
+        }
+      }
+      const newSelectedCategories = new Set(selectedCategories);
+      if (checked) {
+        newSelectedCategories.add(categoryId);
+      } else {
+        newSelectedCategories.delete(categoryId);
+      }
+      setSelectedCategories(Array.from(newSelectedCategories));
+    },
+    [categories, selectedCategories]
+  );
+
+  const renderCategories = useCallback(
+    (ctgTree?: CategoryTree[]) => {
+      if (!ctgTree) return null;
+      return ctgTree.map((category) => {
+        return (
+          <div key={category.id} className="pl-4">
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  onChange={handleCheckCategory}
+                  value={category.id}
+                />
+                {category.name}
+              </label>
+            </div>
+            {category.subcategories && renderCategories(category.subcategories)}
+          </div>
+        );
+      });
+    },
+    [handleCheckCategory]
+  );
+  return (
+    <div>{categoryTree.map((category) => renderCategories([category]))}</div>
+  );
+});
 
 export default function PostForm({
   authorId,
@@ -23,6 +90,7 @@ export default function PostForm({
   categories: Category[];
 }) {
   const [content, setContent] = useState("");
+
   const handleChange = useCallback((editorState: EditorState) => {
     editorState.read(() => {
       const markdownText = $convertToMarkdownString(PLAYGROUND_TRANSFORMERS);
@@ -48,15 +116,8 @@ export default function PostForm({
       />
 
       <LexicalEditor onChange={handleChange} />
-      <Select name="categoryId">
-        {categories.map((category) => {
-          return (
-            <option value={category.id} key={category.id}>
-              {category.name}
-            </option>
-          );
-        })}
-      </Select>
+
+      <CategorySelect categories={categories} />
       <Input
         id="featuredImageURL"
         name="featuredImageURL"
