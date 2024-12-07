@@ -15,13 +15,13 @@ import type {
   NodeKey,
   SerializedLexicalNode,
   Spread,
-} from 'lexical';
+} from "lexical";
 
-import {$applyNodeReplacement, DecoratorNode} from 'lexical';
-import * as React from 'react';
-import {Suspense} from 'react';
+import { $applyNodeReplacement, DecoratorNode } from "lexical";
+import * as React from "react";
+import { Suspense } from "react";
 
-const ImageComponent = React.lazy(() => import('./ImageComponent'));
+const ImageComponent = React.lazy(() => import("./ImageComponent"));
 
 export interface ImagePayload {
   altText: string;
@@ -32,20 +32,20 @@ export interface ImagePayload {
 function isGoogleDocCheckboxImg(img: HTMLImageElement): boolean {
   return (
     img.parentElement != null &&
-    img.parentElement.tagName === 'LI' &&
+    img.parentElement.tagName === "LI" &&
     img.previousSibling === null &&
-    img.getAttribute('aria-roledescription') === 'checkbox'
+    img.getAttribute("aria-roledescription") === "checkbox"
   );
 }
 
 function $convertImageElement(domNode: Node): null | DOMConversionOutput {
   const img = domNode as HTMLImageElement;
-  if (img.src.startsWith('file:///') || isGoogleDocCheckboxImg(img)) {
+  if (img.src.startsWith("file:///") || isGoogleDocCheckboxImg(img)) {
     return null;
   }
-  const {alt: altText, src} = img;
-  const node = $createImageNode({altText, src});
-  return {node};
+  const { alt: altText, src } = img;
+  const node = $createImageNode({ altText, src });
+  return { node };
 }
 
 export type SerializedImageNode = Spread<
@@ -56,37 +56,32 @@ export type SerializedImageNode = Spread<
   SerializedLexicalNode
 >;
 
-export class ImageNode extends DecoratorNode<JSX.Element> {
+export class ImageNode extends DecoratorNode<React.JSX.Element> {
   __src: string;
   __altText: string;
   static getType(): string {
-    return 'image';
+    return "image";
   }
 
   static clone(node: ImageNode): ImageNode {
-    return new ImageNode(
-      node.__src,
-      node.__altText,
-      node.__key,
-    );
+    return new ImageNode(node.__src, node.__altText, node.__key);
   }
 
   static importJSON(serializedNode: SerializedImageNode): ImageNode {
-    const {altText, src} =
-      serializedNode;
+    const { altText, src } = serializedNode;
     const node = $createImageNode({
       altText,
       src,
     });
-    
+
     return node;
   }
 
   exportDOM(): DOMExportOutput {
-    const element = document.createElement('img');
-    element.setAttribute('src', this.__src);
-    element.setAttribute('alt', this.__altText);
-    return {element};
+    const element = document.createElement("img");
+    element.setAttribute("src", this.__src);
+    element.setAttribute("alt", this.__altText);
+    return { element };
   }
 
   static importDOM(): DOMConversionMap | null {
@@ -98,11 +93,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     };
   }
 
-  constructor(
-    src: string,
-    altText: string,
-    key?: NodeKey,
-  ) {
+  constructor(src: string, altText: string, key?: NodeKey) {
     super(key);
     this.__src = src;
     this.__altText = altText;
@@ -112,15 +103,13 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     return {
       altText: this.getAltText(),
       src: this.getSrc(),
-      type: 'image',
+      type: "image",
       version: 1,
-    }
+    };
   }
 
-  
-
   createDOM(config: EditorConfig): HTMLElement {
-    const span = document.createElement('span');
+    const span = document.createElement("span");
     const theme = config.theme;
     const className = theme.image;
     if (className !== undefined) {
@@ -141,7 +130,7 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     return this.__altText;
   }
 
-  decorate(): JSX.Element {
+  decorate(): React.JSX.Element {
     return (
       <Suspense fallback={null}>
         <ImageComponent
@@ -159,17 +148,11 @@ export function $createImageNode({
   src,
   key,
 }: ImagePayload): ImageNode {
-  return $applyNodeReplacement(
-    new ImageNode(
-      src,
-      altText,
-      key,
-    ),
-  );
+  return $applyNodeReplacement(new ImageNode(src, altText, key));
 }
 
 export function $isImageNode(
-  node: LexicalNode | null | undefined,
+  node: LexicalNode | null | undefined
 ): node is ImageNode {
   return node instanceof ImageNode;
 }

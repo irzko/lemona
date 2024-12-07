@@ -5,16 +5,13 @@ const buttonStyles = tv({
   base: "flex justify-center items-center gap-2 font-medium tap-highlight-transparent",
   variants: {
     color: {
-      default:
-        "text-gray-500",
-      primary:
-        "text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300",
+      default: "text-gray-500",
+      primary: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-blue-300",
       light:
         "text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100",
       danger:
         "focus:outline-none focus:ring-4 bg-red-600 text-white hover:bg-red-700 focus:ring-red-900",
-      dark:
-        "text-white focus:outline-none focus:ring-4 bg-gray-800 hover:bg-gray-700 focus:ring-gray-700 border-gray-700"
+      dark: "text-white focus:outline-none focus:ring-4 bg-gray-800 hover:bg-gray-700 focus:ring-gray-700 border-gray-700",
     },
 
     radius: {
@@ -69,7 +66,7 @@ export default function Button({
 } & React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
->): JSX.Element {
+>): React.JSX.Element {
   return (
     <button
       {...props}
@@ -80,7 +77,7 @@ export default function Button({
         size,
         isIconOnly,
       })}
-      type={props.type || "button" }
+      type={props.type || "button"}
     >
       {children}
     </button>

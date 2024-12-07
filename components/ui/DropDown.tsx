@@ -75,7 +75,7 @@ function DropDownItems({
     (itemRef: React.RefObject<HTMLButtonElement>) => {
       setItems((prev) => (prev ? [...prev, itemRef] : [itemRef]));
     },
-    [setItems],
+    [setItems]
   );
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -113,7 +113,7 @@ function DropDownItems({
     () => ({
       registerItem,
     }),
-    [registerItem],
+    [registerItem]
   );
 
   useEffect(() => {
@@ -151,11 +151,11 @@ export default function DropDown({
   disabled?: boolean;
   buttonAriaLabel?: string;
   buttonClassName?: string;
-  buttonIcon?: JSX.Element;
+  buttonIcon?: React.JSX.Element;
   buttonLabel?: string;
   children: ReactNode;
   stopCloseOnClickSelf?: boolean;
-}): JSX.Element {
+}): React.JSX.Element {
   const dropDownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [showDropDown, setShowDropDown] = useState(false);
@@ -176,7 +176,7 @@ export default function DropDown({
       dropDown.style.top = `${top + button.offsetHeight + dropDownPadding}px`;
       dropDown.style.left = `${Math.min(
         left,
-        window.innerWidth - dropDown.offsetWidth - 20,
+        window.innerWidth - dropDown.offsetWidth - 20
       )}px`;
     }
   }, [dropDownRef, buttonRef, showDropDown]);
@@ -267,7 +267,7 @@ export default function DropDown({
           <DropDownItems dropDownRef={dropDownRef} onClose={handleClose}>
             {children}
           </DropDownItems>,
-          document.body,
+          document.body
         )}
     </>
   );

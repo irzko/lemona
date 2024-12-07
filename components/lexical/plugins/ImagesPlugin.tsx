@@ -74,7 +74,7 @@ export function InsertImageDialog({
 }: {
   activeEditor: LexicalEditor;
   onClose: () => void;
-}): JSX.Element {
+}): React.JSX.Element {
   const hasModifier = useRef(false);
 
   useEffect(() => {
@@ -104,7 +104,7 @@ export default function ImagesPlugin({
   captionsEnabled,
 }: {
   captionsEnabled?: boolean;
-}): JSX.Element | null {
+}): React.JSX.Element | null {
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
@@ -124,8 +124,8 @@ export default function ImagesPlugin({
 
           return true;
         },
-        COMMAND_PRIORITY_EDITOR,
-      ),
+        COMMAND_PRIORITY_EDITOR
+      )
     );
   }, [captionsEnabled, editor]);
 

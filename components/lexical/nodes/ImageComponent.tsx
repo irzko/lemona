@@ -69,7 +69,7 @@ function LazyImage({
   imageRef: { current: null | HTMLImageElement };
   src: string;
   onError: () => void;
-}): JSX.Element {
+}): React.JSX.Element {
   useSuspenseImage(src);
   return (
     <NextImage
@@ -87,7 +87,7 @@ function LazyImage({
   );
 }
 
-function BrokenImage(): JSX.Element {
+function BrokenImage(): React.JSX.Element {
   return (
     <NextImage
       alt="Broken image"
@@ -110,7 +110,7 @@ export default function ImageComponent({
   altText: string;
   nodeKey: NodeKey;
   src: string;
-}): JSX.Element {
+}): React.JSX.Element {
   const imageRef = useRef<null | HTMLImageElement>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [isSelected, setSelected, clearSelection] =
@@ -137,7 +137,7 @@ export default function ImageComponent({
       }
       return false;
     },
-    [editor, isSelected],
+    [editor, isSelected]
   );
 
   const $onEnter = useCallback(
@@ -157,7 +157,7 @@ export default function ImageComponent({
       }
       return false;
     },
-    [isSelected],
+    [isSelected]
   );
 
   const onClick = useCallback(
@@ -176,7 +176,7 @@ export default function ImageComponent({
 
       return false;
     },
-    [isSelected, setSelected, clearSelection],
+    [isSelected, setSelected, clearSelection]
   );
 
   const onRightClick = useCallback(
@@ -191,12 +191,12 @@ export default function ImageComponent({
         ) {
           editor.dispatchCommand(
             RIGHT_CLICK_IMAGE_COMMAND,
-            event as MouseEvent,
+            event as MouseEvent
           );
         }
       });
     },
-    [editor],
+    [editor]
   );
 
   useEffect(() => {
@@ -214,17 +214,17 @@ export default function ImageComponent({
           activeEditorRef.current = activeEditor;
           return false;
         },
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand<MouseEvent>(
         CLICK_COMMAND,
         onClick,
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand<MouseEvent>(
         RIGHT_CLICK_IMAGE_COMMAND,
         onClick,
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand(
         DRAGSTART_COMMAND,
@@ -237,19 +237,19 @@ export default function ImageComponent({
           }
           return false;
         },
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand(
         KEY_DELETE_COMMAND,
         $onDelete,
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
       editor.registerCommand(
         KEY_BACKSPACE_COMMAND,
         $onDelete,
-        COMMAND_PRIORITY_LOW,
+        COMMAND_PRIORITY_LOW
       ),
-      editor.registerCommand(KEY_ENTER_COMMAND, $onEnter, COMMAND_PRIORITY_LOW),
+      editor.registerCommand(KEY_ENTER_COMMAND, $onEnter, COMMAND_PRIORITY_LOW)
     );
 
     rootElement?.addEventListener("contextmenu", onRightClick);

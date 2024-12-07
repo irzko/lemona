@@ -12,16 +12,16 @@ import * as React from "react";
 import Sidebar from "@/components/ui/sidebar";
 
 export default function useSidebar(): [
-  JSX.Element | null,
+  React.JSX.Element | null,
   (
     title: string,
-    showSidebar: (onClose: () => void) => JSX.Element,
-    closeOnClickOutside: boolean,
+    showSidebar: (onClose: () => void) => React.JSX.Element,
+    closeOnClickOutside: boolean
   ) => void,
 ] {
   const [sidebarContent, setSidebarContent] = useState<null | {
     closeOnClickOutside: boolean;
-    content: JSX.Element;
+    content: React.JSX.Element;
     title: string;
   }>(null);
 
@@ -49,8 +49,8 @@ export default function useSidebar(): [
     (
       title: string,
       // eslint-disable-next-line no-shadow
-      getContent: (onClose: () => void) => JSX.Element,
-      closeOnClickOutside = false,
+      getContent: (onClose: () => void) => React.JSX.Element,
+      closeOnClickOutside = false
     ) => {
       setSidebarContent({
         closeOnClickOutside,
@@ -58,7 +58,7 @@ export default function useSidebar(): [
         title,
       });
     },
-    [onClose],
+    [onClose]
   );
 
   return [sidebar, showSidebar];

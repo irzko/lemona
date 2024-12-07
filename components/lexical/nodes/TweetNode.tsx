@@ -34,7 +34,7 @@ type TweetComponentProps = Readonly<{
     focus: string;
   }>;
   format: ElementFormatType | null;
-  loadingComponent?: JSX.Element | string;
+  loadingComponent?: React.JSX.Element | string;
   nodeKey: NodeKey;
   onError?: (error: string) => void;
   onLoad?: () => void;
@@ -42,7 +42,7 @@ type TweetComponentProps = Readonly<{
 }>;
 
 function $convertTweetElement(
-  domNode: HTMLDivElement,
+  domNode: HTMLDivElement
 ): DOMConversionOutput | null {
   const id = domNode.getAttribute("data-lexical-tweet-id");
   if (id) {
@@ -192,7 +192,7 @@ export class TweetNode extends DecoratorBlockNode {
     return `https://x.com/i/web/status/${this.__id}`;
   }
 
-  decorate(editor: LexicalEditor, config: EditorConfig): JSX.Element {
+  decorate(editor: LexicalEditor, config: EditorConfig): React.JSX.Element {
     const embedBlockTheme = config.theme.embedBlock || {};
     const className = {
       base: embedBlockTheme.base || "",
@@ -215,7 +215,7 @@ export function $createTweetNode(tweetID: string): TweetNode {
 }
 
 export function $isTweetNode(
-  node: TweetNode | LexicalNode | null | undefined,
+  node: TweetNode | LexicalNode | null | undefined
 ): node is TweetNode {
   return node instanceof TweetNode;
 }

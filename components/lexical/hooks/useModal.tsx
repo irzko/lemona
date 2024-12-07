@@ -6,18 +6,21 @@
  *
  */
 
-import {useCallback, useMemo, useState} from 'react';
-import * as React from 'react';
+import { useCallback, useMemo, useState } from "react";
+import * as React from "react";
 
-import Modal from '../../ui/Modal';
+import Modal from "../../ui/Modal";
 
 export default function useModal(): [
-  JSX.Element | null,
-  (title: string, showModal: (onClose: () => void) => JSX.Element) => void,
+  React.JSX.Element | null,
+  (
+    title: string,
+    showModal: (onClose: () => void) => React.JSX.Element
+  ) => void,
 ] {
   const [modalContent, setModalContent] = useState<null | {
     closeOnClickOutside: boolean;
-    content: JSX.Element;
+    content: React.JSX.Element;
     title: string;
   }>(null);
 
@@ -29,12 +32,13 @@ export default function useModal(): [
     if (modalContent === null) {
       return null;
     }
-    const {title, content, closeOnClickOutside} = modalContent;
+    const { title, content, closeOnClickOutside } = modalContent;
     return (
       <Modal
         onClose={onClose}
         title={title}
-        closeOnClickOutside={closeOnClickOutside}>
+        closeOnClickOutside={closeOnClickOutside}
+      >
         {content}
       </Modal>
     );
@@ -44,8 +48,8 @@ export default function useModal(): [
     (
       title: string,
       // eslint-disable-next-line no-shadow
-      getContent: (onClose: () => void) => JSX.Element,
-      closeOnClickOutside = false,
+      getContent: (onClose: () => void) => React.JSX.Element,
+      closeOnClickOutside = false
     ) => {
       setModalContent({
         closeOnClickOutside,
@@ -53,7 +57,7 @@ export default function useModal(): [
         title,
       });
     },
-    [onClose],
+    [onClose]
   );
 
   return [modal, showModal];

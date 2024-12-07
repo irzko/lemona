@@ -6,10 +6,10 @@
  *
  */
 
-import {LinkPlugin as LexicalLinkPlugin} from '@lexical/react/LexicalLinkPlugin';
-import * as React from 'react';
+import { LinkPlugin as LexicalLinkPlugin } from "@lexical/react/LexicalLinkPlugin";
+import * as React from "react";
 
-import {validateUrl} from '../../utils/url';
+import { validateUrl } from "../../utils/url";
 
 type Props = {
   hasLinkAttributes?: boolean;
@@ -17,15 +17,15 @@ type Props = {
 
 export default function LinkPlugin({
   hasLinkAttributes = false,
-}: Props): JSX.Element {
+}: Props): React.JSX.Element {
   return (
     <LexicalLinkPlugin
       validateUrl={validateUrl}
       attributes={
         hasLinkAttributes
           ? {
-              rel: 'noopener noreferrer',
-              target: '_blank',
+              rel: "noopener noreferrer",
+              target: "_blank",
             }
           : undefined
       }

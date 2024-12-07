@@ -108,7 +108,7 @@ export default function Sidebar({
   closeOnClickOutside?: boolean;
   onClose: () => void;
   title: string;
-}): JSX.Element {
+}): React.JSX.Element {
   return createPortal(
     <PortalImpl
       onClose={onClose}
@@ -117,6 +117,6 @@ export default function Sidebar({
     >
       {children}
     </PortalImpl>,
-    document.body,
+    document.body
   );
 }

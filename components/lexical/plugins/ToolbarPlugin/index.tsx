@@ -91,7 +91,7 @@ function getCodeLanguageOptions(): [string, string][] {
   const options: [string, string][] = [];
 
   for (const [lang, friendlyName] of Object.entries(
-    CODE_LANGUAGE_FRIENDLY_NAME_MAP,
+    CODE_LANGUAGE_FRIENDLY_NAME_MAP
   )) {
     options.push([lang, friendlyName]);
   }
@@ -116,7 +116,7 @@ type rootTypeToRootName = {
 
 const iconBlockFormat: {
   [key in keyof typeof blockTypeToBlockName]: {
-    icon: JSX.Element;
+    icon: React.JSX.Element;
   };
 } = {
   bullet: {
@@ -485,7 +485,7 @@ function BlockFormatDropDown({
   rootType: keyof rootTypeToRootName;
   editor: LexicalEditor;
   disabled?: boolean;
-}): JSX.Element {
+}): React.JSX.Element {
   return (
     <DropDown
       disabled={disabled}
@@ -573,7 +573,7 @@ export default function ToolbarPlugin({
   setIsLinkEditMode: Dispatch<boolean>;
 }) {
   const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
-    null,
+    null
   );
   const [modal, showModal] = useModal();
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
@@ -587,8 +587,8 @@ export default function ToolbarPlugin({
         updateToolbarState(
           "isImageCaption",
           !!rootElement?.parentElement?.classList.contains(
-            "image-caption-container",
-          ),
+            "image-caption-container"
+          )
         );
       } else {
         updateToolbarState("isImageCaption", false);
@@ -630,7 +630,7 @@ export default function ToolbarPlugin({
         if ($isListNode(element)) {
           const parentList = $getNearestNodeOfType<ListNode>(
             anchorNode,
-            ListNode,
+            ListNode
           );
           const type = parentList
             ? parentList.getListType()
@@ -644,7 +644,7 @@ export default function ToolbarPlugin({
           if (type in blockTypeToBlockName) {
             updateToolbarState(
               "blockType",
-              type as keyof typeof blockTypeToBlockName,
+              type as keyof typeof blockTypeToBlockName
             );
           }
           if ($isCodeNode(element)) {
@@ -652,7 +652,7 @@ export default function ToolbarPlugin({
               element.getLanguage() as keyof typeof CODE_LANGUAGE_MAP;
             updateToolbarState(
               "codeLanguage",
-              language ? CODE_LANGUAGE_MAP[language] || language : "",
+              language ? CODE_LANGUAGE_MAP[language] || language : ""
             );
             return;
           }
@@ -665,7 +665,7 @@ export default function ToolbarPlugin({
         // If node is a link, we need to fetch the parent paragraph node to set format
         matchingParent = $findMatchingParent(
           node,
-          (parentNode) => $isElementNode(parentNode) && !parentNode.isInline(),
+          (parentNode) => $isElementNode(parentNode) && !parentNode.isInline()
         );
       }
 
@@ -676,7 +676,7 @@ export default function ToolbarPlugin({
           ? matchingParent.getFormatType()
           : $isElementNode(node)
             ? node.getFormatType()
-            : parent?.getFormatType() || "left",
+            : parent?.getFormatType() || "left"
       );
     }
 
@@ -687,7 +687,7 @@ export default function ToolbarPlugin({
       updateToolbarState("isUnderline", selection.hasFormat("underline"));
       updateToolbarState(
         "isStrikethrough",
-        selection.hasFormat("strikethrough"),
+        selection.hasFormat("strikethrough")
       );
       updateToolbarState("isSubscript", selection.hasFormat("subscript"));
       updateToolbarState("isSuperscript", selection.hasFormat("superscript"));
@@ -703,7 +703,7 @@ export default function ToolbarPlugin({
         $updateToolbar();
         return false;
       },
-      COMMAND_PRIORITY_CRITICAL,
+      COMMAND_PRIORITY_CRITICAL
     );
   }, [editor, $updateToolbar, setActiveEditor]);
 
@@ -729,7 +729,7 @@ export default function ToolbarPlugin({
           updateToolbarState("canUndo", payload);
           return false;
         },
-        COMMAND_PRIORITY_CRITICAL,
+        COMMAND_PRIORITY_CRITICAL
       ),
       activeEditor.registerCommand<boolean>(
         CAN_REDO_COMMAND,
@@ -737,8 +737,8 @@ export default function ToolbarPlugin({
           updateToolbarState("canRedo", payload);
           return false;
         },
-        COMMAND_PRIORITY_CRITICAL,
-      ),
+        COMMAND_PRIORITY_CRITICAL
+      )
     );
   }, [$updateToolbar, activeEditor, editor, updateToolbarState]);
 
@@ -779,7 +779,7 @@ export default function ToolbarPlugin({
       setIsLinkEditMode(true);
       activeEditor.dispatchCommand(
         TOGGLE_LINK_COMMAND,
-        sanitizeUrl("https://"),
+        sanitizeUrl("https://")
       );
     } else {
       setIsLinkEditMode(false);
@@ -798,7 +798,7 @@ export default function ToolbarPlugin({
         }
       });
     },
-    [activeEditor, selectedElementKey],
+    [activeEditor, selectedElementKey]
   );
   /*
   const insertGifOnClick = (payload: InsertImagePayload) => {
@@ -888,7 +888,7 @@ export default function ToolbarPlugin({
             return (
               <DropDownItem
                 className={`item ${dropDownActiveClass(
-                  value === toolbarState.codeLanguage,
+                  value === toolbarState.codeLanguage
                 )}`}
                 onClick={() => onCodeLanguageSelect(value)}
                 key={value}
@@ -1144,7 +1144,7 @@ export default function ToolbarPlugin({
               onClick={() => {
                 activeEditor.dispatchCommand(
                   FORMAT_TEXT_COMMAND,
-                  "strikethrough",
+                  "strikethrough"
                 );
               }}
               className={dropDownActiveClass(toolbarState.isStrikethrough)}
@@ -1223,7 +1223,7 @@ export default function ToolbarPlugin({
               onClick={() => {
                 activeEditor.dispatchCommand(
                   FORMAT_TEXT_COMMAND,
-                  "superscript",
+                  "superscript"
                 );
               }}
               className={dropDownActiveClass(toolbarState.isSuperscript)}
