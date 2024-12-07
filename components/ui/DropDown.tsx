@@ -40,8 +40,8 @@ export function DropDownItem({
   const { registerItem } = dropDownContext;
 
   useEffect(() => {
-    if (ref && ref.current) {
-      registerItem(ref);
+    if (ref.current) {
+      registerItem(ref as React.RefObject<HTMLButtonElement>);
     }
   }, [ref, registerItem]);
 
