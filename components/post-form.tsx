@@ -43,7 +43,7 @@ export default function PostForm({
         id="title"
         name="title"
         placeholder="Tiêu đề"
-        autoComplete="false"
+        autoComplete="off"
         required
       />
 
@@ -95,21 +95,21 @@ export default function PostForm({
         name="featuredImageURL"
         placeholder="Featured image URL"
         required
-        autoComplete="false"
+        autoComplete="off"
       />
       <Input
         id="description"
         name="description"
         placeholder="Nhập mô tả"
         required
-        autoComplete="false"
+        autoComplete="off"
       />
       <Input
         id="tags"
-        name="tags"
+        name="tagNames"
         placeholder="Thẻ bài viết"
         required
-        autoComplete="false"
+        autoComplete="off"
       />
       <Button className="w-full" color="light" type="submit">
         Đăng

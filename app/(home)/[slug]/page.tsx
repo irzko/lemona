@@ -185,12 +185,32 @@ export default async function Page({
   const breadcrumbs = post.categories.map((c) => ({
     id: c.category.id,
     name: c.category.name,
-    href: `/categories/${c.category.slug}`,
+    href: `/${c.category.slug}`,
   }));
   return (
     <main className="flex justify-center">
       <div className="flex md:flex-row justify-center flex-col max-w-screen-lg w-full p-4 gap-4">
         <div className="w-full space-y-4">
+          <div className="flex gap-2">
+            <Link
+              href={breadcrumbs[0].href}
+              className="text-blue-600 hover:underline"
+            >
+              {breadcrumbs[0].name}
+            </Link>
+            {breadcrumbs.slice(1).map((b) => (
+              <span key={b.id} className="flex gap-2">
+                <span>&gt;</span>
+                <Link
+                  key={b.id}
+                  href={b.href}
+                  className="text-blue-600 hover:underline"
+                >
+                  {b.name}
+                </Link>
+              </span>
+            ))}
+          </div>
           <h1 className="text-4xl font-medium">{post.title || "(No title)"}</h1>
           <p>
             {new Date(post.createdAt).toLocaleDateString("vi-VN", {
@@ -199,13 +219,7 @@ export default async function Page({
               year: "numeric",
             })}
           </p>
-          <div className="flex gap-2">
-            {breadcrumbs.map((b) => (
-              <Link key={b.id} href={`/${b.href}`}>
-                <a className="text-blue-600 hover:underline">{b.name}</a>
-              </Link>
-            ))}
-          </div>
+
           <p className="font-semibold text-gray-900">{post.description}</p>
           <Markdown
             components={components}

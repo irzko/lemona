@@ -3,7 +3,6 @@ import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 
-
 const getUser = unstable_cache(
   async (username: string) => {
     return await prisma.user.findUnique({
@@ -21,7 +20,7 @@ const getUser = unstable_cache(
     });
   },
   ["users"],
-  { tags: ["users"] },
+  { tags: ["users"] }
 );
 
 const getPosts = unstable_cache(
@@ -38,7 +37,7 @@ const getPosts = unstable_cache(
     });
   },
   ["posts"],
-  { tags: ["posts"] },
+  { tags: ["posts"] }
 );
 
 export default async function Page({
@@ -59,7 +58,7 @@ export default async function Page({
       </main>
     );
   }
-  
+
   const posts = await getPosts(user.id);
   return (
     <main className="flex justify-center">
@@ -80,9 +79,9 @@ export default async function Page({
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 ></path>
               </svg>
             )}
@@ -90,7 +89,7 @@ export default async function Page({
           <h4>{user.name || user.username}</h4>
         </div>
         <ul className="flex flex-col gap-4">
-                  {posts.map((post) => (
+          {posts.map((post) => (
             <li className="overflow-hidden bg-white" key={post.id}>
               <Link
                 className="text-gray-800 flex gap-4"

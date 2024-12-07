@@ -19,7 +19,7 @@ export async function createPost(formData: FormData) {
     .split(",")
     .map((i) => i.trim());
   const categoryIds = JSON.parse(
-    formData.get("categories") as string
+    formData.get("categoryIds") as string
   ) as string[];
 
   const cuid = init({ length: 12 });
@@ -174,7 +174,7 @@ export async function createCategory(
       errors: { name: ["Category already exists"] },
     };
   }
-  const parentCategoryId = formData.get("parentCategoryId") as string;
+  const parentCategoryId = (formData.get("parentCategoryId") as string) || null;
   await prisma.category.create({
     data: {
       id: createId(),
