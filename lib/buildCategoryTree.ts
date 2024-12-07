@@ -9,7 +9,6 @@ export default function buildCategoryTree(
 ): CategoryTree[] {
   const categoryMap = new Map<string, CategoryTree>();
   const rootCategories: CategoryTree[] = [];
-  console.log(categories);
 
   categories.forEach((category) => {
     categoryMap.set(category.id, category);

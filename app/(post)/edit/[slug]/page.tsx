@@ -37,10 +37,6 @@ const getPost = unstable_cache(
 const getCategories = unstable_cache(
   async () => {
     return await prisma.category.findMany({
-      select: {
-        id: true,
-        name: true,
-      },
       orderBy: [
         {
           name: "asc",

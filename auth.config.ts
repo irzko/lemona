@@ -32,7 +32,9 @@ export const authConfig = {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
       } else if (isOnAuth && isLoggedIn) {
-        return Response.redirect(new URL("/"));
+        const url = nextUrl.clone();
+        url.pathname = "/";
+        return Response.redirect(url);
       }
       return true;
     },

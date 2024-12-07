@@ -4,6 +4,7 @@ import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { init, createId } from "@paralleldrive/cuid2";
 import { hash } from "argon2";
+import slugify from "slugify";
 
 import {
   SignupFormSchema,
@@ -17,9 +18,9 @@ export async function createPost(formData: FormData) {
   const tagNames = (formData.get("tagNames") as string)
     .split(",")
     .map((i) => i.trim());
-  const categoryIds = (formData.get("categoryIds") as string)
-    .split(",")
-    .map((i) => i.trim());
+  const categoryIds = JSON.parse(
+    formData.get("categories") as string
+  ) as string[];
 
   const cuid = init({ length: 12 });
   await prisma.post.create({
@@ -146,7 +147,7 @@ export async function createUser(state: SignupFormState, formData: FormData) {
 
 export async function createCategory(
   state: CategoryFormState,
-  formData: FormData,
+  formData: FormData
 ) {
   const validatedFields = CategoryFormSchema.safeParse({
     name: formData.get("name"),
@@ -178,6 +179,14 @@ export async function createCategory(
     data: {
       id: createId(),
       name,
+      slug: slugify(name, {
+        replacement: "-",
+        remove: undefined,
+        lower: true,
+        strict: true,
+        locale: "vi",
+        trim: true,
+      }),
       parentCategoryId,
     },
   });
@@ -187,7 +196,7 @@ export async function createCategory(
 
 export async function updateCategory(
   state: CategoryFormState,
-  formData: FormData,
+  formData: FormData
 ) {
   const validatedFields = CategoryFormSchema.safeParse({
     name: formData.get("name"),
@@ -211,6 +220,14 @@ export async function updateCategory(
     },
     data: {
       name,
+      slug: slugify(name, {
+        replacement: "-",
+        remove: undefined,
+        lower: true,
+        strict: true,
+        locale: "vi",
+        trim: true,
+      }),
       parentCategoryId,
     },
   });

@@ -1,5 +1,5 @@
 "use client";
-import { memo, useMemo, useState } from "react";
+import { useState } from "react";
 import Input from "@/components/ui/Input";
 import { createPost } from "@/app/actions";
 import { $convertToMarkdownString } from "@lexical/markdown";
@@ -8,79 +8,9 @@ import { EditorState } from "lexical";
 import Button from "@/components/ui/Button";
 import { useCallback } from "react";
 import LexicalEditor from "@/components/lexical";
-import buildCategoryTree, { CategoryTree } from "@/lib/buildCategoryTree";
 import { Category } from "@prisma/client";
-
-const CategorySelect = memo(function CategorySelect({
-  categories,
-}: {
-  categories: Category[];
-}) {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>();
-
-  const categoryTree = useMemo(
-    () => buildCategoryTree(categories),
-    [categories]
-  );
-
-  const handleCheckCategory = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const categoryId = e.target.value;
-      const checked = e.target.checked;
-      const category = categories.find(
-        (category) => category.id === categoryId
-      );
-      if (!category) return;
-      const parentCategoryId = category.parentCategoryId;
-      if (parentCategoryId) {
-        const parentElement = document.querySelector(
-          `input[value="${parentCategoryId}"]`
-        ) as HTMLInputElement;
-        if (parentElement) {
-          parentElement.checked = checked;
-          handleCheckCategory({
-            target: parentElement,
-          } as React.ChangeEvent<HTMLInputElement>);
-        }
-      }
-      const newSelectedCategories = new Set(selectedCategories);
-      if (checked) {
-        newSelectedCategories.add(categoryId);
-      } else {
-        newSelectedCategories.delete(categoryId);
-      }
-      setSelectedCategories(Array.from(newSelectedCategories));
-    },
-    [categories, selectedCategories]
-  );
-
-  const renderCategories = useCallback(
-    (ctgTree?: CategoryTree[]) => {
-      if (!ctgTree) return null;
-      return ctgTree.map((category) => {
-        return (
-          <div key={category.id} className="pl-4">
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  onChange={handleCheckCategory}
-                  value={category.id}
-                />
-                {category.name}
-              </label>
-            </div>
-            {category.subcategories && renderCategories(category.subcategories)}
-          </div>
-        );
-      });
-    },
-    [handleCheckCategory]
-  );
-  return (
-    <div>{categoryTree.map((category) => renderCategories([category]))}</div>
-  );
-});
+import Select from "./ui/select";
+import { findChildCategories } from "@/lib/findChildCategories";
 
 export default function PostForm({
   authorId,
@@ -90,6 +20,7 @@ export default function PostForm({
   categories: Category[];
 }) {
   const [content, setContent] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const handleChange = useCallback((editorState: EditorState) => {
     editorState.read(() => {
@@ -104,6 +35,7 @@ export default function PostForm({
       action={(formData) => {
         formData.append("content", content);
         formData.append("authorId", authorId);
+        formData.append("categoryIds", JSON.stringify(selectedCategories));
         createPost(formData);
       }}
     >
@@ -117,7 +49,47 @@ export default function PostForm({
 
       <LexicalEditor onChange={handleChange} />
 
-      <CategorySelect categories={categories} />
+      <div className="space-y-4">
+        <h2>Danh mục</h2>
+        <Select
+          onChange={(e) => {
+            setSelectedCategories([...selectedCategories, e.target.value]);
+          }}
+        >
+          <option value="">-- Chọn danh mục --</option>
+          {findChildCategories(categories, null).map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </Select>
+        {selectedCategories.map((selectedCategory) => {
+          const childCategories = findChildCategories(
+            categories,
+            selectedCategory
+          );
+          if (childCategories.length === 0) return null;
+          return (
+            <div key={selectedCategory}>
+              <Select
+                onChange={(e) => {
+                  setSelectedCategories([
+                    ...selectedCategories,
+                    e.target.value,
+                  ]);
+                }}
+              >
+                <option>-- Chọn danh phụ --</option>
+                {childCategories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </Select>
+            </div>
+          );
+        })}
+      </div>
       <Input
         id="featuredImageURL"
         name="featuredImageURL"

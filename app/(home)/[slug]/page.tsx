@@ -1,7 +1,6 @@
 import Markdown, { type Components } from "react-markdown";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
-// import { MDXRemote } from "remote-mdx/rsc";
 import remarkGfm from "remark-gfm";
 import emoji from "remark-emoji";
 import supersub from "remark-supersub";
@@ -12,8 +11,6 @@ import rehypeHighlight from "rehype-highlight";
 import rehypeHighlightLines from "rehype-highlight-code-lines";
 import remarkFlexibleMarkers from "remark-flexible-markers";
 import remarkFlexibleContainers from "remark-flexible-containers";
-
-//import hljs from 'highlight.js';
 import "highlight.js/styles/github-dark.min.css";
 
 const getPost = unstable_cache(
@@ -21,6 +18,18 @@ const getPost = unstable_cache(
     return await prisma.post.findUnique({
       where: {
         id,
+      },
+      include: {
+        categories: {
+          include: {
+            category: true,
+          },
+        },
+        tags: {
+          include: {
+            tag: true,
+          },
+        },
       },
     });
   },
@@ -171,6 +180,13 @@ export default async function Page({
       </main>
     );
   }
+
+  // handle breadcrumbs from categories
+  const breadcrumbs = post.categories.map((c) => ({
+    id: c.category.id,
+    name: c.category.name,
+    href: `/categories/${c.category.slug}`,
+  }));
   return (
     <main className="flex justify-center">
       <div className="flex md:flex-row justify-center flex-col max-w-screen-lg w-full p-4 gap-4">
@@ -183,6 +199,13 @@ export default async function Page({
               year: "numeric",
             })}
           </p>
+          <div className="flex gap-2">
+            {breadcrumbs.map((b) => (
+              <Link key={b.id} href={`/${b.href}`}>
+                <a className="text-blue-600 hover:underline">{b.name}</a>
+              </Link>
+            ))}
+          </div>
           <p className="font-semibold text-gray-900">{post.description}</p>
           <Markdown
             components={components}

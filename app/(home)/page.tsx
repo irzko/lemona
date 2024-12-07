@@ -21,7 +21,7 @@ const getPosts = unstable_cache(
     });
   },
   ["posts"],
-  { tags: ["posts"] },
+  { tags: ["posts"] }
 );
 
 export default async function Page() {
@@ -32,10 +32,7 @@ export default async function Page() {
         <h3 className="text-2xl">Bài viết mới</h3>
         <ul className="grid grid-cols divide-y sm:divide-y-0 sm:grid-cols-2 md:grid-cols-4 gap-4">
           {allPosts.slice(0, 4).map((post) => (
-            <li
-              className="bg-white pt-4"
-              key={post.id}
-            >
+            <li className="bg-white pt-4" key={post.id}>
               <Link
                 href={`/${slugify(post.title, {
                   replacement: "-",
@@ -51,6 +48,7 @@ export default async function Page() {
                     src={post.featuredImageURL || "/no-image.jpg"}
                     alt={post.title}
                     fill
+                    unoptimized
                     className="object-cover rounded-lg"
                   />
                 </div>
@@ -82,6 +80,7 @@ export default async function Page() {
                     <Image
                       src={post.title || "/no-image.jpg"}
                       alt={post.title}
+                      unoptimized
                       fill
                       className="object-cover rounded-lg"
                     />

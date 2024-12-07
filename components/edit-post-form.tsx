@@ -8,13 +8,15 @@ import { PLAYGROUND_TRANSFORMERS } from "@/components/lexical/plugins/MarkdownTr
 import Button from "@/components/ui/Button";
 import Select from "@/components/ui/select";
 import { useCallback } from "react";
-import { Post, TagsOnPosts, Tag, CategoriesOnPosts } from "@prisma/client";
+import {
+  Post,
+  TagsOnPosts,
+  Tag,
+  CategoriesOnPosts,
+  Category,
+} from "@prisma/client";
 import LexicalEditor from "@/components/lexical";
-
-interface Category {
-  id: string;
-  name: string;
-}
+import { findChildCategories } from "@/lib/findChildCategories";
 
 export default function EditPostForm({
   categories,
@@ -28,6 +30,9 @@ export default function EditPostForm({
   };
 }) {
   const [content, setContent] = useState(post.content);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    post.categories.map((i) => i.category.id)
+  );
   const handleChange = useCallback((editorState: EditorState) => {
     editorState.read(() => {
       const markdownText = $convertToMarkdownString(PLAYGROUND_TRANSFORMERS);
@@ -54,15 +59,49 @@ export default function EditPostForm({
       />
 
       <LexicalEditor onChange={handleChange} markdown={post.content} />
-      <Select defaultValue={undefined} name="categoryIds">
-        {categories.map((category) => {
-          return (
-            <option value={category.id} key={category.id}>
+      <div className="space-y-4">
+        <h2>Danh mục</h2>
+        <Select
+          defaultValue={selectedCategories[0]}
+          onChange={(e) => {
+            setSelectedCategories([...selectedCategories, e.target.value]);
+          }}
+        >
+          <option value="">-- Chọn danh mục --</option>
+          {findChildCategories(categories, null).map((category) => (
+            <option key={category.id} value={category.id}>
               {category.name}
             </option>
+          ))}
+        </Select>
+        {selectedCategories.map((selectedCategory, index) => {
+          const childCategories = findChildCategories(
+            categories,
+            selectedCategory
+          );
+          if (childCategories.length === 0) return null;
+          return (
+            <div key={selectedCategory}>
+              <Select
+                defaultValue={selectedCategories[index + 1]}
+                onChange={(e) => {
+                  setSelectedCategories([
+                    ...selectedCategories,
+                    e.target.value,
+                  ]);
+                }}
+              >
+                <option>-- Chọn danh phụ --</option>
+                {childCategories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </Select>
+            </div>
           );
         })}
-      </Select>
+      </div>
       <Input
         autoComplete="false"
         id="featuredImageURL"

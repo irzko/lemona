@@ -134,5 +134,8 @@ export default function ImagesPlugin({
 
 const TRANSPARENT_IMAGE =
   "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-const img = document.createElement("img");
-img.src = TRANSPARENT_IMAGE;
+
+if (typeof document !== "undefined") {
+  const img = document.createElement("img");
+  img.src = TRANSPARENT_IMAGE;
+}

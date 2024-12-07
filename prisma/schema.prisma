@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["typedSql"]
 }
 
 datasource db {
@@ -46,6 +45,7 @@ model Category {
   name             String              @unique
   description      String?
   parentCategoryId String?
+  slug             String              @unique
   image            String?
   posts            CategoriesOnPosts[]
   createdAt        DateTime            @default(now())
