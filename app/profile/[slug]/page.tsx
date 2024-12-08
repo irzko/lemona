@@ -1,44 +1,24 @@
-import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 
-const getUser = unstable_cache(
-  async (username: string) => {
-    return await prisma.user.findUnique({
-      where: {
-        username,
-      },
-      select: {
-        id: true,
-        username: true,
-        name: true,
-        image: true,
-        posts: true,
-        role: true,
-      },
-    });
-  },
-  ["users"],
-  { tags: ["users"] }
-);
+const getUser = async (username: string) => {
+  return await prisma.user.findUnique({
+    where: {
+      username,
+    },
 
-const getPosts = unstable_cache(
-  async (authorId: string) => {
-    return await prisma.post.findMany({
-      where: {
-        authorId,
+    include: {
+      posts: {
+        select: {
+          id: true,
+          title: true,
+          featuredImageURL: true,
+        },
       },
-      select: {
-        id: true,
-        title: true,
-        featuredImageURL: true,
-      },
-    });
-  },
-  ["posts"],
-  { tags: ["posts"] }
-);
+    },
+  });
+};
 
 export default async function Page({
   params,
@@ -59,7 +39,6 @@ export default async function Page({
     );
   }
 
-  const posts = await getPosts(user.id);
   return (
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full space-y-4 p-4">
@@ -89,7 +68,7 @@ export default async function Page({
           <h4>{user.name || user.username}</h4>
         </div>
         <ul className="flex flex-col gap-4">
-          {posts.map((post) => (
+          {user.posts.map((post) => (
             <li className="overflow-hidden bg-white" key={post.id}>
               <Link
                 className="text-gray-800 flex gap-4"

@@ -10,41 +10,45 @@ import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
-import {ClickableLinkPlugin} from '@lexical/react/LexicalClickableLinkPlugin';
-import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
-import {useSharedHistoryContext} from './context/SharedHistoryContext';
+import { ClickableLinkPlugin } from "@lexical/react/LexicalClickableLinkPlugin";
+import { useLexicalEditable } from "@lexical/react/useLexicalEditable";
+import { useSharedHistoryContext } from "./context/SharedHistoryContext";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { $convertFromMarkdownString } from "@lexical/markdown";
-import {PLAYGROUND_TRANSFORMERS} from "@/components/lexical/plugins/MarkdownTransformers";
+import { PLAYGROUND_TRANSFORMERS } from "@/components/lexical/plugins/MarkdownTransformers";
 import { TablePlugin } from "@lexical/react/LexicalTablePlugin";
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import ToolbarPlugin from "./plugins/ToolbarPlugin";
 import { useState } from "react";
 import ImagesPlugin from "./plugins/ImagesPlugin";
-import LinkPlugin from './plugins/LinkPlugin';
-import CodeHighlightPlugin from './plugins/CodeHighlightPlugin';
-
+import LinkPlugin from "./plugins/LinkPlugin";
+import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
+import ActionsPlugin from "./plugins/ActionsPlugin";
 
 const placeholder = "Hãy bắt đầu viết...";
 
-
 export default function Editor({ markdown }: { markdown?: string }) {
   const [editor] = useLexicalComposerContext();
-  const {historyState} = useSharedHistoryContext();
+  const { historyState } = useSharedHistoryContext();
   const [activeEditor, setActiveEditor] = useState(editor);
   const isEditable = useLexicalEditable();
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
-  
-  console.log(isLinkEditMode)
+
+  console.log(isLinkEditMode);
   if (markdown) {
     editor.update(() => {
-      $convertFromMarkdownString(markdown, PLAYGROUND_TRANSFORMERS);
+      $convertFromMarkdownString(
+        markdown,
+        PLAYGROUND_TRANSFORMERS,
+        undefined,
+        true
+      );
     });
   }
-  
+
   return (
     <div className="w-full border border-gray-200 rounded-lg bg-gray-50">
       <ToolbarPlugin
@@ -83,6 +87,7 @@ export default function Editor({ markdown }: { markdown?: string }) {
         />
         <ImagesPlugin />
         <AutoFocusPlugin />
+        <ActionsPlugin shouldPreserveNewLinesInMarkdown={true} />
       </div>
     </div>
   );

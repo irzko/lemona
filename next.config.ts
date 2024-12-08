@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
     ],
   },
   experimental: {
+    dynamicIO: true,
     serverActions: {
       allowedOrigins: [
         "friendly-waddle-j9g4vw94762x6v-3000.app.github.dev",
