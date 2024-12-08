@@ -1,5 +1,5 @@
 import Markdown, { type Components } from "react-markdown";
-import { unstable_cacheTag as cacheTag } from "next/cache";
+import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import remarkGfm from "remark-gfm";
 import emoji from "remark-emoji";
@@ -13,27 +13,29 @@ import remarkFlexibleMarkers from "remark-flexible-markers";
 import remarkFlexibleContainers from "remark-flexible-containers";
 import "highlight.js/styles/github-dark.min.css";
 
-const getPost = async (id: string) => {
-  "use cache";
-  cacheTag("post");
-  return await prisma.post.findUnique({
-    where: {
-      id,
-    },
-    include: {
-      categories: {
-        include: {
-          category: true,
+const getPost = unstable_cache(
+  async (id: string) => {
+    return await prisma.post.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        categories: {
+          include: {
+            category: true,
+          },
+        },
+        tags: {
+          include: {
+            tag: true,
+          },
         },
       },
-      tags: {
-        include: {
-          tag: true,
-        },
-      },
-    },
-  });
-};
+    });
+  },
+  ["posts"],
+  { tags: ["posts"] }
+);
 
 const components: Components = {
   h1({ children }) {

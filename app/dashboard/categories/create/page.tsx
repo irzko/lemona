@@ -1,19 +1,21 @@
 import CreateCategoryForm from "./CreateCategoryForm";
 import { auth } from "@/auth";
-import { unstable_cacheTag as cacheTag } from "next/cache";
+import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 
-const getCategories = async () => {
-  "use cache";
-  cacheTag("categories");
-  return await prisma.category.findMany({
-    orderBy: [
-      {
-        name: "asc",
-      },
-    ],
-  });
-};
+const getCategories = unstable_cache(
+  async () => {
+    return await prisma.category.findMany({
+      orderBy: [
+        {
+          name: "asc",
+        },
+      ],
+    });
+  },
+  ["categories"],
+  { tags: ["categories"] }
+);
 
 export default async function Page() {
   const categories = await getCategories();

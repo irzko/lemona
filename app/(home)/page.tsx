@@ -1,26 +1,28 @@
-import { unstable_cacheTag as cacheTag } from "next/cache";
+import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import Image from "next/image";
 import slugify from "slugify";
 
-const getPosts = async () => {
-  "use cache";
-  cacheTag("posts");
-  return await prisma.post.findMany({
-    select: {
-      id: true,
-      title: true,
-      featuredImageURL: true,
-      createdAt: true,
-    },
-    orderBy: [
-      {
-        createdAt: "desc",
+const getPosts = unstable_cache(
+  async () => {
+    return await prisma.post.findMany({
+      select: {
+        id: true,
+        title: true,
+        featuredImageURL: true,
+        createdAt: true,
       },
-    ],
-  });
-};
+      orderBy: [
+        {
+          createdAt: "desc",
+        },
+      ],
+    });
+  },
+  ["posts"],
+  { tags: ["posts"] }
+);
 
 export default async function Page() {
   const allPosts = await getPosts();

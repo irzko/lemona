@@ -1,6 +1,6 @@
 import EditPostForm from "@/components/edit-post-form";
 import { auth } from "@/auth";
-import { unstable_cacheTag as cacheTag } from "next/cache";
+import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import {
   Post,
@@ -10,39 +10,43 @@ import {
   CategoriesOnPosts,
 } from "@prisma/client";
 
-const getPost = async (id: string) => {
-  "use cache";
-  cacheTag("posts");
-  return await prisma.post.findUnique({
-    where: {
-      id,
-    },
-    include: {
-      tags: {
-        include: {
-          tag: true,
+const getPost = unstable_cache(
+  async (id: string) => {
+    return await prisma.post.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        tags: {
+          include: {
+            tag: true,
+          },
+        },
+        categories: {
+          include: {
+            category: true,
+          },
         },
       },
-      categories: {
-        include: {
-          category: true,
-        },
-      },
-    },
-  });
-};
+    });
+  },
+  ["posts"],
+  { tags: ["posts"] }
+);
 
-const getCategories = async () => {
-  "use cache";
-  cacheTag("categories");
-  return await prisma.category.findMany({
-    orderBy: [
-      {
-        name: "asc",
-      },
-    ],
-  });
-};
+const getCategories = unstable_cache(
+  async () => {
+    return await prisma.category.findMany({
+      orderBy: [
+        {
+          name: "asc",
+        },
+      ],
+    });
+  },
+  ["categories"],
+  { tags: ["categories"] }
+);
 
 export default async function Page({
   params,
