@@ -20,7 +20,7 @@
     "katex": "^0.16.11",
     "lexical": "^0.20.0",
     "lodash-es": "^4.17.21",
-    "next": "^15.0.4",
+    "next": "^15.1.0",
     "next-auth": "beta",
     "prettier": "^3.4.1",
     "react": "^19.0.0",

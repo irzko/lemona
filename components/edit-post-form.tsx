@@ -18,6 +18,20 @@ import {
 import LexicalEditor from "@/components/lexical";
 import { findChildCategories } from "@/lib/findChildCategories";
 
+function sortCategories(categories: Category[]) {
+  const result: string[] = [];
+  function addChildren(parentId: string | null) {
+    categories
+      .filter((category) => category.parentCategoryId === parentId)
+      .forEach((category) => {
+        result.push(category.id);
+        addChildren(category.id);
+      });
+  }
+  addChildren(null);
+  return result;
+}
+
 export default function EditPostForm({
   categories,
   post,
@@ -30,12 +44,44 @@ export default function EditPostForm({
   };
 }) {
   const [content, setContent] = useState(post.content);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(
-    post.categories.map((i) => i.category.id)
+
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>(
+    sortCategories(
+      post.categories.map((selectedCategory) => selectedCategory.category)
+    )
   );
+
+  const handleChangeCategories = useCallback(
+    (categoryId: string, index: number) => {
+      if (categoryId === "") {
+        setSelectedCategoryIds(selectedCategoryIds.slice(0, index));
+        return;
+      }
+      if (index === selectedCategoryIds.length) {
+        setSelectedCategoryIds([...selectedCategoryIds, categoryId]);
+        return;
+      } else if (index < selectedCategoryIds.length - 1) {
+        const newSelectedCategoryIds = selectedCategoryIds.slice(0, index + 1);
+        setSelectedCategoryIds(
+          newSelectedCategoryIds.map((id, i) => {
+            if (i === index) {
+              return categoryId;
+            }
+            return id;
+          })
+        );
+      }
+    },
+    [selectedCategoryIds]
+  );
+
   const handleChange = useCallback((editorState: EditorState) => {
     editorState.read(() => {
-      const markdownText = $convertToMarkdownString(PLAYGROUND_TRANSFORMERS);
+      const markdownText = $convertToMarkdownString(
+        PLAYGROUND_TRANSFORMERS,
+        undefined,
+        true
+      );
       setContent(markdownText);
     });
   }, []);
@@ -62,9 +108,9 @@ export default function EditPostForm({
       <div className="space-y-4">
         <h2>Danh mục</h2>
         <Select
-          defaultValue={selectedCategories[0]}
+          defaultValue={selectedCategoryIds[0] || ""}
           onChange={(e) => {
-            setSelectedCategories([...selectedCategories, e.target.value]);
+            handleChangeCategories(e.target.value, 0);
           }}
         >
           <option value="">-- Chọn danh mục --</option>
@@ -74,33 +120,30 @@ export default function EditPostForm({
             </option>
           ))}
         </Select>
-        {selectedCategories.map((selectedCategory, index) => {
-          const childCategories = findChildCategories(
-            categories,
-            selectedCategory
-          );
-          if (childCategories.length === 0) return null;
-          return (
-            <div key={selectedCategory}>
+        {selectedCategoryIds.length > 0 &&
+          selectedCategoryIds.map((selectedCategoryId, index) => {
+            const childCategories = findChildCategories(
+              categories,
+              selectedCategoryId || null
+            );
+            if (childCategories.length === 0) return null;
+            return (
               <Select
-                defaultValue={selectedCategories[index + 1]}
+                key={`child-${selectedCategoryIds[index]}`}
+                defaultValue={selectedCategoryIds[index + 1] || ""}
                 onChange={(e) => {
-                  setSelectedCategories([
-                    ...selectedCategories,
-                    e.target.value,
-                  ]);
+                  handleChangeCategories(e.target.value, index + 1);
                 }}
               >
-                <option>-- Chọn danh phụ --</option>
+                <option value="">-- Chọn danh phụ --</option>
                 {childCategories.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
                 ))}
               </Select>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
       <Input
         autoComplete="false"

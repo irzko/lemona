@@ -20,7 +20,31 @@ export default function PostForm({
   categories: Category[];
 }) {
   const [content, setContent] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([]);
+
+  const handleChangeCategories = useCallback(
+    (categoryId: string, index: number) => {
+      if (categoryId === "") {
+        setSelectedCategoryIds(selectedCategoryIds.slice(0, index));
+        return;
+      }
+      if (index === selectedCategoryIds.length) {
+        setSelectedCategoryIds([...selectedCategoryIds, categoryId]);
+        return;
+      } else if (index < selectedCategoryIds.length - 1) {
+        const newSelectedCategoryIds = selectedCategoryIds.slice(0, index + 1);
+        setSelectedCategoryIds(
+          newSelectedCategoryIds.map((id, i) => {
+            if (i === index) {
+              return categoryId;
+            }
+            return id;
+          })
+        );
+      }
+    },
+    [selectedCategoryIds]
+  );
 
   const handleChange = useCallback((editorState: EditorState) => {
     editorState.read(() => {
@@ -35,7 +59,7 @@ export default function PostForm({
       action={(formData) => {
         formData.append("content", content);
         formData.append("authorId", authorId);
-        formData.append("categoryIds", JSON.stringify(selectedCategories));
+        formData.append("categoryIds", JSON.stringify(selectedCategoryIds));
         createPost(formData);
       }}
     >
@@ -53,7 +77,7 @@ export default function PostForm({
         <h2>Danh mục</h2>
         <Select
           onChange={(e) => {
-            setSelectedCategories([...selectedCategories, e.target.value]);
+            handleChangeCategories(e.target.value, 0);
           }}
         >
           <option value="">-- Chọn danh mục --</option>
@@ -63,20 +87,18 @@ export default function PostForm({
             </option>
           ))}
         </Select>
-        {selectedCategories.map((selectedCategory) => {
-          const childCategories = findChildCategories(
-            categories,
-            selectedCategory
-          );
-          if (childCategories.length === 0) return null;
-          return (
-            <div key={selectedCategory}>
+        {selectedCategoryIds.length > 0 &&
+          selectedCategoryIds.map((selectedCategory, index) => {
+            const childCategories = findChildCategories(
+              categories,
+              selectedCategory
+            );
+            if (childCategories.length === 0) return null;
+            return (
               <Select
+                key={`child-${selectedCategoryIds[index]}`}
                 onChange={(e) => {
-                  setSelectedCategories([
-                    ...selectedCategories,
-                    e.target.value,
-                  ]);
+                  handleChangeCategories(e.target.value, index + 1);
                 }}
               >
                 <option>-- Chọn danh phụ --</option>
@@ -86,9 +108,8 @@ export default function PostForm({
                   </option>
                 ))}
               </Select>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
       <Input
         id="featuredImageURL"
