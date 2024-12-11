@@ -11,7 +11,7 @@ import rehypeHighlight from "rehype-highlight";
 import rehypeHighlightLines from "rehype-highlight-code-lines";
 import remarkFlexibleMarkers from "remark-flexible-markers";
 import remarkFlexibleContainers from "remark-flexible-containers";
-import "highlight.js/styles/github-dark.min.css";
+import "highlight.js/styles/dark.min.css";
 
 const getPost = unstable_cache(
   async (id: string) => {
@@ -76,16 +76,6 @@ const components: Components = {
       </blockquote>
     );
   },
-
-  /*
-  pre({ children }) {
-    return (
-      <pre className="border text-sm rounded-lg p-2.5 bg-gray-50 border-gray-200 overflow-x-auto">
-        {children}
-      </pre>
-    );
-  },
-*/
 
   img({ alt, src }) {
     return (
@@ -185,7 +175,7 @@ export default async function Page({
   const breadcrumbs = post.categories.map((c) => ({
     id: c.category.id,
     name: c.category.name,
-    href: `/${c.category.slug}`,
+    href: `/category/${c.category.slug}`,
   }));
   return (
     <main className="flex justify-center">

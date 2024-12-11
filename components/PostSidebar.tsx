@@ -14,7 +14,7 @@ const sidebarItems = [
   {
     id: 2,
     name: "Danh mục",
-    href: "/categories",
+    href: "/category",
   },
 ];
 
@@ -31,7 +31,7 @@ export default function PostSidebar() {
             "Menu",
             () => {
               return (
-                <ul className="flex flex-col w-full px-2">
+                <ul className="flex flex-col w-full px-2 space-y-2">
                   {session?.user ? (
                     <li className="flex">
                       <Link

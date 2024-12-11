@@ -1,11 +1,10 @@
-import { Navbar } from "@/components/ui/navbar";
+import { Navbar, NavbarContent } from "@/components/ui/navbar";
 import { Bangers } from "next/font/google";
 import Link from "next/link";
 import React from "react";
 import PostSidebar from "@/components/PostSidebar";
 import { SessionProvider } from "next-auth/react";
-import { auth } from "@/auth"
-
+import { auth } from "@/auth";
 
 const bangers = Bangers({
   weight: ["400"],
@@ -15,24 +14,30 @@ const bangers = Bangers({
 export default async function HomeLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const session = await auth()
+  const session = await auth();
   return (
     <>
       <Navbar>
-        <SessionProvider basePath={"/auth"} session={session} refetchOnWindowFocus={false}>
-          <PostSidebar/>
-        </SessionProvider>
-
-        <Link
-          href="/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
-        >
-          <span
-            className={`self-center text-2xl text-gray-900 font-semibold whitespace-nowrap ${bangers.className}`}
+        <NavbarContent>
+          <SessionProvider
+            basePath={"/auth"}
+            session={session}
+            refetchOnWindowFocus={false}
           >
-            Lemona
-          </span>
-        </Link>
+            <PostSidebar />
+          </SessionProvider>
+
+          <Link
+            href="/"
+            className="flex items-center space-x-3 rtl:space-x-reverse"
+          >
+            <span
+              className={`self-center text-2xl text-gray-900 font-semibold whitespace-nowrap ${bangers.className}`}
+            >
+              Lemona
+            </span>
+          </Link>
+        </NavbarContent>
         <Link
           href="/search"
           type="button"
@@ -76,7 +81,7 @@ export default async function HomeLayout({
             type="text"
             id="search-navbar"
             className="block w-full p-2 ps-10 text-sm text-zinc-500 border border-gray-300 rounded-lg bg-zinc-400/20 focus:ring-blue-500 focus:border-blue-500 placeholder:text-zinc-500"
-            placeholder="Tìm kiếm truyện..."
+            placeholder="Tìm kiếm..."
           ></input>
         </div>
       </Navbar>

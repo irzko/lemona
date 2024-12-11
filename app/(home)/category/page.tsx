@@ -31,7 +31,7 @@ export default async function Page() {
               <li key={category.id}>
                 <Link
                   className="p-4 bg-gray-100 rounded-lg"
-                  href={`/categories/${category.slug}`}
+                  href={`/category/${category.slug}`}
                 >
                   {category.name}
                 </Link>

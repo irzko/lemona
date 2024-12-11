@@ -43,12 +43,12 @@ export default async function Page({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const categoryId = (await params).slug;
-  if (!categoryId) {
+  const slug = (await params).slug;
+  if (!slug) {
     return null;
   }
   // const categories = await getCategory(categoryId);
-  const category = await getPosts(categoryId);
+  const category = await getPosts(slug);
 
   if (!category) {
     return <div>Danh mục không tồn tại</div>;
@@ -57,6 +57,7 @@ export default async function Page({
   return (
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-4">
+        <h1 className="text-4xl">{category.name}</h1>
         <ul className="grid grid-cols-1 mt-4 space-y-0 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
           {category.posts.map((categoriesOnPosts) => (
             <li
