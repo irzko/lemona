@@ -77,9 +77,7 @@ export default function EditPostForm({
 
   const handleChange = useCallback((editorState: EditorState) => {
     editorState.read(() => {
-      const markdownText = $convertToMarkdownString(
-        PLAYGROUND_TRANSFORMERS
-      );
+      const markdownText = $convertToMarkdownString(PLAYGROUND_TRANSFORMERS);
       setContent(markdownText);
     });
   }, []);
@@ -90,6 +88,7 @@ export default function EditPostForm({
       action={(formData) => {
         formData.append("content", content);
         formData.append("id", post.id);
+        formData.append("categoryIds", JSON.stringify(selectedCategoryIds));
         updatePost(formData);
       }}
     >

@@ -71,9 +71,9 @@ export async function updatePost(formData: FormData) {
     .map((i) => i.trim());
   const id = formData.get("id") as string;
   const description = formData.get("description") as string;
-  const categoryIds = (formData.get("categoryIds") as string)
-    .split(",")
-    .map((i) => i.trim());
+  const categoryIds = JSON.parse(
+    formData.get("categoryIds") as string
+  ) as string[];
 
   await prisma.post.update({
     where: {
