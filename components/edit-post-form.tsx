@@ -78,9 +78,7 @@ export default function EditPostForm({
   const handleChange = useCallback((editorState: EditorState) => {
     editorState.read(() => {
       const markdownText = $convertToMarkdownString(
-        PLAYGROUND_TRANSFORMERS,
-        undefined,
-        true
+        PLAYGROUND_TRANSFORMERS
       );
       setContent(markdownText);
     });

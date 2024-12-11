@@ -87,7 +87,7 @@ export default function Editor({ markdown }: { markdown?: string }) {
         />
         <ImagesPlugin />
         <AutoFocusPlugin />
-        <ActionsPlugin shouldPreserveNewLinesInMarkdown={true} />
+        <ActionsPlugin shouldPreserveNewLinesInMarkdown={false} />
       </div>
     </div>
   );
