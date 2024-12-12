@@ -1,4 +1,4 @@
-import { Navbar, NavbarContent } from "@/components/ui/navbar";
+import { Navbar } from "@/components/ui/navbar";
 import { Bangers } from "next/font/google";
 import Link from "next/link";
 import React from "react";
@@ -18,7 +18,7 @@ export default async function HomeLayout({
   return (
     <>
       <Navbar>
-        <NavbarContent>
+        <div className="h-full flex-row flex-nowrap items-center justify-center flex gap-4">
           <SessionProvider
             basePath={"/auth"}
             session={session}
@@ -37,7 +37,7 @@ export default async function HomeLayout({
               Lemona
             </span>
           </Link>
-        </NavbarContent>
+        </div>
         <Link
           href="/search"
           type="button"
