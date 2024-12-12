@@ -43,8 +43,6 @@ export default function Editor({ markdown }: { markdown?: string }) {
       $convertFromMarkdownString(
         markdown,
         PLAYGROUND_TRANSFORMERS,
-        undefined,
-        true
       );
     });
   }
