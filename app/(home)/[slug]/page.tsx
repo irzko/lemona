@@ -41,9 +41,9 @@ const components: Components = {
   h1({ children }) {
     return <h1 className="text-4xl">{children}</h1>;
   },
-  h2({ children }) {
-    return <h2 className="text-3xl font-medium">{children}</h2>;
-  },
+  // h2({ children }) {
+  //   return <h2 className="text-3xl font-medium">{children}</h2>;
+  // },
   h3({ children }) {
     return <h3 className="text-2xl font-medium">{children}</h3>;
   },
@@ -66,9 +66,9 @@ const components: Components = {
   em({ children }) {
     return <em className="italic">{children}</em>;
   },
-  p({ children }) {
-    return <p className="text-gray-500">{children}</p>;
-  },
+  // p({ children }) {
+  //   return <p className="text-gray-500">{children}</p>;
+  // },
   blockquote({ children }) {
     return (
       <blockquote className="p-4 my-4 border-s-4 border-gray-300 bg-gray-50">

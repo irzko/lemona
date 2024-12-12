@@ -1,7 +1,28 @@
 @tailwind base;
+
+body {
+  color: rgb(28 27 29);
+}
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-[475];
+  }
+  h1 {
+    @apply text-[3.25rem];
+  }
+
+  h2 {
+    @apply text-[2.8125rem];
+  }
+}
+
 @tailwind components;
 @tailwind utilities;
-
 
 .parent-container-of-pre {
   display: grid; /* in order { overflow-x: auto; } works in child <pre> */
@@ -53,7 +74,9 @@ span.code-line {
 }
 
 .code-line.inserted {
-  background-color: var(--color-inserted-line); /* inserted code-line (+) color */
+  background-color: var(
+    --color-inserted-line
+  ); /* inserted code-line (+) color */
 }
 
 .code-line.deleted {

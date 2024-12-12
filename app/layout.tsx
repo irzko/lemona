@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Roboto } from 'next/font/google'
- 
-const roboto = Roboto({
-  weight: ["100", "300", "400", "500", "700", "900"],
-  subsets: ['latin'],
-  style: ['normal', 'italic'],
-  display: 'swap',
-})
+import { Open_Sans } from "next/font/google";
+
+const roboto = Open_Sans({
+  weight: ["300", "400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Lemona",
