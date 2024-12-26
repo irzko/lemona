@@ -4,13 +4,14 @@ import { createPost } from "@/app/actions";
 import { $convertToMarkdownString } from "@lexical/markdown";
 import { PLAYGROUND_TRANSFORMERS } from "@/components/lexical/plugins/MarkdownTransformers";
 import { EditorState } from "lexical";
-import Button from "@/components/ui/Button";
+
 import { useCallback } from "react";
 import LexicalEditor from "@/components/lexical";
 import { Category } from "@prisma/client";
 import { findChildCategories } from "@/lib/findChildCategories";
 import { Input } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
+import { Button } from "@nextui-org/button";
 
 export default function PostForm({
   authorId,
@@ -54,95 +55,107 @@ export default function PostForm({
   }, []);
 
   return (
-    <form
-      className="gap-6 p-4 flex flex-col"
-      action={(formData) => {
-        formData.append("content", content);
-        formData.append("authorId", authorId);
-        formData.append("categoryIds", JSON.stringify(selectedCategoryIds));
-        createPost(formData);
-      }}
-    >
-      <Input
-        id="title"
-        name="title"
-        label="Tiêu đề"
-        autoComplete="off"
-        variant="faded"
-        size="sm"
-        isRequired
-      />
-
-      <LexicalEditor onChange={handleChange} />
-
-      <div className="space-y-4">
-        <h2>Danh mục</h2>
-        <Select
-          onChange={(e) => {
-            handleChangeCategories(e.target.value, 0);
+    <div className="max-w-screen-lg w-full">
+      <div className="">
+        <form
+          className="flex md:flex-row justify-center flex-col max-w-screen-lg w-full p-4 gap-4"
+          action={(formData) => {
+            formData.append("content", content);
+            formData.append("authorId", authorId);
+            formData.append("categoryIds", JSON.stringify(selectedCategoryIds));
+            createPost(formData);
           }}
         >
-          {/* <option value="">-- Chọn danh mục --</option> */}
-          {findChildCategories(categories, null).map((category) => (
-            <SelectItem key={category.id} value={category.id}>
-              {category.name}
-            </SelectItem>
-          ))}
-        </Select>
-        {selectedCategoryIds.length > 0 &&
-          selectedCategoryIds.map((selectedCategory, index) => {
-            const childCategories = findChildCategories(
-              categories,
-              selectedCategory
-            );
-            if (childCategories.length === 0) return null;
-            return (
+          <div className="w-full space-y-4">
+            <Input
+              id="title"
+              name="title"
+              label="Tiêu đề"
+              autoComplete="off"
+              variant="bordered"
+              size="sm"
+              isRequired
+            />
+
+            <LexicalEditor onChange={handleChange} />
+          </div>
+          <div className="md:w-96 w-full space-y-4">
+            <div className="space-y-4">
               <Select
-                key={`child-${selectedCategoryIds[index]}`}
+                variant="bordered"
+                label="Danh mục"
+                size="sm"
                 onChange={(e) => {
-                  handleChangeCategories(e.target.value, index + 1);
+                  handleChangeCategories(e.target.value, 0);
                 }}
               >
-                {/* <option>-- Chọn danh phụ --</option> */}
-                {childCategories.map((category) => (
+                {/* <option value="">-- Chọn danh mục --</option> */}
+                {findChildCategories(categories, null).map((category) => (
                   <SelectItem key={category.id} value={category.id}>
                     {category.name}
                   </SelectItem>
                 ))}
               </Select>
-            );
-          })}
+              {selectedCategoryIds.length > 0 &&
+                selectedCategoryIds.map((selectedCategory, index) => {
+                  const childCategories = findChildCategories(
+                    categories,
+                    selectedCategory
+                  );
+                  if (childCategories.length === 0) return null;
+                  return (
+                    <Select
+                      variant="bordered"
+                      label="Danh mục phụ"
+                      size="sm"
+                      key={`child-${selectedCategoryIds[index]}`}
+                      onChange={(e) => {
+                        handleChangeCategories(e.target.value, index + 1);
+                      }}
+                    >
+                      {/* <option>-- Chọn danh phụ --</option> */}
+                      {childCategories.map((category) => (
+                        <SelectItem key={category.id} value={category.id}>
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  );
+                })}
+            </div>
+            <Input
+              id="featuredImageURL"
+              name="featuredImageURL"
+              label="Featured image URL"
+              isRequired
+              autoComplete="off"
+              variant="bordered"
+              size="sm"
+            />
+            <Input
+              id="description"
+              name="description"
+              label="Nhập mô tả"
+              isRequired
+              variant="bordered"
+              size="sm"
+              autoComplete="off"
+            />
+            <Input
+              id="tags"
+              name="tagNames"
+              label="Thẻ bài viết"
+              isRequired
+              autoComplete="off"
+              variant="bordered"
+              size="sm"
+            />
+            <Button className="w-full" color="primary">
+              Đăng
+            </Button>
+          </div>
+        </form>
       </div>
-      <Input
-        id="featuredImageURL"
-        name="featuredImageURL"
-        label="Featured image URL"
-        isRequired
-        autoComplete="off"
-        variant="faded"
-        size="sm"
-      />
-      <Input
-        id="description"
-        name="description"
-        label="Nhập mô tả"
-        isRequired
-        variant="faded"
-        size="sm"
-        autoComplete="off"
-      />
-      <Input
-        id="tags"
-        name="tagNames"
-        label="Thẻ bài viết"
-        isRequired
-        autoComplete="off"
-        variant="faded"
-        size="sm"
-      />
-      <Button className="w-full" color="light" type="submit">
-        Đăng
-      </Button>
-    </form>
+    </div>
   );
 }

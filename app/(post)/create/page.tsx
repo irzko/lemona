@@ -24,12 +24,7 @@ export default async function Page() {
 
   return (
     <div className="flex justify-center">
-      <div className="max-w-screen-lg w-full">
-        <PostForm
-          authorId={session.user.id as string}
-          categories={categories}
-        />
-      </div>
+      <PostForm authorId={session.user.id as string} categories={categories} />
     </div>
   );
 }

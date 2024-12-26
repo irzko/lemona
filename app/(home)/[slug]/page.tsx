@@ -12,6 +12,7 @@ import rehypeHighlightLines from "rehype-highlight-code-lines";
 import remarkFlexibleMarkers from "remark-flexible-markers";
 import remarkFlexibleContainers from "remark-flexible-containers";
 import "highlight.js/styles/dark.min.css";
+import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/breadcrumbs";
 
 const getPost = unstable_cache(
   async (id: string) => {
@@ -181,7 +182,7 @@ export default async function Page({
     <main className="flex justify-center">
       <div className="flex md:flex-row justify-center flex-col max-w-screen-lg w-full p-4 gap-4">
         <div className="w-full space-y-4">
-          <div className="flex gap-2">
+          {/* <div className="flex gap-2">
             <Link
               href={breadcrumbs[0].href}
               className="text-blue-600 hover:underline"
@@ -200,7 +201,16 @@ export default async function Page({
                 </Link>
               </span>
             ))}
-          </div>
+          </div> */}
+
+          <Breadcrumbs>
+            <BreadcrumbItem>Home</BreadcrumbItem>
+            <BreadcrumbItem>Music</BreadcrumbItem>
+            <BreadcrumbItem>Artist</BreadcrumbItem>
+            <BreadcrumbItem>Album</BreadcrumbItem>
+            <BreadcrumbItem>Song</BreadcrumbItem>
+          </Breadcrumbs>
+
           <h1 className="text-4xl font-medium">{post.title || "(No title)"}</h1>
           <p>
             {new Date(post.createdAt).toLocaleDateString("vi-VN", {
