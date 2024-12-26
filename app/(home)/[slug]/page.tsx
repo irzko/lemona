@@ -202,13 +202,12 @@ export default async function Page({
               </span>
             ))}
           </div> */}
-
           <Breadcrumbs>
-            <BreadcrumbItem>Home</BreadcrumbItem>
-            <BreadcrumbItem>Music</BreadcrumbItem>
-            <BreadcrumbItem>Artist</BreadcrumbItem>
-            <BreadcrumbItem>Album</BreadcrumbItem>
-            <BreadcrumbItem>Song</BreadcrumbItem>
+            {breadcrumbs.map((item) => (
+              <BreadcrumbItem as={Link} key={item.id} href={item.href}>
+                {item.name}
+              </BreadcrumbItem>
+            ))}
           </Breadcrumbs>
 
           <h1 className="text-4xl font-medium">{post.title || "(No title)"}</h1>

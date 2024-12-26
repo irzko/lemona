@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Drawer, DrawerContent, DrawerBody } from "@nextui-org/drawer";
 import { Button } from "@nextui-org/button";
-import { Listbox, ListboxSection, ListboxItem } from "@nextui-org/listbox";
+import { Listbox, ListboxItem } from "@nextui-org/listbox";
 import { useDisclosure } from "@nextui-org/modal";
 
 const sidebarItems = [
