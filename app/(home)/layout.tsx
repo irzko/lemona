@@ -1,10 +1,10 @@
-import { Navbar } from "@/components/ui/navbar";
 import { Bangers } from "next/font/google";
 import Link from "next/link";
 import React from "react";
 import PostSidebar from "@/components/PostSidebar";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import { Navbar, NavbarBrand } from "@nextui-org/navbar";
 
 const bangers = Bangers({
   weight: ["400"],
@@ -17,7 +17,7 @@ export default async function HomeLayout({
   const session = await auth();
   return (
     <>
-      <Navbar>
+      <Navbar shouldHideOnScroll>
         <div className="h-full flex-row flex-nowrap items-center justify-center flex gap-4">
           <SessionProvider
             basePath={"/auth"}
@@ -26,17 +26,18 @@ export default async function HomeLayout({
           >
             <PostSidebar />
           </SessionProvider>
-
-          <Link
-            href="/"
-            className="flex items-center space-x-3 rtl:space-x-reverse"
-          >
-            <span
-              className={`self-center text-2xl text-gray-900 font-semibold whitespace-nowrap ${bangers.className}`}
+          <NavbarBrand>
+            <Link
+              href="/"
+              className="flex items-center space-x-3 rtl:space-x-reverse"
             >
-              Lemona
-            </span>
-          </Link>
+              <span
+                className={`self-center text-2xl text-gray-900 font-semibold whitespace-nowrap ${bangers.className}`}
+              >
+                Lemona
+              </span>
+            </Link>
+          </NavbarBrand>
         </div>
         <Link
           href="/search"

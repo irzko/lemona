@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Input from "@/components/ui/Input";
 import { createPost } from "@/app/actions";
 import { $convertToMarkdownString } from "@lexical/markdown";
 import { PLAYGROUND_TRANSFORMERS } from "@/components/lexical/plugins/MarkdownTransformers";
@@ -9,8 +8,9 @@ import Button from "@/components/ui/Button";
 import { useCallback } from "react";
 import LexicalEditor from "@/components/lexical";
 import { Category } from "@prisma/client";
-import Select from "./ui/select";
 import { findChildCategories } from "@/lib/findChildCategories";
+import { Input } from "@nextui-org/input";
+import { Select, SelectItem } from "@nextui-org/select";
 
 export default function PostForm({
   authorId,
@@ -66,9 +66,11 @@ export default function PostForm({
       <Input
         id="title"
         name="title"
-        placeholder="Tiêu đề"
+        label="Tiêu đề"
         autoComplete="off"
-        required
+        variant="faded"
+        size="sm"
+        isRequired
       />
 
       <LexicalEditor onChange={handleChange} />
@@ -80,11 +82,11 @@ export default function PostForm({
             handleChangeCategories(e.target.value, 0);
           }}
         >
-          <option value="">-- Chọn danh mục --</option>
+          {/* <option value="">-- Chọn danh mục --</option> */}
           {findChildCategories(categories, null).map((category) => (
-            <option key={category.id} value={category.id}>
+            <SelectItem key={category.id} value={category.id}>
               {category.name}
-            </option>
+            </SelectItem>
           ))}
         </Select>
         {selectedCategoryIds.length > 0 &&
@@ -101,11 +103,11 @@ export default function PostForm({
                   handleChangeCategories(e.target.value, index + 1);
                 }}
               >
-                <option>-- Chọn danh phụ --</option>
+                {/* <option>-- Chọn danh phụ --</option> */}
                 {childCategories.map((category) => (
-                  <option key={category.id} value={category.id}>
+                  <SelectItem key={category.id} value={category.id}>
                     {category.name}
-                  </option>
+                  </SelectItem>
                 ))}
               </Select>
             );
@@ -114,23 +116,29 @@ export default function PostForm({
       <Input
         id="featuredImageURL"
         name="featuredImageURL"
-        placeholder="Featured image URL"
-        required
+        label="Featured image URL"
+        isRequired
         autoComplete="off"
+        variant="faded"
+        size="sm"
       />
       <Input
         id="description"
         name="description"
-        placeholder="Nhập mô tả"
-        required
+        label="Nhập mô tả"
+        isRequired
+        variant="faded"
+        size="sm"
         autoComplete="off"
       />
       <Input
         id="tags"
         name="tagNames"
-        placeholder="Thẻ bài viết"
-        required
+        label="Thẻ bài viết"
+        isRequired
         autoComplete="off"
+        variant="faded"
+        size="sm"
       />
       <Button className="w-full" color="light" type="submit">
         Đăng

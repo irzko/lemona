@@ -76,7 +76,7 @@ import {
 import { sanitizeUrl } from "@/components/lexical/utils/url";
 import { Dispatch, useCallback, useEffect, useState } from "react";
 import { getSelectedNode } from "@/components/lexical/utils/getSelectedNode";
-import Button from "@/components/ui/Button";
+import { Button } from "@nextui-org/button";
 import DropDown, { DropDownItem } from "@/components/ui/DropDown";
 
 function Divider() {
@@ -813,12 +813,13 @@ export default function ToolbarPlugin({
     <div className="sticky z-30 top-16 px-3 py-2 border-b flex items-center flex-wrap gap-2 rounded-t-lg bg-gray-50">
       <Button
         disabled={!toolbarState.canUndo || !isEditable}
-        onClick={() => {
+        onPress={() => {
           activeEditor.dispatchCommand(UNDO_COMMAND, undefined);
         }}
         isIconOnly
         size="sm"
         // className="toolbar-item spaced"
+        variant="light"
         aria-label="Undo"
       >
         <svg
@@ -848,9 +849,10 @@ export default function ToolbarPlugin({
         isIconOnly
         size="sm"
         disabled={!toolbarState.canRedo || !isEditable}
-        onClick={() => {
+        onPress={() => {
           activeEditor.dispatchCommand(REDO_COMMAND, undefined);
         }}
+        variant="light"
         aria-label="Redo"
       >
         <svg
@@ -904,10 +906,10 @@ export default function ToolbarPlugin({
             isIconOnly
             size="sm"
             disabled={!isEditable}
-            onClick={() => {
+            variant={toolbarState.isBold ? "solid" : "light"}
+            onPress={() => {
               activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
             }}
-            className={toolbarState.isBold ? "bg-gray-100 text-gray-900" : ""}
             aria-label="Format Bold"
           >
             <svg
@@ -939,10 +941,10 @@ export default function ToolbarPlugin({
             isIconOnly
             size="sm"
             disabled={!isEditable}
-            onClick={() => {
+            onPress={() => {
               activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
             }}
-            className={toolbarState.isItalic ? "bg-gray-100 text-gray-900" : ""}
+            variant={toolbarState.isItalic ? "solid" : "light"}
             aria-label="Format Italics"
           >
             <svg
@@ -976,12 +978,10 @@ export default function ToolbarPlugin({
             isIconOnly
             size="sm"
             disabled={!isEditable}
-            onClick={() => {
+            onPress={() => {
               activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
             }}
-            className={
-              toolbarState.isUnderline ? "bg-gray-100 text-gray-900" : ""
-            }
+            variant={toolbarState.isUnderline ? "solid" : "light"}
             aria-label="Format Underline"
           >
             <svg
@@ -1006,50 +1006,13 @@ export default function ToolbarPlugin({
               />
             </svg>
           </Button>
+          <InsertImageDialog activeEditor={activeEditor} />
           <Button
             isIconOnly
-            onClick={() => {
-              showModal("Chèn ảnh", (onClose) => (
-                <InsertImageDialog
-                  activeEditor={activeEditor}
-                  onClose={onClose}
-                />
-              ));
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              width={20}
-              height={20}
-              fill={"none"}
-            >
-              <circle
-                cx="7.5"
-                cy="7.5"
-                r="1.5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
-              <path
-                d="M5 21C9.37246 15.775 14.2741 8.88406 21.4975 13.5424"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
-            </svg>
-          </Button>
-          <Button
-            isIconOnly
+            size="sm"
             disabled={!isEditable}
-            onClick={insertLink}
-            className={toolbarState.isLink ? "active" : ""}
+            onPress={insertLink}
+            variant={toolbarState.isLink ? "solid" : "light"}
             aria-label="Insert link"
           >
             <svg
@@ -1075,7 +1038,7 @@ export default function ToolbarPlugin({
           </Button>
           <Button
             isIconOnly
-            onClick={() => {
+            onPress={() => {
               showModal("Chèn bảng", (onClose) => (
                 <InsertTableDialog
                   activeEditor={activeEditor}
