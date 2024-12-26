@@ -1,8 +1,5 @@
 @tailwind base;
 
-body {
-  color: rgb(28 27 29);
-}
 @layer base {
   h1,
   h2,

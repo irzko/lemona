@@ -23,7 +23,7 @@ export default async function HomeLayout({
   const session = await auth();
   return (
     <>
-      <Navbar shouldHideOnScroll isBordered>
+      <Navbar shouldHideOnScroll isBordered className="bg-white/70">
         <div className="h-full flex-row flex-nowrap items-center justify-center flex gap-4">
           <SessionProvider
             basePath={"/auth"}
@@ -66,7 +66,7 @@ export default async function HomeLayout({
             />
           </svg>
         </Link>
-        <NavbarContent justify="end">
+        <NavbarContent justify="end" className="hidden sm:flex">
           <NavbarItem>
             <Input
               variant="bordered"

@@ -77,7 +77,12 @@ import { sanitizeUrl } from "@/components/lexical/utils/url";
 import { Dispatch, useCallback, useEffect, useState } from "react";
 import { getSelectedNode } from "@/components/lexical/utils/getSelectedNode";
 import { Button } from "@nextui-org/button";
-import DropDown, { DropDownItem } from "@/components/ui/DropDown";
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@nextui-org/dropdown";
 
 function Divider() {
   return (
@@ -487,77 +492,91 @@ function BlockFormatDropDown({
   disabled?: boolean;
 }): React.JSX.Element {
   return (
-    <DropDown
-      disabled={disabled}
-      buttonClassName="bg-gray-100 hover:bg-gray-200 hover:text-gray-600 text-sm"
-      buttonIcon={iconBlockFormat[blockType].icon}
-      buttonLabel={blockTypeToBlockName[blockType]}
-      buttonAriaLabel="Formatting options for text style"
-    >
-      <DropDownItem
-        className={dropDownActiveClass(blockType === "paragraph")}
-        onClick={() => formatParagraph(editor)}
-      >
-        {iconBlockFormat.paragraph.icon}
-        <span className="text">Normal</span>
-      </DropDownItem>
-      <DropDownItem
-        className={dropDownActiveClass(blockType === "h1")}
-        onClick={() => formatHeading(editor, blockType, "h1")}
-      >
-        {iconBlockFormat.h1.icon}
-        <span>Heading 1</span>
-      </DropDownItem>
-      <DropDownItem
-        className={dropDownActiveClass(blockType === "h2")}
-        onClick={() => formatHeading(editor, blockType, "h2")}
-      >
-        {iconBlockFormat.h2.icon}
-        <span>Heading 2</span>
-      </DropDownItem>
-      <DropDownItem
-        className={dropDownActiveClass(blockType === "h3")}
-        onClick={() => formatHeading(editor, blockType, "h3")}
-      >
-        {iconBlockFormat.h3.icon}
-        <span className="text">Heading 3</span>
-      </DropDownItem>
-      <DropDownItem
-        className={dropDownActiveClass(blockType === "bullet")}
-        onClick={() => formatBulletList(editor, blockType)}
-      >
-        {iconBlockFormat.bullet.icon}
-        <span className="text">Bullet List</span>
-      </DropDownItem>
-      <DropDownItem
-        className={dropDownActiveClass(blockType === "number")}
-        onClick={() => formatNumberedList(editor, blockType)}
-      >
-        {iconBlockFormat.number.icon}
-        <span className="text">Numbered List</span>
-      </DropDownItem>
-      <DropDownItem
-        className={dropDownActiveClass(blockType === "check")}
-        onClick={() => formatCheckList(editor, blockType)}
-      >
-        {iconBlockFormat.check.icon}
-        <span className="text">Check List</span>
-      </DropDownItem>
-      <DropDownItem
-        className={dropDownActiveClass(blockType === "quote")}
-        onClick={() => formatQuote(editor, blockType)}
-      >
-        {iconBlockFormat.quote.icon}
-        <span>Quote</span>
-      </DropDownItem>
-      <DropDownItem
-        className={dropDownActiveClass(blockType === "code")}
-        onClick={() => formatCode(editor, blockType)}
-      >
-        {iconBlockFormat.code.icon}
-        <span className="text">Code Block</span>
-      </DropDownItem>
-    </DropDown>
+    <Dropdown isDisabled={disabled}>
+      <DropdownTrigger>
+        <Button
+          startContent={iconBlockFormat[blockType].icon}
+          aria-label="Formatting options for text style"
+          size="sm"
+        >
+          {blockTypeToBlockName[blockType]}
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu aria-label="Static Actions">
+        <DropdownItem
+          startContent={iconBlockFormat.paragraph.icon}
+          key="paragraph"
+          // className={dropDownActiveClass(blockType === "paragraph")}
+          onPress={() => formatParagraph(editor)}
+        >
+          <span className="text">Normal</span>
+        </DropdownItem>
+        <DropdownItem
+          key="h1"
+          startContent={iconBlockFormat.h1.icon}
+          // className={dropDownActiveClass(blockType === "h1")}
+          onPress={() => formatHeading(editor, blockType, "h1")}
+        >
+          <span>Heading 1</span>
+        </DropdownItem>
+        <DropdownItem
+          key="h2"
+          startContent={iconBlockFormat.h2.icon}
+          // className={dropDownActiveClass(blockType === "h2")}
+          onPress={() => formatHeading(editor, blockType, "h2")}
+        >
+          <span>Heading 2</span>
+        </DropdownItem>
+        <DropdownItem
+          key="h3"
+          startContent={iconBlockFormat.h3.icon}
+          // className={dropDownActiveClass(blockType === "h3")}
+          onPress={() => formatHeading(editor, blockType, "h3")}
+        >
+          <span className="text">Heading 3</span>
+        </DropdownItem>
+        <DropdownItem
+          key="bullet"
+          // className={dropDownActiveClass(blockType === "bullet")}
+          onPress={() => formatBulletList(editor, blockType)}
+          startContent={iconBlockFormat.bullet.icon}
+        >
+          <span className="text">Bullet List</span>
+        </DropdownItem>
+        <DropdownItem
+          key="number"
+          // className={dropDownActiveClass(blockType === "number")}
+          onPress={() => formatNumberedList(editor, blockType)}
+          startContent={iconBlockFormat.number.icon}
+        >
+          <span className="text">Numbered List</span>
+        </DropdownItem>
+        <DropdownItem
+          key="check"
+          // className={dropDownActiveClass(blockType === "check")}
+          onPress={() => formatCheckList(editor, blockType)}
+          startContent={iconBlockFormat.check.icon}
+        >
+          <span className="text">Check List</span>
+        </DropdownItem>
+        <DropdownItem
+          key="quote"
+          // className={dropDownActiveClass(blockType === "quote")}
+          onPress={() => formatQuote(editor, blockType)}
+          startContent={iconBlockFormat.quote.icon}
+        >
+          <span>Quote</span>
+        </DropdownItem>
+        <DropdownItem
+          key="code"
+          // className={dropDownActiveClass(blockType === "code")}
+          onPress={() => formatCode(editor, blockType)}
+          startContent={iconBlockFormat.code.icon}
+        >
+          <span className="text">Code Block</span>
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
   );
 }
 
@@ -880,26 +899,28 @@ export default function ToolbarPlugin({
       </Button>
       <Divider />
       {toolbarState.blockType === "code" ? (
-        <DropDown
-          disabled={!isEditable}
-          buttonClassName="toolbar-item code-language"
-          buttonLabel={getLanguageFriendlyName(toolbarState.codeLanguage)}
-          buttonAriaLabel="Select language"
-        >
-          {CODE_LANGUAGE_OPTIONS.map(([value, name]) => {
-            return (
-              <DropDownItem
-                className={`item ${dropDownActiveClass(
-                  value === toolbarState.codeLanguage
-                )}`}
-                onClick={() => onCodeLanguageSelect(value)}
-                key={value}
-              >
-                <span className="text">{name}</span>
-              </DropDownItem>
-            );
-          })}
-        </DropDown>
+        <Dropdown isDisabled={!isEditable}>
+          <DropdownTrigger>
+            <Button variant="bordered">
+              {getLanguageFriendlyName(toolbarState.codeLanguage)}
+            </Button>
+          </DropdownTrigger>
+          <DropdownMenu>
+            {CODE_LANGUAGE_OPTIONS.map(([value, name]) => {
+              return (
+                <DropdownItem
+                  className={`item ${dropDownActiveClass(
+                    value === toolbarState.codeLanguage
+                  )}`}
+                  onPress={() => onCodeLanguageSelect(value)}
+                  key={value}
+                >
+                  <span className="text">{name}</span>
+                </DropdownItem>
+              );
+            })}
+          </DropdownMenu>
+        </Dropdown>
       ) : (
         <>
           <Button
@@ -1073,199 +1094,212 @@ export default function ToolbarPlugin({
             </svg>
           </Button>
           <Divider />
-          <DropDown
-            disabled={!isEditable}
-            buttonClassName="bg-gray-100"
-            buttonLabel=""
-            buttonAriaLabel="Formatting options for additional text styles"
-            buttonIcon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width={20}
-                height={20}
-                fill={"none"}
+          <Dropdown isDisabled={!isEditable}>
+            <DropdownTrigger>
+              <Button size="sm" isIconOnly>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width={20}
+                  height={20}
+                  fill={"none"}
+                >
+                  <path
+                    d="M14 19L11.1069 10.7479C9.76348 6.91597 9.09177 5 8 5C6.90823 5 6.23652 6.91597 4.89309 10.7479L2 19M4.5 12H11.5"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M21.9692 13.9392V18.4392M21.9692 13.9392C22.0164 13.1161 22.0182 12.4891 21.9194 11.9773C21.6864 10.7709 20.4258 10.0439 19.206 9.89599C18.0385 9.75447 17.1015 10.055 16.1535 11.4363M21.9692 13.9392L19.1256 13.9392C18.6887 13.9392 18.2481 13.9603 17.8272 14.0773C15.2545 14.7925 15.4431 18.4003 18.0233 18.845C18.3099 18.8944 18.6025 18.9156 18.8927 18.9026C19.5703 18.8724 20.1955 18.545 20.7321 18.1301C21.3605 17.644 21.9692 16.9655 21.9692 15.9392V13.9392Z"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu>
+              <DropdownItem
+                startContent={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width={20}
+                    height={20}
+                    fill={"none"}
+                  >
+                    <path
+                      d="M4 12H20"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M17.5 7.66667C17.5 5.08934 15.0376 3 12 3C8.96243 3 6.5 5.08934 6.5 7.66667C6.5 8.15279 6.55336 8.59783 6.6668 9M6 16.3333C6 18.9107 8.68629 21 12 21C15.3137 21 18 19.6667 18 16.3333C18 13.9404 16.9693 12.5782 14.9079 12"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                }
+                onPress={() => {
+                  activeEditor.dispatchCommand(
+                    FORMAT_TEXT_COMMAND,
+                    "strikethrough"
+                  );
+                }}
+                // className={dropDownActiveClass(toolbarState.isStrikethrough)}
+                title="Strikethrough"
+                key="strikethrough"
+                aria-label="Format text with a strikethrough"
               >
-                <path
-                  d="M14 19L11.1069 10.7479C9.76348 6.91597 9.09177 5 8 5C6.90823 5 6.23652 6.91597 4.89309 10.7479L2 19M4.5 12H11.5"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M21.9692 13.9392V18.4392M21.9692 13.9392C22.0164 13.1161 22.0182 12.4891 21.9194 11.9773C21.6864 10.7709 20.4258 10.0439 19.206 9.89599C18.0385 9.75447 17.1015 10.055 16.1535 11.4363M21.9692 13.9392L19.1256 13.9392C18.6887 13.9392 18.2481 13.9603 17.8272 14.0773C15.2545 14.7925 15.4431 18.4003 18.0233 18.845C18.3099 18.8944 18.6025 18.9156 18.8927 18.9026C19.5703 18.8724 20.1955 18.545 20.7321 18.1301C21.3605 17.644 21.9692 16.9655 21.9692 15.9392V13.9392Z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            }
-          >
-            <DropDownItem
-              onClick={() => {
-                activeEditor.dispatchCommand(
-                  FORMAT_TEXT_COMMAND,
-                  "strikethrough"
-                );
-              }}
-              className={dropDownActiveClass(toolbarState.isStrikethrough)}
-              title="Strikethrough"
-              aria-label="Format text with a strikethrough"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width={20}
-                height={20}
-                fill={"none"}
+                <span className="text">Strikethrough</span>
+              </DropdownItem>
+              <DropdownItem
+                startContent={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width={20}
+                    height={20}
+                    fill={"none"}
+                  >
+                    <path
+                      d="M12.5 21H6.5"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M16.5 6C16.5 5.37191 16.5 5.05787 16.4194 4.78267C16.2518 4.21026 15.8066 3.71716 15.2541 3.49226C14.9886 3.38413 14.6885 3.35347 14.0884 3.29216C12.6695 3.14718 10.8874 3 9.5 3C8.11262 3 6.33047 3.14718 4.91161 3.29216C4.3115 3.35347 4.01144 3.38413 3.74586 3.49226C3.19344 3.71716 2.74816 4.21026 2.58057 4.78267C2.5 5.05787 2.5 5.37191 2.5 6"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M9.5 3.34863L9.5 20.8486"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M21.5 21H19.5C19.0286 21 18.7929 21 18.6464 20.8566C18.5 20.7133 18.5 20.4825 18.5 20.021V19.0766C18.5 18.2812 18.676 18.1253 19.5004 18.1094C20.2769 18.0944 20.7401 18.0388 21.0607 17.8333C21.5 17.5516 21.5 17.0983 21.5 16.1916C21.5 14.4594 18.5 15.1262 18.5 15.1262"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                }
+                onPress={() => {
+                  activeEditor.dispatchCommand(
+                    FORMAT_TEXT_COMMAND,
+                    "subscript"
+                  );
+                }}
+                // className={dropDownActiveClass(toolbarState.isSubscript)}
+                title="Subscript"
+                key="subscript"
+                aria-label="Format text with a subscript"
               >
-                <path
-                  d="M4 12H20"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M17.5 7.66667C17.5 5.08934 15.0376 3 12 3C8.96243 3 6.5 5.08934 6.5 7.66667C6.5 8.15279 6.55336 8.59783 6.6668 9M6 16.3333C6 18.9107 8.68629 21 12 21C15.3137 21 18 19.6667 18 16.3333C18 13.9404 16.9693 12.5782 14.9079 12"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-              <span className="text">Strikethrough</span>
-            </DropDownItem>
-            <DropDownItem
-              onClick={() => {
-                activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript");
-              }}
-              className={dropDownActiveClass(toolbarState.isSubscript)}
-              title="Subscript"
-              aria-label="Format text with a subscript"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width={20}
-                height={20}
-                fill={"none"}
+                <span className="text">Subscript</span>
+              </DropdownItem>
+              <DropdownItem
+                startContent={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width={20}
+                    height={20}
+                    fill={"none"}
+                  >
+                    <path
+                      d="M12.5 21H6.5"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M16.5 6C16.5 5.37191 16.5 5.05787 16.4194 4.78267C16.2518 4.21026 15.8066 3.71716 15.2541 3.49226C14.9886 3.38413 14.6885 3.35347 14.0884 3.29216C12.6695 3.14718 10.8874 3 9.5 3C8.11262 3 6.33047 3.14718 4.91161 3.29216C4.3115 3.35347 4.01144 3.38413 3.74586 3.49226C3.19344 3.71716 2.74816 4.21026 2.58057 4.78267C2.5 5.05787 2.5 5.37191 2.5 6"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M9.5 3.34863L9.5 20.8486"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M22 12H20C19.5286 12 19.2929 12 19.1464 11.8566C19 11.7133 19 11.4825 19 11.021V10.0766C19 9.28117 19.176 9.12533 20.0004 9.10939C20.7769 9.09438 21.2401 9.03883 21.5607 8.83328C22 8.55161 22 8.09827 22 7.19159C22 5.45943 19 6.12617 19 6.12617"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                }
+                onPress={() => {
+                  activeEditor.dispatchCommand(
+                    FORMAT_TEXT_COMMAND,
+                    "superscript"
+                  );
+                }}
+                // className={dropDownActiveClass(toolbarState.isSuperscript)}
+                title="Superscript"
+                key="superscript"
+                aria-label="Format text with a superscript"
               >
-                <path
-                  d="M12.5 21H6.5"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M16.5 6C16.5 5.37191 16.5 5.05787 16.4194 4.78267C16.2518 4.21026 15.8066 3.71716 15.2541 3.49226C14.9886 3.38413 14.6885 3.35347 14.0884 3.29216C12.6695 3.14718 10.8874 3 9.5 3C8.11262 3 6.33047 3.14718 4.91161 3.29216C4.3115 3.35347 4.01144 3.38413 3.74586 3.49226C3.19344 3.71716 2.74816 4.21026 2.58057 4.78267C2.5 5.05787 2.5 5.37191 2.5 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M9.5 3.34863L9.5 20.8486"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M21.5 21H19.5C19.0286 21 18.7929 21 18.6464 20.8566C18.5 20.7133 18.5 20.4825 18.5 20.021V19.0766C18.5 18.2812 18.676 18.1253 19.5004 18.1094C20.2769 18.0944 20.7401 18.0388 21.0607 17.8333C21.5 17.5516 21.5 17.0983 21.5 16.1916C21.5 14.4594 18.5 15.1262 18.5 15.1262"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-
-              <span className="text">Subscript</span>
-            </DropDownItem>
-            <DropDownItem
-              onClick={() => {
-                activeEditor.dispatchCommand(
-                  FORMAT_TEXT_COMMAND,
-                  "superscript"
-                );
-              }}
-              className={dropDownActiveClass(toolbarState.isSuperscript)}
-              title="Superscript,"
-              aria-label="Format text with a superscript"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width={20}
-                height={20}
-                fill={"none"}
+                <span className="text">Superscript</span>
+              </DropdownItem>
+              <DropdownItem
+                key="clear_formatting"
+                onPress={() => clearFormatting(activeEditor)}
+                className="item wide"
+                title="Clear text formatting"
+                aria-label="Clear all text formatting"
+                startContent={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width={20}
+                    height={20}
+                    fill={"none"}
+                  >
+                    <path
+                      d="M11 20.001H5"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M12 4L8 20.0008M12 4C13.3874 4 15.1695 4.03054 16.5884 4.17648C17.1885 4.23819 17.4886 4.26905 17.7541 4.37789C18.3066 4.60428 18.7518 5.10062 18.9194 5.6768C19 5.95381 19 6.26991 19 6.90214M12 4C10.6126 4 8.83047 4.03054 7.41161 4.17648C6.8115 4.23819 6.51144 4.26905 6.24586 4.37789C5.69344 4.60428 5.24816 5.10062 5.08057 5.6768C5 5.95381 5 6.26991 5 6.90214"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M14 15L19 20M14 20L19 15"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                }
               >
-                <path
-                  d="M12.5 21H6.5"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M16.5 6C16.5 5.37191 16.5 5.05787 16.4194 4.78267C16.2518 4.21026 15.8066 3.71716 15.2541 3.49226C14.9886 3.38413 14.6885 3.35347 14.0884 3.29216C12.6695 3.14718 10.8874 3 9.5 3C8.11262 3 6.33047 3.14718 4.91161 3.29216C4.3115 3.35347 4.01144 3.38413 3.74586 3.49226C3.19344 3.71716 2.74816 4.21026 2.58057 4.78267C2.5 5.05787 2.5 5.37191 2.5 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M9.5 3.34863L9.5 20.8486"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M22 12H20C19.5286 12 19.2929 12 19.1464 11.8566C19 11.7133 19 11.4825 19 11.021V10.0766C19 9.28117 19.176 9.12533 20.0004 9.10939C20.7769 9.09438 21.2401 9.03883 21.5607 8.83328C22 8.55161 22 8.09827 22 7.19159C22 5.45943 19 6.12617 19 6.12617"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <span className="text">Superscript</span>
-            </DropDownItem>
-            <DropDownItem
-              onClick={() => clearFormatting(activeEditor)}
-              className="item wide"
-              title="Clear text formatting"
-              aria-label="Clear all text formatting"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width={20}
-                height={20}
-                fill={"none"}
-              >
-                <path
-                  d="M11 20.001H5"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M12 4L8 20.0008M12 4C13.3874 4 15.1695 4.03054 16.5884 4.17648C17.1885 4.23819 17.4886 4.26905 17.7541 4.37789C18.3066 4.60428 18.7518 5.10062 18.9194 5.6768C19 5.95381 19 6.26991 19 6.90214M12 4C10.6126 4 8.83047 4.03054 7.41161 4.17648C6.8115 4.23819 6.51144 4.26905 6.24586 4.37789C5.69344 4.60428 5.24816 5.10062 5.08057 5.6768C5 5.95381 5 6.26991 5 6.90214"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="M14 15L19 20M14 20L19 15"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <span>Clear Formatting</span>
-            </DropDownItem>
-          </DropDown>
+                <span>Clear Formatting</span>
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </>
       )}
       {toolbarState.blockType in blockTypeToBlockName &&
