@@ -1,11 +1,12 @@
 "use client";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import { Drawer, DrawerContent, DrawerBody } from "@nextui-org/drawer";
 import { Button } from "@nextui-org/button";
 import { Listbox, ListboxItem } from "@nextui-org/listbox";
 import { useDisclosure } from "@nextui-org/modal";
+import { Session } from "next-auth";
 
 const sidebarItems = [
   {
@@ -20,9 +21,9 @@ const sidebarItems = [
   },
 ];
 
-export default function PostSidebar() {
+export default function PostSidebar({ session }: { session: Session | null }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   return (
     <>
       <Button onPress={onOpen} isIconOnly variant="bordered">
@@ -94,7 +95,6 @@ export default function PostSidebar() {
                         }
                         className="flex items-center p-2 gap-2"
                         href={`/profile/${session?.user?.username}`}
-                        endContent={<Button>Đăng xuất</Button>}
                       >
                         <span>
                           {session.user.name || session.user.username}

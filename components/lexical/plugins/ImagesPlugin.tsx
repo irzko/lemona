@@ -96,7 +96,7 @@ export function InsertImageDialog({
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
-          {(onClose) => (
+          {() => (
             <>
               <ModalHeader className="flex flex-col gap-1">
                 Chèn ảnh
@@ -124,7 +124,7 @@ export function InsertImageDialog({
                 <Button
                   color="primary"
                   isDisabled={isDisabled}
-                  onPress={() => onClick}
+                  onPress={() => onClick({ altText, src })}
                 >
                   Xác nhận
                 </Button>

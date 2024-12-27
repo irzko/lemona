@@ -26,9 +26,16 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import * as React from "react";
 import invariant from "../shared/invariant";
 
-import Button from "../../ui/Button";
-import { DialogActions } from "../../ui/Dialog";
-import Input from "../../ui/Input";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/modal";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
 
 export type InsertTableCommandPayload = Readonly<{
   columns: string;
@@ -92,11 +99,10 @@ export function TableContext({ children }: { children: React.JSX.Element }) {
 
 export function InsertTableDialog({
   activeEditor,
-  onClose,
 }: {
   activeEditor: LexicalEditor;
-  onClose: () => void;
 }): React.JSX.Element {
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const [rows, setRows] = useState("5");
   const [columns, setColumns] = useState("5");
   const [isDisabled, setIsDisabled] = useState(true);
@@ -122,27 +128,73 @@ export function InsertTableDialog({
 
   return (
     <>
-      <Input
-        placeholder={"# of rows (1-500)"}
-        label="Rows"
-        onChange={(e) => setRows(e.target.value)}
-        value={rows}
-        data-test-id="table-modal-rows"
-        type="number"
-      />
-      <Input
-        placeholder={"# of columns (1-50)"}
-        label="Columns"
-        onChange={(e) => setColumns(e.target.value)}
-        value={columns}
-        data-test-id="table-modal-columns"
-        type="number"
-      />
-      <DialogActions data-test-id="table-model-confirm-insert">
-        <Button disabled={isDisabled} onClick={onClick}>
-          Confirm
-        </Button>
-      </DialogActions>
+      <Button onPress={onOpen} isIconOnly variant="light" size="sm">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width={20}
+          height={20}
+          fill={"none"}
+        >
+          <path
+            d="M3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088Z"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path d="M2.5 9L21.5 9" stroke="currentColor" strokeWidth="2" />
+          <path d="M2.5 13L21.5 13" stroke="currentColor" strokeWidth="2" />
+          <path d="M2.5 17L21.5 17" stroke="currentColor" strokeWidth="2" />
+          <path
+            d="M12 21.5L12 9"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+        </svg>
+      </Button>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {() => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Chèn bảng
+              </ModalHeader>
+              <ModalBody>
+                <Input
+                  placeholder={"# of rows (1-500)"}
+                  label="Rows"
+                  onChange={(e) => setRows(e.target.value)}
+                  value={rows}
+                  data-test-id="table-modal-rows"
+                  type="number"
+                />
+                <Input
+                  placeholder={"# of columns (1-50)"}
+                  label="Columns"
+                  onChange={(e) => setColumns(e.target.value)}
+                  value={columns}
+                  data-test-id="table-modal-columns"
+                  type="number"
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button
+                  color="primary"
+                  isDisabled={isDisabled}
+                  onPress={onClick}
+                >
+                  Confirm
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </>
   );
 }

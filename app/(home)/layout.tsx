@@ -2,7 +2,6 @@ import { Bangers } from "next/font/google";
 import Link from "next/link";
 import React from "react";
 import PostSidebar from "@/components/PostSidebar";
-import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import {
   Navbar,
@@ -25,13 +24,7 @@ export default async function HomeLayout({
     <>
       <Navbar shouldHideOnScroll isBordered className="bg-white/70">
         <div className="h-full flex-row flex-nowrap items-center justify-center flex gap-4">
-          <SessionProvider
-            basePath={"/auth"}
-            session={session}
-            refetchOnWindowFocus={false}
-          >
-            <PostSidebar />
-          </SessionProvider>
+          <PostSidebar session={session} />
           <NavbarBrand>
             <Link
               href="/"
@@ -69,7 +62,6 @@ export default async function HomeLayout({
         <NavbarContent justify="end" className="hidden sm:flex">
           <NavbarItem>
             <Input
-              variant="bordered"
               startContent={
                 <svg
                   className="w-4 h-4 text-zinc-500"
