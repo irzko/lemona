@@ -72,7 +72,6 @@ export default function PostForm({
               name="title"
               label="Tiêu đề"
               autoComplete="off"
-              variant="bordered"
               size="sm"
               isRequired
             />
@@ -82,7 +81,6 @@ export default function PostForm({
           <div className="md:w-96 w-full space-y-4">
             <div className="space-y-4">
               <Select
-                variant="bordered"
                 label="Danh mục"
                 size="sm"
                 onChange={(e) => {
@@ -105,7 +103,6 @@ export default function PostForm({
                   if (childCategories.length === 0) return null;
                   return (
                     <Select
-                      variant="bordered"
                       label="Danh mục phụ"
                       size="sm"
                       key={`child-${selectedCategoryIds[index]}`}
@@ -129,7 +126,6 @@ export default function PostForm({
               label="Featured image URL"
               isRequired
               autoComplete="off"
-              variant="bordered"
               size="sm"
             />
             <Input
@@ -137,7 +133,6 @@ export default function PostForm({
               name="description"
               label="Nhập mô tả"
               isRequired
-              variant="bordered"
               size="sm"
               autoComplete="off"
             />
@@ -147,12 +142,9 @@ export default function PostForm({
               label="Thẻ bài viết"
               isRequired
               autoComplete="off"
-              variant="bordered"
               size="sm"
             />
-            <Button className="w-full" color="primary">
-              Đăng
-            </Button>
+            <Button className="w-full" variant="bordered">Đăng</Button>
           </div>
         </form>
       </div>

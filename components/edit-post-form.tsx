@@ -1,12 +1,10 @@
 "use client";
 import { useState } from "react";
-import Input from "@/components/ui/Input";
+
 import { updatePost } from "@/app/actions";
 import { $convertToMarkdownString } from "@lexical/markdown";
 import { EditorState } from "lexical";
 import { PLAYGROUND_TRANSFORMERS } from "@/components/lexical/plugins/MarkdownTransformers";
-import Button from "@/components/ui/Button";
-import Select from "@/components/ui/select";
 import { useCallback } from "react";
 import {
   Post,
@@ -17,6 +15,9 @@ import {
 } from "@prisma/client";
 import LexicalEditor from "@/components/lexical";
 import { findChildCategories } from "@/lib/findChildCategories";
+import { Input } from "@nextui-org/input";
+import { Select, SelectItem } from "@nextui-org/select";
+import { Button } from "@nextui-org/button";
 
 function sortCategories(categories: Category[]) {
   const result: string[] = [];
@@ -105,16 +106,15 @@ export default function EditPostForm({
       <div className="space-y-4">
         <h2>Danh mục</h2>
         <Select
-          defaultValue={selectedCategoryIds[0] || ""}
+          defaultSelectedKeys={selectedCategoryIds[0] || ""}
           onChange={(e) => {
             handleChangeCategories(e.target.value, 0);
           }}
         >
-          <option value="">-- Chọn danh mục --</option>
           {findChildCategories(categories, null).map((category) => (
-            <option key={category.id} value={category.id}>
+            <SelectItem key={category.id} value={category.id}>
               {category.name}
-            </option>
+            </SelectItem>
           ))}
         </Select>
         {selectedCategoryIds.length > 0 &&
@@ -127,16 +127,15 @@ export default function EditPostForm({
             return (
               <Select
                 key={`child-${selectedCategoryIds[index]}`}
-                defaultValue={selectedCategoryIds[index + 1] || ""}
+                defaultSelectedKeys={selectedCategoryIds[index + 1] || ""}
                 onChange={(e) => {
                   handleChangeCategories(e.target.value, index + 1);
                 }}
               >
-                <option value="">-- Chọn danh phụ --</option>
                 {childCategories.map((category) => (
-                  <option key={category.id} value={category.id}>
+                  <SelectItem key={category.id} value={category.id}>
                     {category.name}
-                  </option>
+                  </SelectItem>
                 ))}
               </Select>
             );
@@ -166,7 +165,7 @@ export default function EditPostForm({
         required
         defaultValue={post.tags.map((i) => i.tag.name).join(", ")}
       />
-      <Button className="w-full" color="light" type="submit">
+      <Button className="w-full" type="submit">
         Lưu
       </Button>
     </form>
