@@ -1,5 +1,5 @@
+import { Button } from "@nextui-org/button";
 import { useFormStatus } from "react-dom";
-import Button from "@/components/ui/Button";
 
 export default function SubmitButton({
   children,
@@ -9,7 +9,12 @@ export default function SubmitButton({
   const { pending } = useFormStatus();
 
   return (
-    <Button color="primary" disabled={pending} type="submit">
+    <Button
+      color="primary"
+      isDisabled={pending}
+      isLoading={pending}
+      type="submit"
+    >
       {children}
     </Button>
   );

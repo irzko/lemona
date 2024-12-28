@@ -15,7 +15,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { $createTextNode, $getRoot } from "lexical";
 import { useCallback } from "react";
 import { PLAYGROUND_TRANSFORMERS } from "../MarkdownTransformers";
-import Button from "@/components/ui/Button";
+import { Button } from "@nextui-org/button";
 
 export default function ActionsPlugin({
   shouldPreserveNewLinesInMarkdown,
@@ -54,8 +54,7 @@ export default function ActionsPlugin({
   return (
     <div className="actions">
       <Button
-        className="action-button"
-        onClick={handleMarkdownToggle}
+        onPress={handleMarkdownToggle}
         title="Convert From Markdown"
         aria-label="Convert from markdown"
       >

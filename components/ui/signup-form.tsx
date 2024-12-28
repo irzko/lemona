@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import SubmitButton from "@/components/SubmitButton";
 
 import { createUser } from "@/app/actions";
-import Input from "@/components/ui/Input";
+import { Input } from "@nextui-org/input";
 
 export function SignupForm() {
   const [state, action] = useActionState(createUser, undefined);
@@ -15,13 +15,15 @@ export function SignupForm() {
         label="Tên người dùng"
         name="username"
         placeholder="Nhập tên người dùng"
-        error={state?.errors.username}
+        errorMessage={state?.errors.username}
+        isInvalid={!!state?.errors.username?.length}
       />
       <Input
         label="Mật khẩu"
         name="password"
         placeholder="Nhập mật khẩu"
-        error={state?.errors.password}
+        errorMessage={state?.errors.password}
+        isInvalid={!!state?.errors.password?.length}
       />
 
       <SubmitButton>Đăng ký</SubmitButton>

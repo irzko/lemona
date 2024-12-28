@@ -3,9 +3,9 @@
 import { useActionState } from "react";
 import { createCategory } from "@/app/actions";
 import SubmitButton from "@/components/SubmitButton";
-import Input from "@/components/ui/Input";
-import Select from "@/components/ui/select";
 import { Category } from "@prisma/client";
+import { Select, SelectItem } from "@nextui-org/select";
+import { Input } from "@nextui-org/input";
 
 export default function CreateCategoryForm({
   categories,
@@ -18,18 +18,18 @@ export default function CreateCategoryForm({
       <h1 className="text-2xl font-bold">Tạo danh mục</h1>
       <form className="flex flex-col gap-6 px-4" action={action}>
         <Select name="parentCategoryId">
-          <option value="">Danh mục gốc</option>
           {categories.map((category) => (
-            <option key={category.id} value={category.id}>
+            <SelectItem key={category.id} value={category.id}>
               {category.name}
-            </option>
+            </SelectItem>
           ))}
         </Select>
         <Input
           name="name"
           placeholder="Tên danh mục"
           autoComplete="off"
-          error={state?.errors.name}
+          errorMessage={state?.errors.name}
+          isInvalid={!!state?.errors.name?.length}
         />
         <Input placeholder="Mô tả" />
         <SubmitButton>Tạo</SubmitButton>
