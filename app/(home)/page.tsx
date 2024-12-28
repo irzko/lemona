@@ -31,7 +31,7 @@ export default async function Page() {
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-4">
         <h3 className="text-xl font-semibold mb-4">Bài viết mới</h3>
-        <div className="grid grid-cols divide-y sm:divide-y-0 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols sm:grid-cols-2 md:grid-cols-4 gap-4">
           {allPosts.slice(0, 4).map((post) => (
             <Card
               shadow="sm"

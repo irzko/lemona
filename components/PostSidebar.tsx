@@ -23,7 +23,6 @@ const sidebarItems = [
 
 export default function PostSidebar({ session }: { session: Session | null }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  // const { data: session } = useSession();
   return (
     <>
       <Button onPress={onOpen} isIconOnly variant="bordered">
@@ -106,7 +105,12 @@ export default function PostSidebar({ session }: { session: Session | null }) {
 
                     {sidebarItems.map((item) => {
                       return (
-                        <ListboxItem as={Link} key={item.id} href={item.href}>
+                        <ListboxItem
+                          as={Link}
+                          className="py-2"
+                          key={item.id}
+                          href={item.href}
+                        >
                           {item.name}
                         </ListboxItem>
                       );
