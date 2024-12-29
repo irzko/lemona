@@ -13,6 +13,8 @@ import { Input } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
 import { Button } from "@nextui-org/button";
 
+
+
 export default function PostForm({
   authorId,
   categories,
@@ -70,24 +72,27 @@ export default function PostForm({
             <Input
               id="title"
               name="title"
+              labelPlacement="outside"
               label="Tiêu đề"
+              placeholder="Nhập tiêu đề"
               autoComplete="off"
-              size="sm"
               isRequired
             />
-
-            <LexicalEditor onChange={handleChange} />
+            <div>
+              <p className="mb-2 text-sm">Nội dung</p>
+              <LexicalEditor onChange={handleChange} />
+            </div>
           </div>
           <div className="md:w-96 w-full space-y-4">
             <div className="space-y-4">
               <Select
                 label="Danh mục"
-                size="sm"
+                labelPlacement="outside"
+                placeholder="Chọn danh mục"
                 onChange={(e) => {
                   handleChangeCategories(e.target.value, 0);
                 }}
               >
-                {/* <option value="">-- Chọn danh mục --</option> */}
                 {findChildCategories(categories, null).map((category) => (
                   <SelectItem key={category.id} value={category.id}>
                     {category.name}
@@ -104,13 +109,13 @@ export default function PostForm({
                   return (
                     <Select
                       label="Danh mục phụ"
-                      size="sm"
+                      labelPlacement="outside"
+                      placeholder="Chọn danh mục phụ"
                       key={`child-${selectedCategoryIds[index]}`}
                       onChange={(e) => {
                         handleChangeCategories(e.target.value, index + 1);
                       }}
                     >
-                      {/* <option>-- Chọn danh phụ --</option> */}
                       {childCategories.map((category) => (
                         <SelectItem key={category.id} value={category.id}>
                           {category.name}
@@ -123,28 +128,33 @@ export default function PostForm({
             <Input
               id="featuredImageURL"
               name="featuredImageURL"
-              label="Featured image URL"
+              labelPlacement="outside"
+              label="Hình ảnh tiêu biểu"
+              placeholder="Nhập URL hình ảnh tiêu biểu"
               isRequired
               autoComplete="off"
-              size="sm"
             />
             <Input
               id="description"
               name="description"
-              label="Nhập mô tả"
+              labelPlacement="outside"
+              label="Mô tả"
+              placeholder="Nhập mô tả"
               isRequired
-              size="sm"
               autoComplete="off"
             />
             <Input
               id="tags"
               name="tagNames"
               label="Thẻ bài viết"
+              labelPlacement="outside"
+              placeholder="Nhập thẻ bài viết"
               isRequired
               autoComplete="off"
-              size="sm"
             />
-            <Button className="w-full" variant="bordered">Đăng</Button>
+            <Button className="w-full" variant="bordered">
+              Đăng
+            </Button>
           </div>
         </form>
       </div>
