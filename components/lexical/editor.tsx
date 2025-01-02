@@ -27,6 +27,8 @@ import ImagesPlugin from "./plugins/ImagesPlugin";
 import LinkPlugin from "./plugins/LinkPlugin";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
 import ActionsPlugin from "./plugins/ActionsPlugin";
+import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
+import { Divider } from "@nextui-org/divider";
 
 const placeholder = "Hãy bắt đầu viết...";
 
@@ -40,53 +42,57 @@ export default function Editor({ markdown }: { markdown?: string }) {
   console.log(isLinkEditMode);
   if (markdown) {
     editor.update(() => {
-      $convertFromMarkdownString(
-        markdown,
-        PLAYGROUND_TRANSFORMERS,
-      );
+      $convertFromMarkdownString(markdown, PLAYGROUND_TRANSFORMERS);
     });
   }
 
   return (
-    <div className="w-full border border-gray-200 rounded-lg bg-gray-50">
-      <ToolbarPlugin
-        editor={editor}
-        activeEditor={activeEditor}
-        setActiveEditor={setActiveEditor}
-        setIsLinkEditMode={setIsLinkEditMode}
-      />
-      <HistoryPlugin externalHistoryState={historyState} />
-      <MarkdownShortcutPlugin transformers={PLAYGROUND_TRANSFORMERS} />
-      <div className="relative">
-        <RichTextPlugin
-          contentEditable={
-            <ContentEditable
-              className="block w-full relative min-h-40 outline-none px-4 py-2 bg-white rounded-b-lg text-sm text-gray-800 border-0 overflow-auto focus:ring-0"
-              aria-placeholder={placeholder}
-              placeholder={
-                <div className="absolute text-sm top-2 left-4 text-gray-400 text-ellipsis user-select-none pointer-events-none inline">
-                  {placeholder}
-                </div>
-              }
-            />
-          }
-          ErrorBoundary={LexicalErrorBoundary}
+    <Card shadow="sm">
+      <CardHeader>
+        <ToolbarPlugin
+          editor={editor}
+          activeEditor={activeEditor}
+          setActiveEditor={setActiveEditor}
+          setIsLinkEditMode={setIsLinkEditMode}
         />
+      </CardHeader>
+      <Divider />
+      <CardBody className="w-full">
+        <HistoryPlugin externalHistoryState={historyState} />
+        <MarkdownShortcutPlugin transformers={PLAYGROUND_TRANSFORMERS} />
+        <div className="relative">
+          <RichTextPlugin
+            contentEditable={
+              <ContentEditable
+                className="block w-full relative min-h-40 outline-none text-sm border-0 overflow-auto focus:ring-0"
+                aria-placeholder={placeholder}
+                placeholder={
+                  <div className="absolute text-sm top-0 text-gray-400 text-ellipsis user-select-none pointer-events-none inline">
+                    {placeholder}
+                  </div>
+                }
+              />
+            }
+            ErrorBoundary={LexicalErrorBoundary}
+          />
 
-        <ListPlugin />
-        <LinkPlugin hasLinkAttributes={false} />
-        <ClickableLinkPlugin disabled={isEditable} />
-        <CodeHighlightPlugin />
-        <CheckListPlugin />
-        <TablePlugin
-          hasCellMerge={true}
-          hasCellBackgroundColor={true}
-          hasTabHandler={true}
-        />
-        <ImagesPlugin />
-        <AutoFocusPlugin />
+          <ListPlugin />
+          <LinkPlugin hasLinkAttributes={false} />
+          <ClickableLinkPlugin disabled={isEditable} />
+          <CodeHighlightPlugin />
+          <CheckListPlugin />
+          <TablePlugin
+            hasCellMerge={true}
+            hasCellBackgroundColor={true}
+            hasTabHandler={true}
+          />
+          <ImagesPlugin />
+          <AutoFocusPlugin />
+        </div>
+      </CardBody>
+      <CardFooter>
         <ActionsPlugin shouldPreserveNewLinesInMarkdown={false} />
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 }

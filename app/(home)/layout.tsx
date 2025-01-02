@@ -9,7 +9,8 @@ import {
   NavbarContent,
   NavbarItem,
 } from "@nextui-org/navbar";
-import { Input } from "@nextui-org/input";
+// import { Input } from "@nextui-org/input";
+import { Button } from "@nextui-org/button";
 
 const bangers = Bangers({
   weight: ["400"],
@@ -23,66 +24,78 @@ export default async function HomeLayout({
   return (
     <>
       <Navbar shouldHideOnScroll>
-        <div className="h-full flex-row flex-nowrap items-center justify-center flex gap-4">
-          <PostSidebar session={session} />
-          <NavbarBrand>
-            <Link
-              href="/"
-              className="flex items-center space-x-3 rtl:space-x-reverse"
-            >
-              <span
-                className={`self-center text-2xl text-gray-900 font-semibold whitespace-nowrap ${bangers.className}`}
-              >
-                Lemona
-              </span>
-            </Link>
-          </NavbarBrand>
-        </div>
-        <Link
-          href="/search"
-          type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-zinc-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-        >
-          <svg
-            className="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 20 20"
+        <NavbarBrand>
+          <Link
+            href="/"
+            className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-            />
-          </svg>
-        </Link>
-        <NavbarContent justify="end" className="hidden sm:flex">
+            <span
+              className={`self-center text-2xl text-gray-900 font-semibold whitespace-nowrap ${bangers.className}`}
+            >
+              Lemona
+            </span>
+          </Link>
+        </NavbarBrand>
+        <NavbarContent justify="end">
+          <NavbarItem>
+            <Button as={Link} isIconOnly variant="light" href="/search">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width={24}
+                height={24}
+                fill={"none"}
+              >
+                <path
+                  d="M17.5 17.5L22 22"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C15.9706 20 20 15.9706 20 11Z"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Button>
+          </NavbarItem>
+          <NavbarItem>
+            <PostSidebar session={session} />
+          </NavbarItem>
+        </NavbarContent>
+        {/* <NavbarContent justify="end" className="hidden sm:flex">
           <NavbarItem>
             <Input
               startContent={
                 <svg
-                  className="w-4 h-4 text-zinc-500"
-                  aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
+                  viewBox="0 0 24 24"
+                  width={24}
+                  height={24}
+                  fill={"none"}
                 >
                   <path
+                    d="M17.5 17.5L22 22"
                     stroke="currentColor"
+                    strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                  />
+                  <path
+                    d="M20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C15.9706 20 20 15.9706 20 11Z"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinejoin="round"
                   />
                 </svg>
               }
               placeholder="Tìm kiếm"
             ></Input>
           </NavbarItem>
-        </NavbarContent>
+        </NavbarContent> */}
       </Navbar>
       {children}
     </>

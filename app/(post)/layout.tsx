@@ -22,7 +22,7 @@ export default async function HomeLayout({
   const session = await auth();
   return (
     <>
-      <Navbar shouldHideOnScroll>
+      <Navbar>
         <div className="h-full flex-row flex-nowrap items-center justify-center flex gap-4">
           <PostSidebar session={session} />
           <NavbarBrand>

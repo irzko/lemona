@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { useRouter } from "next/navigation";
 
@@ -17,7 +18,7 @@ export default function SearchPage() {
     <main className="flex flex-col items-center">
       <div className="border-b h-16 flex justify-center items-center border-gray-200 w-full">
         <div className="flex justify-center items-center max-w-sm w-full p-2">
-          <button className="mr-2" onClick={() => router.back()}>
+          <Button variant="light" isIconOnly className="mr-2" onPress={() => router.back()}>
             <svg
               className="w-6 h-6"
               aria-hidden="true"
@@ -35,11 +36,11 @@ export default function SearchPage() {
                 d="M5 12h14M5 12l4-4m-4 4 4 4"
               />
             </svg>
-          </button>
+          </Button>
           <div className="relative w-full">
             <Input
               onChange={handleChange}
-              variant="bordered"
+              // variant="bordered"
               startContent={
                 <svg
                   className="w-4 h-4 text-zinc-500"

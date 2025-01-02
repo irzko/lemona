@@ -54,6 +54,7 @@ export default function ActionsPlugin({
   return (
     <div className="actions">
       <Button
+        size="sm"
         onPress={handleMarkdownToggle}
         title="Convert From Markdown"
         aria-label="Convert from markdown"
