@@ -1,4 +1,4 @@
-import PostForm from "@/components/post-form";
+import CreatePostForm from "@/components/post/create-post-form";
 import { auth } from "@/auth";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
@@ -24,7 +24,10 @@ export default async function Page() {
 
   return (
     <div className="flex justify-center">
-      <PostForm authorId={session.user.id as string} categories={categories} />
+      <CreatePostForm
+        authorId={session.user.id as string}
+        categories={categories}
+      />
     </div>
   );
 }

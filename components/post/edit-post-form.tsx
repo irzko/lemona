@@ -14,10 +14,9 @@ import {
   Category,
 } from "@prisma/client";
 import LexicalEditor from "@/components/lexical";
-import { findChildCategories } from "@/lib/findChildCategories";
 import { Input } from "@nextui-org/input";
-import { Select, SelectItem } from "@nextui-org/select";
 import { Button } from "@nextui-org/button";
+import SelectCategoryModal from "./select-category-modal";
 
 function sortCategories(categories: Category[]) {
   const result: string[] = [];
@@ -52,30 +51,6 @@ export default function EditPostForm({
     )
   );
 
-  const handleChangeCategories = useCallback(
-    (categoryId: string, index: number) => {
-      if (categoryId === "") {
-        setSelectedCategoryIds(selectedCategoryIds.slice(0, index));
-        return;
-      }
-      if (index === selectedCategoryIds.length) {
-        setSelectedCategoryIds([...selectedCategoryIds, categoryId]);
-        return;
-      } else if (index < selectedCategoryIds.length - 1) {
-        const newSelectedCategoryIds = selectedCategoryIds.slice(0, index + 1);
-        setSelectedCategoryIds(
-          newSelectedCategoryIds.map((id, i) => {
-            if (i === index) {
-              return categoryId;
-            }
-            return id;
-          })
-        );
-      }
-    },
-    [selectedCategoryIds]
-  );
-
   const handleChange = useCallback((editorState: EditorState) => {
     editorState.read(() => {
       const markdownText = $convertToMarkdownString(PLAYGROUND_TRANSFORMERS);
@@ -105,41 +80,11 @@ export default function EditPostForm({
       <LexicalEditor onChange={handleChange} markdown={post.content} />
       <div className="space-y-4">
         <h2>Danh mục</h2>
-        <Select
-          defaultSelectedKeys={selectedCategoryIds[0] || ""}
-          onChange={(e) => {
-            handleChangeCategories(e.target.value, 0);
-          }}
-        >
-          {findChildCategories(categories, null).map((category) => (
-            <SelectItem key={category.id} value={category.id}>
-              {category.name}
-            </SelectItem>
-          ))}
-        </Select>
-        {selectedCategoryIds.length > 0 &&
-          selectedCategoryIds.map((selectedCategoryId, index) => {
-            const childCategories = findChildCategories(
-              categories,
-              selectedCategoryId || null
-            );
-            if (childCategories.length === 0) return null;
-            return (
-              <Select
-                key={`child-${selectedCategoryIds[index]}`}
-                defaultSelectedKeys={selectedCategoryIds[index + 1] || ""}
-                onChange={(e) => {
-                  handleChangeCategories(e.target.value, index + 1);
-                }}
-              >
-                {childCategories.map((category) => (
-                  <SelectItem key={category.id} value={category.id}>
-                    {category.name}
-                  </SelectItem>
-                ))}
-              </Select>
-            );
-          })}
+        <SelectCategoryModal
+          categories={categories}
+          selectedCategoryIds={selectedCategoryIds}
+          setSelectedCategoryIds={setSelectedCategoryIds}
+        />
       </div>
       <Input
         autoComplete="false"

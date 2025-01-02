@@ -8,13 +8,12 @@ import { EditorState } from "lexical";
 import { useCallback } from "react";
 import LexicalEditor from "@/components/lexical";
 import { Category } from "@prisma/client";
-import { findChildCategories } from "@/lib/findChildCategories";
 import { Input } from "@nextui-org/input";
-import { Select, SelectItem } from "@nextui-org/select";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody } from "@nextui-org/card";
+import SelectCategoryModal from "./select-category-modal";
 
-export default function PostForm({
+export default function CreatePostForm({
   authorId,
   categories,
 }: {
@@ -22,31 +21,7 @@ export default function PostForm({
   categories: Category[];
 }) {
   const [content, setContent] = useState("");
-  const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>([]);
-
-  const handleChangeCategories = useCallback(
-    (categoryId: string, index: number) => {
-      if (categoryId === "") {
-        setSelectedCategoryIds(selectedCategoryIds.slice(0, index));
-        return;
-      }
-      if (index === selectedCategoryIds.length) {
-        setSelectedCategoryIds([...selectedCategoryIds, categoryId]);
-        return;
-      } else if (index < selectedCategoryIds.length - 1) {
-        const newSelectedCategoryIds = selectedCategoryIds.slice(0, index + 1);
-        setSelectedCategoryIds(
-          newSelectedCategoryIds.map((id, i) => {
-            if (i === index) {
-              return categoryId;
-            }
-            return id;
-          })
-        );
-      }
-    },
-    [selectedCategoryIds]
-  );
+  const [selectedCategory, setSelectedCategoryIds] = useState<string[]>([]);
 
   const handleChange = useCallback((editorState: EditorState) => {
     editorState.read(() => {
@@ -63,7 +38,7 @@ export default function PostForm({
           action={(formData) => {
             formData.append("content", content);
             formData.append("authorId", authorId);
-            formData.append("categoryIds", JSON.stringify(selectedCategoryIds));
+            formData.append("categoryIds", JSON.stringify(selectedCategory));
             createPost(formData);
           }}
         >
@@ -85,47 +60,14 @@ export default function PostForm({
           <div className="md:w-96 w-full space-y-4">
             <Card shadow="sm">
               <CardBody className="flex flex-col gap-4">
-                <Select
-                  label="Danh mục"
-                  labelPlacement="outside"
-                  placeholder="Chọn danh mục"
-                  onChange={(e) => {
-                    handleChangeCategories(e.target.value, 0);
-                  }}
-                >
-                  {findChildCategories(categories, null).map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.name}
-                    </SelectItem>
-                  ))}
-                </Select>
-                {selectedCategoryIds.length > 0 &&
-                  selectedCategoryIds.map((selectedCategory, index) => {
-                    const childCategories = findChildCategories(
-                      categories,
-                      selectedCategory
-                    );
-                    if (childCategories.length === 0) return null;
-                    return (
-                      <Select
-                        placeholder="Chọn danh mục phụ"
-                        key={`child-${selectedCategoryIds[index]}`}
-                        onChange={(e) => {
-                          handleChangeCategories(e.target.value, index + 1);
-                        }}
-                      >
-                        {childCategories.map((category) => (
-                          <SelectItem key={category.id} value={category.id}>
-                            {category.name}
-                          </SelectItem>
-                        ))}
-                      </Select>
-                    );
-                  })}
-              </CardBody>
-            </Card>
-            <Card shadow="sm">
-              <CardBody className="flex flex-col gap-4">
+                <div>
+                  <p className="text-sm mb-2">Danh mục</p>
+                  <SelectCategoryModal
+                    categories={categories}
+                    selectedCategoryIds={selectedCategory}
+                    setSelectedCategoryIds={setSelectedCategoryIds}
+                  />
+                </div>
                 <Input
                   id="featuredImageURL"
                   name="featuredImageURL"

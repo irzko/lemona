@@ -1,4 +1,4 @@
-import EditPostForm from "@/components/edit-post-form";
+import EditPostForm from "@/components/post/edit-post-form";
 import { auth } from "@/auth";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";

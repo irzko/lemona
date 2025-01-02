@@ -49,12 +49,7 @@ export default function PostSidebar({ session }: { session: Session | null }) {
           />
         </svg>
       </Button>
-      <Drawer
-        isOpen={isOpen}
-        placement="left"
-        onOpenChange={onOpenChange}
-        size="xs"
-      >
+      <Drawer isOpen={isOpen} onOpenChange={onOpenChange} size="xs">
         <DrawerContent>
           {() => (
             <>
