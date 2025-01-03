@@ -74,6 +74,7 @@ const SelectCategoryModal = ({
                   defaultSelectedKeys={[selectedCategoryIds[0]]}
                   labelPlacement="outside"
                   placeholder="Chọn danh mục"
+                  aria-label="Chọn danh mục"
                   onChange={(e) => {
                     handleChangeCategories(e.target.value, 0);
                   }}
@@ -95,6 +96,7 @@ const SelectCategoryModal = ({
                       <Select
                         defaultSelectedKeys={[selectedCategoryIds[index + 1]]}
                         placeholder="Chọn danh mục phụ"
+                        aria-label="Chọn danh mục phụ"
                         key={`child-${selectedCategoryIds[index]}`}
                         onChange={(e) => {
                           handleChangeCategories(e.target.value, index + 1);

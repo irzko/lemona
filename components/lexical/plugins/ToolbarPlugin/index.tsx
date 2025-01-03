@@ -896,7 +896,7 @@ export default function ToolbarPlugin({
               {getLanguageFriendlyName(toolbarState.codeLanguage)}
             </Button>
           </DropdownTrigger>
-          <DropdownMenu>
+          <DropdownMenu aria-label="Code Language">
             {CODE_LANGUAGE_OPTIONS.map(([value, name]) => {
               return (
                 <DropdownItem
@@ -1077,7 +1077,7 @@ export default function ToolbarPlugin({
                 </svg>
               </Button>
             </DropdownTrigger>
-            <DropdownMenu>
+            <DropdownMenu aria-label="Block Format">
               <DropdownItem
                 startContent={
                   <svg
