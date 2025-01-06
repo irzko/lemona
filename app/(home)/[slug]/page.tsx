@@ -81,14 +81,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // fetch data
   const id = slug.split(".")[0].split("-").pop() || "";
 
-  const post = await prisma.post.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      title: true,
-    },
-  });
+  const post = await getPost(id);
 
   return {
     title: post ? post.title : "No title",
