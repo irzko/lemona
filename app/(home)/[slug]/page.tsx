@@ -1,4 +1,3 @@
-import Markdown, { type Components } from "react-markdown";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import remarkGfm from "remark-gfm";
@@ -13,6 +12,11 @@ import remarkFlexibleMarkers from "remark-flexible-markers";
 import remarkFlexibleContainers from "remark-flexible-containers";
 import "highlight.js/styles/dark.min.css";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/breadcrumbs";
+import {
+  MDXComponents,
+  MDXRemote,
+  type MDXRemoteOptions,
+} from "next-mdx-remote-client/rsc";
 
 const getPost = unstable_cache(
   async (id: string) => {
@@ -38,7 +42,7 @@ const getPost = unstable_cache(
   { tags: ["posts"] }
 );
 
-const components: Components = {
+const components: MDXComponents = {
   h1({ children }) {
     return <h1 className="text-4xl">{children}</h1>;
   },
@@ -172,6 +176,29 @@ export default async function Page({
     );
   }
 
+  const options: MDXRemoteOptions = {
+    mdxOptions: {
+      rehypePlugins: [
+        [rehypeHighlight],
+        [
+          rehypeHighlightLines,
+          {
+            showLineNumbers: true,
+          },
+        ],
+      ],
+      remarkPlugins: [
+        [remarkGfm, { singleTilde: false }],
+        [emoji, { emoticon: true }],
+        [supersub],
+        [remarkIns],
+        [remarkFlexibleMarkers],
+        [remarkFlexibleContainers],
+      ],
+    },
+    // parseFrontmatter: true,
+  };
+
   // handle breadcrumbs from categories
   const breadcrumbs = post.categories.map((c) => ({
     id: c.category.id,
@@ -220,28 +247,12 @@ export default async function Page({
           </p>
 
           <p className="font-semibold text-gray-900">{post.description}</p>
-          <Markdown
+
+          <MDXRemote
+            source={post.content}
+            options={options}
             components={components}
-            rehypePlugins={[
-              [rehypeHighlight],
-              [
-                rehypeHighlightLines,
-                {
-                  showLineNumbers: true,
-                },
-              ],
-            ]}
-            remarkPlugins={[
-              [remarkGfm, { singleTilde: false }],
-              [emoji, { emoticon: true }],
-              [supersub],
-              [remarkIns],
-              [remarkFlexibleMarkers],
-              [remarkFlexibleContainers],
-            ]}
-          >
-            {post.content || "(No content)"}
-          </Markdown>
+          />
         </div>
         <div className="md:w-96 w-full h-96 border"></div>
       </div>
