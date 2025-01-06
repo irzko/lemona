@@ -23,7 +23,7 @@ export default async function HomeLayout({
   const session = await auth();
   return (
     <>
-      <Navbar shouldHideOnScroll>
+      <Navbar shouldHideOnScroll isBordered isBlurred={false}>
         <NavbarBrand>
           <Link
             href="/"

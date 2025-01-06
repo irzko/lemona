@@ -13,9 +13,11 @@ import remarkFlexibleContainers from "remark-flexible-containers";
 import "highlight.js/styles/dark.min.css";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/breadcrumbs";
 import {
+  evaluate,
+  EvaluateOptions,
   MDXComponents,
-  MDXRemote,
-  type MDXRemoteOptions,
+  // MDXRemote,
+  // type MDXRemoteOptions,
 } from "next-mdx-remote-client/rsc";
 
 const getPost = unstable_cache(
@@ -176,7 +178,7 @@ export default async function Page({
     );
   }
 
-  const options: MDXRemoteOptions = {
+  const options: EvaluateOptions = {
     mdxOptions: {
       rehypePlugins: [
         [rehypeHighlight],
@@ -198,6 +200,12 @@ export default async function Page({
     },
     // parseFrontmatter: true,
   };
+
+  const { content } = await evaluate({
+    source: post.content,
+    options,
+    components,
+  });
 
   // handle breadcrumbs from categories
   const breadcrumbs = post.categories.map((c) => ({
@@ -248,11 +256,7 @@ export default async function Page({
 
           <p className="font-semibold text-gray-900">{post.description}</p>
 
-          <MDXRemote
-            source={post.content}
-            options={options}
-            components={components}
-          />
+          {content}
         </div>
         <div className="md:w-96 w-full h-96 border"></div>
       </div>
