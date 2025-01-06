@@ -7,10 +7,8 @@ import remarkIns from "remark-ins";
 import Image from "next/image";
 import Link from "next/link";
 import rehypeHighlight from "rehype-highlight";
-import rehypeHighlightLines from "rehype-highlight-code-lines";
 import remarkFlexibleMarkers from "remark-flexible-markers";
 import remarkFlexibleContainers from "remark-flexible-containers";
-import "highlight.js/styles/dark.min.css";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/breadcrumbs";
 import {
   MDXComponents,
@@ -140,6 +138,7 @@ const components: MDXComponents = {
         sizes="100vw"
         style={{ width: "100%", height: "auto" }}
         src={src || "./no-image.jpg"}
+        className="rounded-lg"
       />
     );
   },
@@ -243,15 +242,7 @@ export default async function Page({
 
   const options: MDXRemoteOptions = {
     mdxOptions: {
-      rehypePlugins: [
-        [rehypeHighlight],
-        [
-          rehypeHighlightLines,
-          {
-            showLineNumbers: true,
-          },
-        ],
-      ],
+      rehypePlugins: [[rehypeHighlight]],
       remarkPlugins: [
         [remarkGfm, { singleTilde: false }],
         [emoji, { emoticon: true }],
