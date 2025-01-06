@@ -98,7 +98,7 @@ export default function CreatePostForm({
               </CardBody>
             </Card>
 
-            <Button className="w-full" variant="bordered">
+            <Button className="w-full" variant="solid" color="primary">
               Đăng
             </Button>
           </div>

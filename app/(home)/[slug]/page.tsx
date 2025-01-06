@@ -302,7 +302,7 @@ export default async function Page({
             })}
           </p>
 
-          <p className="font-semibold text-gray-900">{post.description}</p>
+          <p className="font-semibold">{post.description}</p>
           <Suspense fallback={<LoadingComponent />}>
             <MDXRemote
               source={post.content}

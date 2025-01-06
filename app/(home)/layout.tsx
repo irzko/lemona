@@ -9,7 +9,6 @@ import {
   NavbarContent,
   NavbarItem,
 } from "@nextui-org/navbar";
-// import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 
 const bangers = Bangers({
@@ -23,14 +22,14 @@ export default async function HomeLayout({
   const session = await auth();
   return (
     <>
-      <Navbar shouldHideOnScroll isBordered isBlurred={false}>
+      <Navbar shouldHideOnScroll isBordered>
         <NavbarBrand>
           <Link
             href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <span
-              className={`self-center text-2xl text-gray-900 font-semibold whitespace-nowrap ${bangers.className}`}
+              className={`self-center text-2xl font-semibold whitespace-nowrap ${bangers.className}`}
             >
               Lemona
             </span>

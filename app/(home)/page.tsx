@@ -44,7 +44,6 @@ export default async function Page() {
                 locale: "vi",
                 trim: true,
               })}-${post.id}.html`}
-              className="bg-white"
               isPressable
               key={post.id}
             >
@@ -55,7 +54,7 @@ export default async function Page() {
                     alt={post.title}
                     fill
                     unoptimized
-                    className="object-cover rounded-lg"
+                    className="object-cover rounded-xl"
                   />
                 </div>
               </CardBody>

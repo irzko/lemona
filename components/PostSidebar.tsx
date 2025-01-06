@@ -64,7 +64,7 @@ export default function PostSidebar({ session }: { session: Session | null }) {
                       <ListboxItem
                         as={Link}
                         startContent={
-                          <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full">
+                          <div className="relative w-10 h-10 overflow-hidden rounded-full">
                             {session.user.image ? (
                               <Image
                                 fill

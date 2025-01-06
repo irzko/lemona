@@ -2,6 +2,7 @@
 
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
+import { Navbar, NavbarContent } from "@nextui-org/navbar";
 import { useRouter } from "next/navigation";
 
 export default function SearchPage() {
@@ -16,9 +17,14 @@ export default function SearchPage() {
 
   return (
     <main className="flex flex-col items-center">
-      <div className="border-b h-16 flex justify-center items-center border-gray-200 w-full">
-        <div className="flex justify-center items-center max-w-sm w-full p-2">
-          <Button variant="light" isIconOnly className="mr-2" onPress={() => router.back()}>
+      <Navbar isBordered>
+        <NavbarContent className="w-full justify-between">
+          <Button
+            variant="light"
+            isIconOnly
+      
+            onPress={() => router.back()}
+          >
             <svg
               className="w-6 h-6"
               aria-hidden="true"
@@ -61,8 +67,8 @@ export default function SearchPage() {
               placeholder="Tìm kiếm"
             ></Input>
           </div>
-        </div>
-      </div>
+        </NavbarContent>
+      </Navbar>
       <div className="max-w-sm w-full p-2">
         {/* <h2 className="font-semibold">Kết quả tìm kiếm</h2> */}
       </div>

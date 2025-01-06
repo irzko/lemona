@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { Card, CardBody } from "@nextui-org/card";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -42,7 +43,7 @@ export default async function Page({
   return (
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full space-y-4 p-4">
-        <div className="flex flex-col gap-4 p-4 bg-gray-100 rounded-lg border border-gray-200">
+        <Card>
           <div className="relative w-32 h-32 overflow-hidden bg-gray-100 rounded-full">
             {user.image ? (
               <Image
@@ -66,32 +67,31 @@ export default async function Page({
             )}
           </div>
           <h4>{user.name || user.username}</h4>
-        </div>
-        <ul className="flex flex-col gap-4">
+        </Card>
+        <div className="flex flex-col gap-4">
           {user.posts.map((post) => (
-            <li className="overflow-hidden bg-white" key={post.id}>
-              <Link
-                className="text-gray-800 flex gap-4"
-                href={`/edit/${post.id}`}
-              >
-                <div className="w-2/5">
-                  <div className="relative w-full aspect-video">
-                    <Image
-                      src={post.featuredImageURL || "/no-image.jpg"}
-                      alt={post.title}
-                      fill
-                      className="object-cover rounded-lg"
-                    />
+            <Card as={Link} href={`/edit/${post.id}`} key={post.id}>
+              <CardBody>
+                <div className="flex gap-4">
+                  <div className="w-2/5">
+                    <div className="relative w-full aspect-video">
+                      <Image
+                        src={post.featuredImageURL || "/no-image.jpg"}
+                        alt={post.title}
+                        fill
+                        className="object-cover rounded-lg"
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <h6 className="font-semibold w-3/5 text-base line-clamp-3">
-                  {post.title || "(No title)"}
-                </h6>
-              </Link>
-            </li>
+                  <h6 className="font-semibold w-3/5 text-base line-clamp-3">
+                    {post.title || "(No title)"}
+                  </h6>
+                </div>
+              </CardBody>
+            </Card>
           ))}
-        </ul>
+        </div>
       </div>
     </main>
   );
