@@ -18,9 +18,9 @@ import {
   type MDXRemoteOptions,
 } from "next-mdx-remote-client/rsc";
 import { Suspense } from "react";
-import { Spinner } from "@nextui-org/spinner";
 import slugify from "slugify";
 import { Metadata } from "next";
+import { Skeleton } from "@nextui-org/skeleton";
 
 const getPost = unstable_cache(
   async (id: string) => {
@@ -204,6 +204,22 @@ const components: MDXComponents = {
   },
 };
 
+const LoadingComponent = () => {
+  return (
+    <div className="space-y-3">
+      <Skeleton className="w-3/5 rounded-lg">
+        <div className="h-3 w-3/5 rounded-lg bg-default-200" />
+      </Skeleton>
+      <Skeleton className="w-4/5 rounded-lg">
+        <div className="h-3 w-4/5 rounded-lg bg-default-200" />
+      </Skeleton>
+      <Skeleton className="w-2/5 rounded-lg">
+        <div className="h-3 w-2/5 rounded-lg bg-default-300" />
+      </Skeleton>
+    </div>
+  );
+};
+
 export default async function Page({
   params,
 }: {
@@ -296,7 +312,7 @@ export default async function Page({
           </p>
 
           <p className="font-semibold text-gray-900">{post.description}</p>
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<LoadingComponent />}>
             <MDXRemote
               source={post.content}
               options={options}

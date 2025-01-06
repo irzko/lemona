@@ -1,5 +1,4 @@
 "use client";
-// import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import { Drawer, DrawerContent, DrawerBody } from "@nextui-org/drawer";
@@ -22,7 +21,7 @@ const sidebarItems = [
 ];
 
 export default function PostSidebar({ session }: { session: Session | null }) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   return (
     <>
       <Button onPress={onOpen} isIconOnly variant="light">
@@ -49,7 +48,12 @@ export default function PostSidebar({ session }: { session: Session | null }) {
           />
         </svg>
       </Button>
-      <Drawer isOpen={isOpen} onOpenChange={onOpenChange} size="xs">
+      <Drawer
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        size="xs"
+        onClose={onClose}
+      >
         <DrawerContent>
           {() => (
             <>
