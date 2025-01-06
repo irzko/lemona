@@ -13,12 +13,14 @@ import remarkFlexibleContainers from "remark-flexible-containers";
 import "highlight.js/styles/dark.min.css";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/breadcrumbs";
 import {
-  evaluate,
-  EvaluateOptions,
   MDXComponents,
-  // MDXRemote,
-  // type MDXRemoteOptions,
+  MDXRemote,
+  type MDXRemoteOptions,
 } from "next-mdx-remote-client/rsc";
+import { Suspense } from "react";
+import { Spinner } from "@nextui-org/spinner";
+import slugify from "slugify";
+import { Metadata } from "next";
 
 const getPost = unstable_cache(
   async (id: string) => {
@@ -43,6 +45,58 @@ const getPost = unstable_cache(
   ["posts"],
   { tags: ["posts"] }
 );
+
+export async function generateStaticParams() {
+  const posts = await prisma.post.findMany({
+    select: {
+      id: true,
+      title: true,
+    },
+  });
+  return posts.map((post) => ({
+    slug:
+      slugify(post.title, {
+        replacement: "-",
+        remove: undefined,
+        lower: true,
+        strict: true,
+        locale: "vi",
+        trim: true,
+      }) +
+      "-" +
+      post.id +
+      ".html",
+  }));
+}
+
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  // read route params
+  const slug = (await params).slug;
+
+  // fetch data
+  const id = slug.split(".")[0].split("-").pop() || "";
+
+  const post = await prisma.post.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      title: true,
+    },
+  });
+
+  return {
+    title: post ? post.title : "No title",
+    // openGraph: {
+    //   images: ["/some-specific-page-image.jpg", ...previousImages],
+    // },
+  };
+}
 
 const components: MDXComponents = {
   h1({ children }) {
@@ -178,7 +232,7 @@ export default async function Page({
     );
   }
 
-  const options: EvaluateOptions = {
+  const options: MDXRemoteOptions = {
     mdxOptions: {
       rehypePlugins: [
         [rehypeHighlight],
@@ -200,12 +254,6 @@ export default async function Page({
     },
     // parseFrontmatter: true,
   };
-
-  const { content } = await evaluate({
-    source: post.content,
-    options,
-    components,
-  });
 
   // handle breadcrumbs from categories
   const breadcrumbs = post.categories.map((c) => ({
@@ -255,8 +303,13 @@ export default async function Page({
           </p>
 
           <p className="font-semibold text-gray-900">{post.description}</p>
-
-          {content}
+          <Suspense fallback={<Spinner />}>
+            <MDXRemote
+              source={post.content}
+              options={options}
+              components={components}
+            />
+          </Suspense>
         </div>
         <div className="md:w-96 w-full h-96 border"></div>
       </div>
