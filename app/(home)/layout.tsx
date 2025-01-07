@@ -1,4 +1,4 @@
-import { Bangers } from "next/font/google";
+import { Silkscreen } from "next/font/google";
 import Link from "next/link";
 import React from "react";
 import PostSidebar from "@/components/PostSidebar";
@@ -10,8 +10,9 @@ import {
   NavbarItem,
 } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
-const bangers = Bangers({
+const silkscreen = Silkscreen({
   weight: ["400"],
   subsets: ["latin"],
 });
@@ -29,7 +30,7 @@ export default async function HomeLayout({
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
             <span
-              className={`self-center text-2xl font-semibold whitespace-nowrap ${bangers.className}`}
+              className={`self-center text-2xl font-semibold whitespace-nowrap ${silkscreen.className}`}
             >
               Lemona
             </span>
@@ -60,6 +61,9 @@ export default async function HomeLayout({
                 />
               </svg>
             </Button>
+          </NavbarItem>
+          <NavbarItem>
+            <ThemeSwitcher />
           </NavbarItem>
           <NavbarItem>
             <PostSidebar session={session} />

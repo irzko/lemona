@@ -13,7 +13,7 @@ const roboto = Open_Sans({
 export const metadata: Metadata = {
   title: "Lemona",
   description:
-    "Đọc truyện tranh online miễn phí tại Lẩu Truyện. Cập nhật truyện tranh mới nhất, nhanh nhất, hot nhất. Đọc truyện tranh chất lượng cao, cập nhật hàng ngày.",
+    "Một blog cá nhân với những bài viết về công nghệ, lập trình, và cuộc sống.",
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className="dark">
+    <html lang="vi" suppressHydrationWarning>
       <head>
         <script
           id="Absence-banner"
