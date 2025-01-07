@@ -11,6 +11,7 @@ import {
 } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import { Input } from "@nextui-org/input";
 
 const silkscreen = Silkscreen({
   weight: ["400"],
@@ -36,9 +37,45 @@ export default async function HomeLayout({
             </span>
           </Link>
         </NavbarBrand>
+
         <NavbarContent justify="end">
+          <NavbarItem className="hidden md:flex">
+            <Input
+              startContent={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width={24}
+                  height={24}
+                  fill={"none"}
+                >
+                  <path
+                    d="M17.5 17.5L22 22"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C15.9706 20 20 15.9706 20 11Z"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              }
+              placeholder="Tìm kiếm"
+            ></Input>
+          </NavbarItem>
           <NavbarItem>
-            <Button as={Link} isIconOnly variant="light" href="/search">
+            <Button
+              as={Link}
+              isIconOnly
+              variant="light"
+              href="/search"
+              className="md:hidden"
+              aria-label="Tìm kiếm"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -69,36 +106,6 @@ export default async function HomeLayout({
             <PostSidebar session={session} />
           </NavbarItem>
         </NavbarContent>
-        {/* <NavbarContent justify="end" className="hidden sm:flex">
-          <NavbarItem>
-            <Input
-              startContent={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width={24}
-                  height={24}
-                  fill={"none"}
-                >
-                  <path
-                    d="M17.5 17.5L22 22"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C15.9706 20 20 15.9706 20 11Z"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              }
-              placeholder="Tìm kiếm"
-            ></Input>
-          </NavbarItem>
-        </NavbarContent> */}
       </Navbar>
       {children}
     </>

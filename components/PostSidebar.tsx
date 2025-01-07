@@ -88,13 +88,20 @@ export default function PostSidebar({ session }: { session: Session | null }) {
                         }
                         className="flex items-center p-2 gap-2"
                         href={`/profile/${session?.user?.username}`}
+                        onPress={onClose}
                       >
                         <span>
                           {session.user.name || session.user.username}
                         </span>
                       </ListboxItem>
                     ) : (
-                      <ListboxItem href="/auth/login">Login</ListboxItem>
+                      <ListboxItem
+                        as={Link}
+                        href="/auth/login"
+                        onPress={onClose}
+                      >
+                        Login
+                      </ListboxItem>
                     )}
 
                     {sidebarItems.map((item) => {
@@ -104,6 +111,7 @@ export default function PostSidebar({ session }: { session: Session | null }) {
                           className="py-2"
                           key={item.id}
                           href={item.href}
+                          onPress={onClose}
                         >
                           {item.name}
                         </ListboxItem>

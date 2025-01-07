@@ -19,6 +19,7 @@ import { Suspense } from "react";
 import slugify from "slugify";
 import { Metadata } from "next";
 import { Skeleton } from "@nextui-org/skeleton";
+import { Card, CardBody, CardHeader } from "@nextui-org/card";
 
 const getPost = unstable_cache(
   async (id: string) => {
@@ -311,7 +312,22 @@ export default async function Page({
             />
           </Suspense>
         </div>
-        <div className="md:w-96 w-full h-96 border"></div>
+        <Card className="md:w-96 w-full h-96">
+          <CardHeader>
+            <h3>Xem thêm</h3>
+          </CardHeader>
+          <CardBody>
+            <ul className="space-y-2">
+              {post.categories.map((c) => (
+                <li key={c.category.id}>
+                  <Link href={`/category/${c.category.slug}`}>
+                    {c.category.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </CardBody>
+        </Card>
       </div>
     </main>
   );
