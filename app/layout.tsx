@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Open_Sans } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 
-const roboto = Open_Sans({
+const inter = Inter({
   weight: ["300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],
   style: ["normal", "italic"],
@@ -35,7 +35,7 @@ export default function RootLayout({
           content="ca-pub-4568231404553117"
         ></meta>
       </head>
-      <body className={`${roboto.className}`}>
+      <body className={`${inter.className}`}>
         <Providers>{children}</Providers>
       </body>
     </html>
