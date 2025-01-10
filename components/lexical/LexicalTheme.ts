@@ -83,7 +83,6 @@ const theme: EditorThemeClasses = {
   ltr: "PlaygroundEditorTheme__ltr",
   mark: "PlaygroundEditorTheme__mark",
   markOverlap: "PlaygroundEditorTheme__markOverlap",
-  paragraph: "text-gray-500",
   quote: "p-4 my-4 border-s-4 border-gray-300 bg-gray-50",
   rtl: "PlaygroundEditorTheme__rtl",
 

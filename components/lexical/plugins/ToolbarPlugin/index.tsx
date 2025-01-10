@@ -487,9 +487,29 @@ function BlockFormatDropDown({
     <Dropdown isDisabled={disabled}>
       <DropdownTrigger>
         <Button
+          variant="light"
           startContent={iconBlockFormat[blockType].icon}
           aria-label="Formatting options for text style"
           size="sm"
+          endContent={
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              color="currentColor"
+            >
+              <path
+                d="M5.99977 9.00005L11.9998 15L17.9998 9"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeMiterlimit="16"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              ></path>
+            </svg>
+          }
         >
           {blockTypeToBlockName[blockType]}
         </Button>
@@ -889,6 +909,19 @@ export default function ToolbarPlugin({
         </svg>
       </Button>
       <Divider orientation="vertical" className="h-5" />
+
+      {toolbarState.blockType in blockTypeToBlockName &&
+        activeEditor === editor && (
+          <>
+            <BlockFormatDropDown
+              disabled={!isEditable}
+              blockType={toolbarState.blockType}
+              rootType={toolbarState.rootType}
+              editor={activeEditor}
+            />
+          </>
+        )}
+      <Divider orientation="vertical" className="h-5" />
       {toolbarState.blockType === "code" ? (
         <Dropdown isDisabled={!isEditable}>
           <DropdownTrigger>
@@ -1052,7 +1085,29 @@ export default function ToolbarPlugin({
           <Divider orientation="vertical" className="h-5" />
           <Dropdown isDisabled={!isEditable}>
             <DropdownTrigger>
-              <Button size="sm" isIconOnly>
+              <Button
+                variant="light"
+                size="sm"
+                endContent={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    color="currentColor"
+                  >
+                    <path
+                      d="M5.99977 9.00005L11.9998 15L17.9998 9"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeMiterlimit="16"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    ></path>
+                  </svg>
+                }
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -1258,18 +1313,6 @@ export default function ToolbarPlugin({
           </Dropdown>
         </>
       )}
-      {toolbarState.blockType in blockTypeToBlockName &&
-        activeEditor === editor && (
-          <>
-            <BlockFormatDropDown
-              disabled={!isEditable}
-              blockType={toolbarState.blockType}
-              rootType={toolbarState.rootType}
-              editor={activeEditor}
-            />
-            <Divider orientation="vertical" className="h-5" />
-          </>
-        )}
     </div>
   );
 }
