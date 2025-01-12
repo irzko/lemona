@@ -11,9 +11,17 @@ const getPosts = unstable_cache(
       select: {
         id: true,
         title: true,
+        description: true,
         featuredImageURL: true,
         createdAt: true,
+        author: {
+          select: {
+            name: true,
+            username: true,
+          },
+        },
       },
+
       orderBy: [
         {
           createdAt: "desc",
@@ -31,23 +39,20 @@ export default async function Page() {
     <main className="flex justify-center">
       <div className="max-w-screen-lg w-full p-4">
         <h3 className="text-xl font-semibold mb-4">Bài viết mới</h3>
-        <div className="grid grid-cols sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols sm:grid-cols-2 md:grid-cols-4 divide-y-1 sm:divide-y-0 gap-4">
           {allPosts.slice(0, 4).map((post) => (
-            <Card
-              shadow="sm"
-              as={Link}
-              href={`/${slugify(post.title, {
-                replacement: "-",
-                remove: undefined,
-                lower: true,
-                strict: true,
-                locale: "vi",
-                trim: true,
-              })}-${post.id}.html`}
-              isPressable
-              key={post.id}
-            >
-              <CardBody className="overflow-visible p-0">
+            <div key={post.id} className="pt-4">
+              <Link
+                className="space-y-4"
+                href={`/${slugify(post.title, {
+                  replacement: "-",
+                  remove: undefined,
+                  lower: true,
+                  strict: true,
+                  locale: "vi",
+                  trim: true,
+                })}-${post.id}.html`}
+              >
                 <div className="relative w-full aspect-video">
                   <Image
                     src={post.featuredImageURL || "/no-image.jpg"}
@@ -57,13 +62,28 @@ export default async function Page() {
                     className="object-cover rounded-xl"
                   />
                 </div>
-              </CardBody>
-              <CardFooter className="items-center">
-                <h4 className="font-semibold uppercase text-lg line-clamp-3">
-                  {post.title || "(No title)"}
-                </h4>
-              </CardFooter>
-            </Card>
+                <div className="flex flex-col">
+                  <h4 className="font-semibold text-lg line-clamp-3">
+                    {post.title || "(No title)"}
+                  </h4>
+                  <div className="space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                    <span>
+                      by{" "}
+                      {post.author?.name || post.author?.username || "Unknown"}
+                    </span>
+                    <span>-</span>
+                    <span>
+                      {new Date(post.createdAt).toLocaleDateString("vi-VN", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </span>
+                  </div>
+                  <p className="text-sm line-clamp-2">{post.description}</p>
+                </div>
+              </Link>
+            </div>
           ))}
         </div>
         <ul className="grid grid-cols-1 mt-4 space-y-0 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
