@@ -3,12 +3,7 @@ import Link from "next/link";
 import React from "react";
 import PostSidebar from "@/components/PostSidebar";
 // import { auth } from "@/auth";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-} from "@heroui/navbar";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/navbar";
 import { Button } from "@heroui/button";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Input } from "@heroui/input";
@@ -103,7 +98,9 @@ export default async function HomeLayout({
             <ThemeSwitcher />
           </NavbarItem>
           <NavbarItem>
-            {/* <PostSidebar session={session} /> */}
+            <PostSidebar
+            // session={session}
+            />
           </NavbarItem>
         </NavbarContent>
       </Navbar>

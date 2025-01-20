@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import { Drawer, DrawerContent, DrawerBody } from "@heroui/drawer";
 import { Button } from "@heroui/button";
 import { Listbox, ListboxItem } from "@heroui/listbox";
 import { useDisclosure } from "@heroui/modal";
-import { Session } from "next-auth";
+// import { Session } from "next-auth";
 
 const sidebarItems = [
   {
