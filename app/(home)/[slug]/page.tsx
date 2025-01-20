@@ -4,6 +4,7 @@ import remarkGfm from "remark-gfm";
 import emoji from "remark-emoji";
 import supersub from "remark-supersub";
 import remarkIns from "remark-ins";
+import remarkComment from "remark-comment";
 import Image from "next/image";
 import Link from "next/link";
 import rehypeHighlight from "rehype-highlight";
@@ -249,6 +250,7 @@ export default async function Page({
         [emoji, { emoticon: true }],
         [supersub],
         [remarkIns],
+        [remarkComment],
         [remarkFlexibleMarkers],
         [remarkFlexibleContainers],
       ],
