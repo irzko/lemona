@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
-import { Navbar, NavbarContent } from "@nextui-org/navbar";
+import { Button } from "@heroui/button";
+import { Input } from "@heroui/input";
+import { Navbar, NavbarContent } from "@heroui/navbar";
 import { useRouter } from "next/navigation";
 
 export default function SearchPage() {

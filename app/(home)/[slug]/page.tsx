@@ -9,7 +9,7 @@ import Link from "next/link";
 import rehypeHighlight from "rehype-highlight";
 import remarkFlexibleMarkers from "remark-flexible-markers";
 import remarkFlexibleContainers from "remark-flexible-containers";
-import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/breadcrumbs";
+import { Breadcrumbs, BreadcrumbItem } from "@heroui/breadcrumbs";
 import {
   MDXComponents,
   MDXRemote,
@@ -18,8 +18,8 @@ import {
 import { Suspense } from "react";
 import slugify from "slugify";
 import { Metadata } from "next";
-import { Skeleton } from "@nextui-org/skeleton";
-import { Card, CardBody, CardHeader } from "@nextui-org/card";
+import { Skeleton } from "@heroui/skeleton";
+import { Card, CardBody, CardHeader } from "@heroui/card";
 
 const getPost = unstable_cache(
   async (id: string) => {

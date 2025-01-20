@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import SubmitButton from "@/components/SubmitButton";
 
 import { createUser } from "@/app/actions";
-import { Input } from "@nextui-org/input";
+import { Input } from "@heroui/input";
 
 export function SignupForm() {
   const [state, action] = useActionState(createUser, undefined);

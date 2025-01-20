@@ -14,8 +14,8 @@ import {
   Category,
 } from "@prisma/client";
 import LexicalEditor from "@/components/lexical";
-import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button";
+import { Input } from "@heroui/input";
+import { Button } from "@heroui/button";
 import SelectCategoryModal from "./select-category-modal";
 
 function sortCategories(categories: Category[]) {

@@ -8,9 +8,9 @@ import { EditorState } from "lexical";
 import { useCallback } from "react";
 import LexicalEditor from "@/components/lexical";
 import { Category } from "@prisma/client";
-import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button";
-import { Card, CardBody } from "@nextui-org/card";
+import { Input } from "@heroui/input";
+import { Button } from "@heroui/button";
+import { Card, CardBody } from "@heroui/card";
 import SelectCategoryModal from "./select-category-modal";
 
 export default function CreatePostForm({

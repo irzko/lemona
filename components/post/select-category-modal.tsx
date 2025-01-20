@@ -1,5 +1,5 @@
 import { findChildCategories } from "@/lib/findChildCategories";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import {
   Modal,
   ModalBody,
@@ -7,8 +7,8 @@ import {
   ModalFooter,
   ModalHeader,
   useDisclosure,
-} from "@nextui-org/modal";
-import { Select, SelectItem } from "@nextui-org/select";
+} from "@heroui/modal";
+import { Select, SelectItem } from "@heroui/select";
 import { Category } from "@prisma/client";
 import { useCallback } from "react";
 

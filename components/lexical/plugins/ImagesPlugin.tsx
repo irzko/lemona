@@ -20,8 +20,8 @@ import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 
 import { $createImageNode, ImageNode, ImagePayload } from "../nodes/ImageNode";
-import { Input } from "@nextui-org/input";
-import { Button } from "@nextui-org/button";
+import { Input } from "@heroui/input";
+import { Button } from "@heroui/button";
 import {
   Modal,
   ModalContent,
@@ -29,7 +29,7 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-} from "@nextui-org/modal";
+} from "@heroui/modal";
 export type InsertImagePayload = Readonly<ImagePayload>;
 
 export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> =

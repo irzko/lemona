@@ -8,10 +8,10 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-} from "@nextui-org/navbar";
-import { Button } from "@nextui-org/button";
+} from "@heroui/navbar";
+import { Button } from "@heroui/button";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { Input } from "@nextui-org/input";
+import { Input } from "@heroui/input";
 
 const silkscreen = Silkscreen({
   weight: ["400"],

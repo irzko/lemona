@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { Card, CardBody } from "@nextui-org/card";
+import { Card, CardBody } from "@heroui/card";
 import Image from "next/image";
 import Link from "next/link";
 

@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { unstable_cache } from "next/cache";
 import Link from "next/link";
 

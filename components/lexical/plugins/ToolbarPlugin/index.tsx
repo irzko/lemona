@@ -75,14 +75,14 @@ import {
 import { sanitizeUrl } from "@/components/lexical/utils/url";
 import { Dispatch, useCallback, useEffect, useState } from "react";
 import { getSelectedNode } from "@/components/lexical/utils/getSelectedNode";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-} from "@nextui-org/dropdown";
-import { Divider } from "@nextui-org/divider";
+} from "@heroui/dropdown";
+import { Divider } from "@heroui/divider";
 
 function getCodeLanguageOptions(): [string, string][] {
   const options: [string, string][] = [];

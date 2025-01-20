@@ -15,7 +15,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { $createTextNode, $getRoot } from "lexical";
 import { useCallback } from "react";
 import { PLAYGROUND_TRANSFORMERS } from "../MarkdownTransformers";
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 
 export default function ActionsPlugin({
   shouldPreserveNewLinesInMarkdown,

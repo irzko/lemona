@@ -27,8 +27,8 @@ import ImagesPlugin from "./plugins/ImagesPlugin";
 import LinkPlugin from "./plugins/LinkPlugin";
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
 import ActionsPlugin from "./plugins/ActionsPlugin";
-import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
-import { Divider } from "@nextui-org/divider";
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
+import { Divider } from "@heroui/divider";
 
 const placeholder = "Hãy bắt đầu viết...";
 

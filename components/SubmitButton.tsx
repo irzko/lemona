@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/button";
+import { Button } from "@heroui/button";
 import { useFormStatus } from "react-dom";
 
 export default function SubmitButton({

@@ -4,8 +4,8 @@ import { useActionState } from "react";
 import { updateCategory } from "@/app/actions";
 import SubmitButton from "@/components/SubmitButton";
 import { Category } from "@prisma/client";
-import { Select, SelectItem } from "@nextui-org/select";
-import { Input } from "@nextui-org/input";
+import { Select, SelectItem } from "@heroui/select";
+import { Input } from "@heroui/input";
 
 export default function EditCategoryForm({
   category,
