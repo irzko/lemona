@@ -5,7 +5,7 @@ import { Drawer, DrawerContent, DrawerBody } from "@heroui/drawer";
 import { Button } from "@heroui/button";
 import { Listbox, ListboxItem } from "@heroui/listbox";
 import { useDisclosure } from "@heroui/modal";
-import { type Session } from "next-auth";
+import { Session } from "next-auth";
 
 const sidebarItems = [
   {
