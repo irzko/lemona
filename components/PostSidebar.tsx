@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-// import Image from "next/image";
+import Image from "next/image";
 import { Drawer, DrawerContent, DrawerBody } from "@heroui/drawer";
 import { Button } from "@heroui/button";
 import { Listbox, ListboxItem } from "@heroui/listbox";
 import { useDisclosure } from "@heroui/modal";
-// import { Session } from "next-auth";
+import { type Session } from "next-auth";
 
 const sidebarItems = [
   {
@@ -20,8 +20,7 @@ const sidebarItems = [
   },
 ];
 
-export default function PostSidebar() {
-  // { session }: { session: Session | null }
+export default function PostSidebar({ session }: { session: Session | null }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   return (
     <>
@@ -61,7 +60,7 @@ export default function PostSidebar() {
               <DrawerBody>
                 <Listbox className="flex flex-col w-full space-y-2">
                   <>
-                    {/* {session?.user ? (
+                    {session?.user ? (
                       <ListboxItem
                         as={Link}
                         startContent={
@@ -103,7 +102,7 @@ export default function PostSidebar() {
                       >
                         Login
                       </ListboxItem>
-                    )} */}
+                    )}
 
                     {sidebarItems.map((item) => {
                       return (

@@ -1,8 +1,6 @@
 import { Silkscreen } from "next/font/google";
 import Link from "next/link";
 import React from "react";
-import PostSidebar from "@/components/PostSidebar";
-// import { auth } from "@/auth";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/navbar";
 import { Button } from "@heroui/button";
 import { ThemeSwitcher } from "@/components/theme-switcher";
@@ -15,8 +13,8 @@ const silkscreen = Silkscreen({
 
 export default async function HomeLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
-  // const session = await auth();
+  sidebar,
+}: Readonly<{ children: React.ReactNode; sidebar: React.ReactNode }>) {
   return (
     <>
       <Navbar shouldHideOnScroll isBordered>
@@ -97,11 +95,7 @@ export default async function HomeLayout({
           <NavbarItem>
             <ThemeSwitcher />
           </NavbarItem>
-          <NavbarItem>
-            <PostSidebar
-            // session={session}
-            />
-          </NavbarItem>
+          <NavbarItem>{sidebar}</NavbarItem>
         </NavbarContent>
       </Navbar>
       {children}
